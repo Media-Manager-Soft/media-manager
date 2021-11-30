@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { ElectronService } from "./core/services/electron.service";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,8 +7,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
+  constructor(
+    private electronService: ElectronService,
+  ){}
 
+  emitFn(){
+    this.electronService.ipcRenderer.send('asd');
+  }
 
   title = 'MB';
-  
 }

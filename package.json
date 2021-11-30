@@ -10,10 +10,9 @@
     "test": "ng test",
 
     "tsc:main": "tsc --lib ES2018,DOM --target ES5 src-backend/main.ts --outDir dist",
-
     "app:build": "ng build --base-href ./ && npm run tsc:main",
-    "app:start": "electron .",
-    "app:start-dev": "npm run tsc:main && electron . --dev"
+    "start:electron": "npm run app:build && electron .",
+    "start:electron-hr": "npm run tsc:main && electron . --serve"
   },
   "private": true,
   "dependencies": {
