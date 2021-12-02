@@ -2,7 +2,6 @@ import { app, BrowserWindow, ipcMain } from "electron";
 import * as path from "path";
 import * as url from "url";
 import { BackupService } from "./src/Services/BackupService";
-import { exec } from "child_process";
 
 let mainWindow: Electron.BrowserWindow;
 
@@ -18,11 +17,12 @@ app.on("ready", () => {
   });
 
   mainWindow.webContents.openDevTools();
+
   const isDev = process.argv.some(val => val === '--serve')
 
   mainWindow.loadURL(
     url.format({
-      pathname: isDev ? 'localhost:4200' : `../dist/MB/index.html`,
+      pathname: isDev ? 'localhost:4200' : path.resolve(__dirname, '../dist/MB/index.html'),
       protocol: isDev ? 'http:' : 'file:',
       slashes: true
     })
@@ -34,8 +34,6 @@ app.on("window-all-closed", () => {
     app.quit();
   }
 });
-
-exec('prisma migrate dev --schema "prisma/schema.prisma"')
 
 ipcMain.on('asd', (event, arg) => {
   const Bs = new BackupService()
