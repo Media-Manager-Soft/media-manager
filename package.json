@@ -1,7 +1,7 @@
 {
   "name": "mb",
   "version": "0.0.0",
-  "main": "dist/main.js",
+  "main": "bin/dist/out-tsc/src-backend/main.js",
   "author": "Tomek Żmudziński",
   "description": "MediaBackupper",
   "scripts": {
@@ -10,10 +10,11 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "app:tsc:main": "tsc --lib ES2018,DOM --target ES5 src-backend/main.ts --outDir dist",
+    "app:tsc:main": "tsc",
     "app:build": "ng build --prod --base-href ./ && npm run app:tsc:main",
-    "app:start:electron": "npm run app:build && electron .",
-    "app:start:electron-hr": "npm run app:tsc:main && electron . --serve",
+    "app:start": "npm run app:build && electron .",
+    "app:start-electron": "npm run app:tsc:main && electron . ",
+    "app:start-hr": "npm run app:tsc:main && electron . --serve",
     "pack": "npm run app:build && electron-builder --dir",
     "dist": "npm run app:build && electron-builder"
   },
@@ -28,9 +29,11 @@
     "@angular/platform-browser-dynamic": "~13.0.0",
     "@angular/router": "~13.0.0",
     "@prisma/client": "^3.5.0",
+    "reflect-metadata": "^0.1.13",
     "rxjs": "~7.4.0",
-    "sequelize": "^6.12.0-alpha.1",
+    "sqlite3": "^5.0.2",
     "tslib": "^2.3.0",
+    "typeorm": "^0.2.41",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
@@ -52,16 +55,11 @@
   },
   "build": {
     "directories": {
-      "buildResources": "./dist",
-      "output": "./build5"
+      "buildResources": "./bin/dist",
+      "output": "./bin/build"
     },
     "files": [
-      "./dist/**/*",
-      "./prisma/prisma_client_js"
+      "./bin/dist/**/*"
     ]
-  },
-  "appId": "your.id",
-  "mac": {
-    "category": "your.app.category.type"
   }
 }
