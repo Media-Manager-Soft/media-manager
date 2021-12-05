@@ -4,8 +4,8 @@ import * as path from "path";
 import * as url from "url";
 import { BackupService } from "./src/Services/BackupService";
 import { createConnection } from "typeorm";
-import { Photo } from "./src/Entities/Photo";
-import { User } from "./src/Entities/User";
+import { Location } from "./src/Entities/Location";
+
 let mainWindow: BrowserWindow;
 
 app.on("ready", () => {
@@ -35,7 +35,9 @@ app.on("ready", () => {
     type: "sqlite",
     database: './db/db.sqlite',
     synchronize: true,
-    entities: [Photo, User],
+    entities: [
+      Location
+    ],
     logging: true
   })
 
@@ -48,10 +50,23 @@ app.on("window-all-closed", () => {
   }
 });
 
-
-
 ipcMain.on('asd', (event, arg) => {
   const Bs = new BackupService()
   Bs.hi();
 })
 
+ipcMain.handle('get-locations', async (event, arg) => {
+  return await Location.find();
+})
+
+ipcMain.handle('store-location', async (event, arg) => {
+  let location = new Location;
+  location.path = arg.path;
+  location.name = arg.name;
+  await location.save();
+})
+
+ipcMain.handle('select-folder', (event, arg) => {
+  const {dialog} = require('electron')
+  return dialog.showOpenDialog({properties: ['openDirectory']});
+})

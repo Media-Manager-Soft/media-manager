@@ -1,0 +1,13 @@
+<h1>Location list</h1>
+<p *ngFor="let location of locations">
+    <span>{{ location['name'] }}</span>
+</p>
+<h2>Add new</h2>
+<form [formGroup]="newPathForm" (ngSubmit)="onSubmit()">
+    <!--    <div [formGroup]="newPathForm">-->
+    Name: <input formControlName="name">
+    Path: <input formControlName="path">
+    <button (click)="selectFolder(); $event.preventDefault()" >Choose</button>
+    <!--    </div>-->
+    <button [disabled]="newPathForm.invalid" type="submit">Add</button>
+</form>
