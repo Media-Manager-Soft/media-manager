@@ -2,9 +2,10 @@ import "reflect-metadata";
 import { app, BrowserWindow, ipcMain } from "electron";
 import * as path from "path";
 import * as url from "url";
-import { BackupService } from "./src/Services/BackupService";
 import { createConnection } from "typeorm";
 import { Location } from "./src/Entities/Location";
+import { Media } from "./src/Entities/Media";
+import ipcRenderer = Electron.ipcRenderer;
 
 let mainWindow: BrowserWindow;
 
@@ -36,7 +37,8 @@ app.on("ready", () => {
     database: './db/db.sqlite',
     synchronize: true,
     entities: [
-      Location
+      Location,
+      Media,
     ],
     logging: true
   })
@@ -50,12 +52,7 @@ app.on("window-all-closed", () => {
   }
 });
 
-ipcMain.on('asd', (event, arg) => {
-  const Bs = new BackupService()
-  Bs.hi();
-})
-
-ipcMain.handle('get-locations', async (event, arg) => {
+ipcMain.handle('get-locations', async () => {
   return await Location.find();
 })
 
@@ -64,9 +61,11 @@ ipcMain.handle('store-location', async (event, arg) => {
   location.path = arg.path;
   location.name = arg.name;
   await location.save();
+  location.service().discoverFiles();
 })
 
 ipcMain.handle('select-folder', (event, arg) => {
   const {dialog} = require('electron')
   return dialog.showOpenDialog({properties: ['openDirectory']});
 })
+

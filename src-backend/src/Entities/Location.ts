@@ -1,4 +1,6 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Media } from "./Media";
+import { LocationService } from "../Services/LocationService";
 
 @Entity()
 export class Location extends BaseEntity {
@@ -11,7 +13,14 @@ export class Location extends BaseEntity {
   @Column()
   path: string;
 
+  @OneToMany(() => Media, media => media.location)
+  media: Media[];
+
   @Column({type: "int", default: () => "CURRENT_TIMESTAMP"})
-  public createdAt: Date;
+  createdAt: Date;
+
+  public service() {
+    return new LocationService(this)
+  }
 
 }
