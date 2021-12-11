@@ -11,9 +11,6 @@ export class AppComponent {
     private electronService: ElectronService,
   ){}
 
-  emitFn(){
-    this.electronService.ipcRenderer.send('asd');
-  }
 
   title = 'MB';
 }

@@ -30,12 +30,26 @@ export class Media extends BaseEntity {
   @Column()
   type: string;
 
+  @Column({type: "int", nullable: true})
+  width: number;
+
+  @Column({type: "int", nullable: true})
+  height: number;
+
+  @Column({nullable: true})
+  camera: string;
+
+  @Column({nullable: true})
+  cameraModel: string;
+
+  @Column({nullable: true ,type: "int", default: () => "CURRENT_TIMESTAMP"})
+  takenAt: Date;
+
   @Column({type: "int", default: () => "CURRENT_TIMESTAMP"})
   createdAt: Date;
 
   @Column({type: "int", default: () => "CURRENT_TIMESTAMP"})
   updatedAt: Date;
-
 
   public get metadataService() {
     if (!this._mediaService) {
