@@ -1,14 +1,8 @@
 import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Location } from "./Location";
 import { MetadataService } from "../Services/Media/Metadata/MetadataService";
+
 const path = require('path');
-
-export enum MediaType {
-  PHOTO = "photo",
-  VIDEO = "video",
-  PHOTO_RAW = "photo_raw",
-}
-
 
 @Entity()
 export class Media extends BaseEntity {
@@ -42,8 +36,11 @@ export class Media extends BaseEntity {
   @Column({nullable: true})
   cameraModel: string;
 
-  @Column({nullable: true ,type: "int", default: () => "CURRENT_TIMESTAMP"})
+  @Column({nullable: true, type: "int", default: () => "CURRENT_TIMESTAMP"})
   takenAt: Date;
+
+  @Column({type: "blob", nullable: true})
+  thumbnail: ArrayBuffer | Buffer | Uint8Array | undefined;
 
   @Column({type: "int", default: () => "CURRENT_TIMESTAMP"})
   createdAt: Date;

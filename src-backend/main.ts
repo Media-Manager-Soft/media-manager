@@ -5,7 +5,7 @@ import * as url from "url";
 import { createConnection } from "typeorm";
 import { Location } from "./src/Entities/Location";
 import { Media } from "./src/Entities/Media";
-import ipcRenderer = Electron.ipcRenderer;
+import { APP_DATA } from "./src/configs";
 
 let mainWindow: BrowserWindow;
 
@@ -17,6 +17,7 @@ app.on("ready", () => {
     webPreferences: {
       nodeIntegration: true, // Allows IPC and other APIs
       contextIsolation: false,
+      webSecurity: false //Todo: remove if not needed in the future
     },
   });
 
@@ -34,13 +35,14 @@ app.on("ready", () => {
 
   createConnection({
     type: "sqlite",
-    database: './db/db.sqlite',
+    database: path.join(APP_DATA, 'db', 'db.sqlite'),
     synchronize: true,
     entities: [
       Location,
       Media,
     ],
-    logging: true
+    logging: false
+    // logging: true
   })
 
 
@@ -54,6 +56,18 @@ app.on("window-all-closed", () => {
 
 ipcMain.handle('get-locations', async () => {
   return await Location.find();
+})
+
+ipcMain.handle('get-media', async (event, arg) => {
+  return await Media.find();
+})
+
+ipcMain.handle('get-thumbnail', async (event, arg) => {
+  let media = await Media.findOne(arg.mediaId);
+  if (media?.thumbnail === null) {
+    media?.metadataService.storeThumb();
+  }
+  return media.thumbnail
 })
 
 ipcMain.handle('store-location', async (event, arg) => {

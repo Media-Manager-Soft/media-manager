@@ -26,9 +26,9 @@ export class LocationService {
   public async discoverFiles() {
     let paths = this.getAllFiles(this.location.path, []);
 
-    for (const path1 of paths) {
+    for (const path of paths) {
       let media = new Media();
-      await media.metadataService.discoverMetadata(path1, this.location);
+      await media.metadataService.discoverMetadata(path, this.location);
       await media.save();
     }
 
