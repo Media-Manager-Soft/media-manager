@@ -40,10 +40,17 @@ export class MetadataService {
     const exif = await this.getExifFromFile();
     this.media.cameraModel = exif.Model;
     this.media.camera = exif.Make;
-    this.media.height = parseInt(exif.ImageWidth);
-    this.media.width = parseInt(exif.ImageHeight);
+    this.media.height = await this.discoverDimension('ImageHeight');
+    this.media.width = await this.discoverDimension('ImageWidth');
+    this.media.latitude = exif.latitude;
+    this.media.longitude = exif.longitude;
+    this.media.orientation = await exifr.orientation(this.media.getPathToFile());
   }
 
+  public async discoverDimension(field: string) {
+    const exif = await this.getExifFromFile();
+    return parseInt(exif[field]);
+  }
 
   public async discoverTakenAtDate() {
     const exif = await this.getExifFromFile();
@@ -62,7 +69,7 @@ export class MetadataService {
       if (!this.media.hasThumb()) {
         let thumb: Thumbnail = new Thumbnail()
         let converter = new MediaConverterService(this.media)
-        thumb.thumbnail = await converter.generateThumb();  //Method depends oon media type
+        thumb.thumbnail = await converter.generateThumb();
         await thumb.save();
         this.media.thumbnail = thumb;
       }

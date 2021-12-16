@@ -29,10 +29,10 @@ export class Media extends BaseEntity {
   width: number;
 
   @Column({type: "int", nullable: true})
-  orientation: number;
-
-  @Column({type: "int", nullable: true})
   height: number;
+
+  @Column({nullable: true})
+  orientation?: number;
 
   @Column({nullable: true})
   camera: string;
@@ -40,13 +40,19 @@ export class Media extends BaseEntity {
   @Column({nullable: true})
   cameraModel: string;
 
-  @Column({nullable: true, type: "int", default: () => "CURRENT_TIMESTAMP"})
+  @Column({nullable: true})
+  latitude: string;
+
+  @Column({nullable: true})
+  longitude: string;
+
+  @Column({nullable: true, default: () => "CURRENT_TIMESTAMP"})
   takenAt: Date;
 
-  @Column({type: "int", default: () => "CURRENT_TIMESTAMP"})
+  @Column({default: () => "CURRENT_TIMESTAMP"})
   createdAt: Date;
 
-  @Column({type: "int", default: () => "CURRENT_TIMESTAMP"})
+  @Column({default: () => "CURRENT_TIMESTAMP"})
   updatedAt: Date;
 
   @OneToOne(() => Thumbnail)
