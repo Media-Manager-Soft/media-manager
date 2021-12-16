@@ -1,16 +1,8 @@
 export enum MediaType {
   PHOTO = "photo",
   VIDEO = "video",
-  PHOTO_RAW = "photo_raw",
+  PHOTO_RAW = "photoRaw",
 }
-
-// interface IObjectKeys {
-//   [key: string]: string;
-// }
-//   MediaExtensions  extends Io{
-
-// };
-
 
 interface IExtensionTypes {
   [name: string]: string
@@ -18,6 +10,7 @@ interface IExtensionTypes {
 
 export const MediaExtensionTypes: IExtensionTypes = {
   '.jpg': MediaType.PHOTO,
+  '.jpeg': MediaType.PHOTO,
   '.png': MediaType.PHOTO,
   '.bmp': MediaType.PHOTO,
   '.webp': MediaType.PHOTO,

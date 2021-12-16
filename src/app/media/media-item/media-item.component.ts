@@ -1,4 +1,4 @@
-import { Component,  ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { ElectronService } from "../../core/services/electron.service";
 
 @Component({
@@ -14,10 +14,15 @@ export class MediaItemComponent implements OnInit {
   // ) {
   // }
 
-  getThumb(){
+  getThumb() {
+    try {
       const urlCreator = window.URL || window.webkitURL;
-      const blob = new Blob([this.media.thumbnail],);
+      const blob = new Blob([this.media.thumbnail.thumbnail],);
       return urlCreator.createObjectURL(blob);
+    } catch (e) {
+      // request from backend
+      return '/assets/no-preview.jpg'
+    }
   }
 
   ngAfterViewInit() {
@@ -26,7 +31,6 @@ export class MediaItemComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 
 
 }

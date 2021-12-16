@@ -1,8 +1,9 @@
 import { Media } from "../../../Entities/Media";
 import { Location } from "../../../Entities/Location";
 import exifr from 'exifr'
-import { ThumbnailService } from "./ThumbnailService";
 import { MediaExtensionTypes } from "../../../Enums/MediaType";
+import { Thumbnail } from "../../../Entities/Thumbnail";
+import { MediaConverterService } from "../../MediaConverterService";
 
 const path = require('path');
 
@@ -27,7 +28,12 @@ export class MetadataService {
   }
 
   public discoverType() {
-    return MediaExtensionTypes[path.extname(this.media.filename)];
+    let ext = path.extname(this.media.filename).toLocaleLowerCase();
+    let type = MediaExtensionTypes[ext];
+    if (type === undefined) {
+      throw new Error('Unsupported extension: ' + ext)
+    }
+    return type;
   }
 
   public async discoverExif() {
@@ -52,7 +58,17 @@ export class MetadataService {
   }
 
   public async storeThumb() {
-    await ThumbnailService.storeThumbnail(this.media);
+    try {
+      if (!this.media.hasThumb()) {
+        let thumb: Thumbnail = new Thumbnail()
+        let converter = new MediaConverterService(this.media)
+        thumb.thumbnail = await converter.generateThumb();  //Method depends oon media type
+        await thumb.save();
+        this.media.thumbnail = thumb;
+      }
+    } catch (e) {
+      console.error(e)
+    }
   }
 
 }

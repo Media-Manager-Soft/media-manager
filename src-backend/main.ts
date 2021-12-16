@@ -2,9 +2,10 @@ import "reflect-metadata";
 import { app, BrowserWindow, ipcMain } from "electron";
 import * as path from "path";
 import * as url from "url";
-import { createConnection } from "typeorm";
+import { createConnections } from "typeorm";
 import { Location } from "./src/Entities/Location";
 import { Media } from "./src/Entities/Media";
+import { Thumbnail } from "./src/Entities/Thumbnail";
 import { APP_DATA } from "./src/configs";
 
 let mainWindow: BrowserWindow;
@@ -33,19 +34,31 @@ app.on("ready", () => {
     })
   );
 
-  createConnection({
+  createConnections([{
     type: "sqlite",
     database: path.join(APP_DATA, 'db', 'db.sqlite'),
     synchronize: true,
     entities: [
       Location,
       Media,
+      Thumbnail,
     ],
     logging: false
     // logging: true
-  })
+  },
+    {
+      name: "thumbnail",
+      type: "sqlite",
+      database: path.join(APP_DATA, 'db', 'thumbnail.sqlite'),
+      synchronize: true,
+      entities: [
+        // Thumbnail,
+      ],
+      logging: false
+    }
+  ])
 
-
+  // Thumbnail.useConnection(getConnection('thumbnail'))
 });
 
 app.on("window-all-closed", () => {
@@ -59,7 +72,7 @@ ipcMain.handle('get-locations', async () => {
 })
 
 ipcMain.handle('get-media', async (event, arg) => {
-  return await Media.find();
+  return await Media.find({relations: ['thumbnail']});
 })
 
 ipcMain.handle('get-thumbnail', async (event, arg) => {
@@ -76,6 +89,7 @@ ipcMain.handle('store-location', async (event, arg) => {
   location.name = arg.name;
   await location.save();
   location.service().discoverFiles();
+
 })
 
 ipcMain.handle('select-folder', (event, arg) => {

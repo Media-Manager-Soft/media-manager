@@ -1,6 +1,7 @@
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Location } from "./Location";
 import { MetadataService } from "../Services/Media/Metadata/MetadataService";
+import { Thumbnail } from "./Thumbnail";
 
 const path = require('path');
 
@@ -28,6 +29,9 @@ export class Media extends BaseEntity {
   width: number;
 
   @Column({type: "int", nullable: true})
+  orientation: number;
+
+  @Column({type: "int", nullable: true})
   height: number;
 
   @Column({nullable: true})
@@ -39,14 +43,15 @@ export class Media extends BaseEntity {
   @Column({nullable: true, type: "int", default: () => "CURRENT_TIMESTAMP"})
   takenAt: Date;
 
-  @Column({type: "blob", nullable: true})
-  thumbnail: ArrayBuffer | Buffer | Uint8Array | undefined;
-
   @Column({type: "int", default: () => "CURRENT_TIMESTAMP"})
   createdAt: Date;
 
   @Column({type: "int", default: () => "CURRENT_TIMESTAMP"})
   updatedAt: Date;
+
+  @OneToOne(() => Thumbnail)
+  @JoinColumn()
+  thumbnail: Thumbnail;
 
   public get metadataService() {
     if (!this._mediaService) {
@@ -57,5 +62,9 @@ export class Media extends BaseEntity {
 
   public getPathToFile() {
     return path.join(this.location.path, this.path, this.filename)
+  }
+
+  public hasThumb(){
+    return !!this.thumbnail;
   }
 }

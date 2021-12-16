@@ -28,8 +28,12 @@ export class LocationService {
 
     for (const path of paths) {
       let media = new Media();
-      await media.metadataService.discoverMetadata(path, this.location);
-      await media.save();
+      try {
+        await media.metadataService.discoverMetadata(path, this.location);
+        await media.save();
+      } catch (e) {
+        console.error(e);
+      }
     }
 
   }
