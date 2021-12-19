@@ -44,4 +44,9 @@ export class LocationComponent implements OnInit {
 
       });
   }
+
+  send(){
+    this.electronService.ipcRenderer.send('async-msg', 'ping')
+
+  }
 }

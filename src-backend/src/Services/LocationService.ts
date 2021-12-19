@@ -1,7 +1,9 @@
 import { Location } from '../Entities/Location';
 import * as fs from "fs";
 import * as path from "path";
-import { Media } from "../Entities/Media";
+
+const bus = require('./../Events/eventBus');
+const workerManager = require('./../Workers/WorkerManager');
 
 export class LocationService {
   constructor(private location: Location) {
@@ -26,15 +28,19 @@ export class LocationService {
   public async discoverFiles() {
     let paths = this.getAllFiles(this.location.path, []);
 
-    for (const path of paths) {
-      let media = new Media();
-      try {
-        await media.metadataService.discoverMetadata(path, this.location);
-        await media.save();
-      } catch (e) {
-        console.error(e);
-      }
-    }
+    workerManager
+      .getWorker('discover')
+      .exec('discover', [this.location.id, paths], {
+        on: function (payload: any) {
+          bus.emit('notifyFront', payload)
+        }
+      })
+      .catch((e: any) => {
+        console.log(e)
+      })
+      .then(function () {
+        workerManager.getWorker('discover').terminate(); // terminate all workers when done
+      });
 
   }
 }

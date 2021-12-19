@@ -7,6 +7,7 @@ import { LocationComponent } from './location/location.component';
 import { ReactiveFormsModule } from "@angular/forms";
 import { GridComponent } from './media/grid/grid.component';
 import { MediaItemComponent } from './media/media-item/media-item.component';
+import { NotificationComponent } from './notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { MediaItemComponent } from './media/media-item/media-item.component';
     LocationComponent,
     GridComponent,
     MediaItemComponent,
+    NotificationComponent,
   ],
   imports: [
     BrowserModule,
