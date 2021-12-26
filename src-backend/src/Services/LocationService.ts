@@ -28,9 +28,11 @@ export class LocationService {
   public async discoverFiles() {
     let paths = this.getAllFiles(this.location.path, []);
 
+    let workerId = workerManager.createWorker('discover')
+
     workerManager
-      .getWorker('discover')
-      .exec('discover', [this.location.id, paths], {
+      .getWorker(workerId)
+      .exec('discover', [workerId, this.location.id, paths], {
         on: function (payload: any) {
           bus.emit('notifyFront', payload)
         }
@@ -39,7 +41,7 @@ export class LocationService {
         console.log(e)
       })
       .then(function () {
-        workerManager.getWorker('discover').terminate(); // terminate all workers when done
+        workerManager.getWorker(workerId).terminate(); // terminate all workers when done
       });
 
   }

@@ -1,18 +1,24 @@
 import * as path from "path";
 
+const {v4: uuidv4} = require('uuid');
+
 const workerpool = require('workerpool');
 
 class WorkerManager {
 
   private workers: WorkerMap = {}
 
-  public getWorker(name: string): any {
-    if (!this.workers[name]) {
-      this.workers[name] = workerpool.pool(workers[name], {workerType: 'process', maxWorkers: 1});
-    }
-    return this.workers[name];
+  getWorker(uniqueName: string): any {
+    return this.workers[uniqueName];
   }
 
+  createWorker(worker: string, maxWorkers: number = 1) {
+    let uniqueName = uuidv4()
+    if (!this.workers[uniqueName]) {
+      this.workers[uniqueName] = workerpool.pool(workers[worker], {workerType: 'process', maxWorkers: maxWorkers});
+    }
+    return uniqueName;
+  }
 
   terminate(name: string) {
     this.workers[name].terminate();

@@ -1,1 +1,17 @@
 <h2>notification works!</h2>
+
+<!--<app-worker *ngFor="let item of workers; index as i" ></app-worker>-->
+
+<app-worker *ngFor="let worker of workersKeys "
+            [title]="workers[worker].data?.title"
+            [id]="workers[worker].workerName"
+            [max]="workers[worker].data?.total"
+            [current]="workers[worker].data?.current"
+></app-worker>
+
+<!--<p *ngFor="let worker of workersArr"> ============== </p>-->
+
+<!--<p>{{ workers | json }}</p>-->
+
+<p (click)="showArray()">show array</p>
+

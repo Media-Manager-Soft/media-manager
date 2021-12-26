@@ -8,6 +8,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { GridComponent } from './media/grid/grid.component';
 import { MediaItemComponent } from './media/media-item/media-item.component';
 import { NotificationComponent } from './notification/notification.component';
+import { WorkerComponent } from './notification/worker/worker.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { NotificationComponent } from './notification/notification.component';
     GridComponent,
     MediaItemComponent,
     NotificationComponent,
+    WorkerComponent,
   ],
   imports: [
     BrowserModule,

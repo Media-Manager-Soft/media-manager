@@ -97,6 +97,10 @@ export class Main {
       loc?.service().discoverFiles();
       return
     })
+
+    ipcMain.handle('terminate-process', async (event, arg) => {
+      workerManager.terminate(arg.processId)
+    })
   }
 
 

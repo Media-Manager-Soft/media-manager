@@ -6,7 +6,7 @@ import { Media } from "../../Entities/Media";
 const workerpool = require('workerpool');
 
 
-async function discover(locationId: any, paths: any) {
+async function discover(workerId: string, locationId: any, paths: any) {
   await DBConnection.createConnection()
   const location = await Location.findOne(locationId);
   location?.service().discoverFiles()
@@ -16,17 +16,28 @@ async function discover(locationId: any, paths: any) {
     try {
       await media.metadataService.discoverMetadata(paths[i], location);
       await media.save();
+
       workerpool.workerEmit({
-        title: media.filename,
-        total: paths.length,
-        current: i
-      });
+        workerName: workerId,
+        processing: true,
+        data: {
+          title: media.filename,
+          total: paths.length,
+          current: i + 1
+        }
+      } as IFrontNotificationWorker);
+
     } catch (e) {
+      //TODO: emit errors during discovering
       console.error(e);
     }
   }
-}
 
+  workerpool.workerEmit({
+    workerName: workerId,
+    processing: false,
+  } as IFrontNotificationWorker);
+}
 
 workerpool.worker({
   discover: discover
