@@ -1,8 +1,6 @@
 import * as path from "path";
-
+import { fork } from "child_process";
 const {v4: uuidv4} = require('uuid');
-
-const workerpool = require('workerpool');
 
 class WorkerManager {
 
@@ -12,16 +10,21 @@ class WorkerManager {
     return this.workers[uniqueName];
   }
 
-  createWorker(worker: string, maxWorkers: number = 1) {
+  runProcess(worker: string, data: any) {
     let uniqueName = uuidv4()
     if (!this.workers[uniqueName]) {
-      this.workers[uniqueName] = workerpool.pool(workers[worker], {workerType: 'process', maxWorkers: maxWorkers});
+      this.workers[uniqueName] = fork(workers[worker])
     }
+    this.workers[uniqueName].send({
+        id: uniqueName,
+        data: data
+      }
+    );
     return uniqueName;
   }
 
-  terminate(name: string) {
-    this.workers[name].terminate();
+  async terminate(name: string) {
+    await this.getWorker(name).kill();
   }
 
   terminateAll() {
@@ -35,11 +38,7 @@ interface WorkerMap {
   [key: string]: any;
 }
 
-interface WorkersDefinitions {
-  [key: string]: string;
-}
-
-const workers: WorkersDefinitions = {
+const workers: WorkerMap = {
   'discover': path.resolve(__dirname, '../../src/Workers/workers/discover.js'),
 }
 

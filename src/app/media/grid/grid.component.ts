@@ -35,8 +35,8 @@ export class GridComponent implements OnInit {
     this.getMedia();
 
     this.electronService.ipcRenderer.on('reply', (event, arg) => {
-      console.log(arg) // prints "pong"
-      console.log('asdasdsasa') // prints "pong"
+      // console.log(arg) // prints "pong"
+      // console.log('asdasdsasa') // prints "pong"
     })
   }
 

@@ -4,6 +4,7 @@ import * as url from "url";
 import { Location } from "./Entities/Location";
 import { Media } from "./Entities/Media";
 import { DBConnection } from "./Database/DBConnection";
+import { fork } from "child_process";
 
 var bus = require('./Events/eventBus');
 var workerManager = require('./Workers/WorkerManager')
@@ -57,7 +58,6 @@ export class Main {
     app.on("window-all-closed", () => {
       if (process.platform !== "darwin") {
         app.quit();
-        workerManager.terminateAll();
       }
     });
   }
@@ -93,13 +93,12 @@ export class Main {
     })
 
     ipcMain.on('async-msg', async (event, arg) => {
-      var loc = await Location.findOne(1)
+      var loc = await Location.findOne(2)
       loc?.service().discoverFiles();
-      return
     })
 
     ipcMain.handle('terminate-process', async (event, arg) => {
-      workerManager.terminate(arg.processId)
+      await workerManager.terminate(arg.processId)
     })
   }
 

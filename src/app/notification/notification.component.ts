@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ElectronService } from "../core/services/electron.service";
-import { Observable } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 
 @Component({
   selector: 'app-notification',
@@ -9,18 +9,13 @@ import { Observable } from "rxjs";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NotificationComponent implements OnInit {
-
+  text = 'aaa'
   workers: any = {};
-  workersArr: [] = [];
+  time: Observable<object>;
+  subject = new BehaviorSubject(123);
 
-  constructor(private electronService: ElectronService) {
-  }
 
-  terminate(processId: string) {
-    this.electronService.ipcRenderer.invoke('terminate-process', {processId: processId}).then(() => {
-      console.log('ok')
-      // this.message = {}
-    })
+  constructor(private electronService: ElectronService, private cdr: ChangeDetectorRef) {
   }
 
 
@@ -28,56 +23,19 @@ export class NotificationComponent implements OnInit {
     return Object.keys(this.workers);
   }
 
-  showArray() {
-    // @ts-ignore
-    this.workers['oNInit23'] = {'workerName': 'aaaaaadasd asd sds d'}
-
-    console.log(this.workers)
-    // console.log(this.workers.length)
+  processTerminated(ev:any){
+    delete this.workers[ev]
   }
 
   ngOnInit() {
-
-    this.workers['oNInit'] = {'workerName': 'aaaaaadasd asd sds d'}
-
-    // this.time = new Observable<object>((observer: Observer<object>) => {
-    //   new Promise((resolve, reject) => {
-    //     this.electronService.ipcRenderer.on('notification', (evt, message) => {
-    //       console.log(message)
-    //       resolve(message)
-    //     })
-    //   }).then((rsp) => {
-    //     // @ts-ignore
-    //     observer.next({...rsp})
-    //   });
-    // });
-    //
-    // this.time.subscribe((s) => {
-    //   // @ts-ignore
-    //   // this.workers[message.workerName] = s
-    //   // @ts-ignore
-    //   this.workersArr.push([s])
-    //   // this.message.push({...s})
-    //   console.log(s)
-    // })
-
     this.electronService.ipcRenderer.on('notification', (evt, message) => {
-      // @ts-ignore
-      this.setMessage(message)
+      if (message.processing === false) {
+        delete this.workers[message.workerName];
+      } else {
+        this.workers[message.workerName] = message
+      }
+      this.cdr.detectChanges();
     })
-
   }
-
-  setMessage(message: any) {
-    // Object.assign(this.workers, message)
-    console.log(message)
-    this.workers[message.workerName] = message
-  }
-
 
 }
-
-//
-// interface WorkerNotificationData {
-//   [key: string]: string;
-// }

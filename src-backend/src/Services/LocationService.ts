@@ -28,21 +28,11 @@ export class LocationService {
   public async discoverFiles() {
     let paths = this.getAllFiles(this.location.path, []);
 
-    let workerId = workerManager.createWorker('discover')
+    let id = workerManager.runProcess('discover', {paths: paths, locationId: this.location.id})
 
-    workerManager
-      .getWorker(workerId)
-      .exec('discover', [workerId, this.location.id, paths], {
-        on: function (payload: any) {
-          bus.emit('notifyFront', payload)
-        }
-      })
-      .catch((e: any) => {
-        console.log(e)
-      })
-      .then(function () {
-        workerManager.getWorker(workerId).terminate(); // terminate all workers when done
-      });
+    workerManager.getWorker(id).on('message', (resp: any) => {
+      bus.emit('notifyFront', resp)
+    })
 
   }
 }

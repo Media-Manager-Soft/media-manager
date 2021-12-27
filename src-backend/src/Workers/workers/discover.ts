@@ -1,44 +1,39 @@
-import "reflect-metadata";
 import { Location } from "../../Entities/Location";
 import { DBConnection } from "../../Database/DBConnection";
 import { Media } from "../../Entities/Media";
 
-const workerpool = require('workerpool');
+process.on('message', async (message) => {
 
-
-async function discover(workerId: string, locationId: any, paths: any) {
   await DBConnection.createConnection()
-  const location = await Location.findOne(locationId);
-  location?.service().discoverFiles()
+  const location = await Location.findOne(message.data.locationId);
 
-  for (let i = 0; i < paths.length; i++) {
+  console.log('aaaaaaaaaaaaaaaaaaaaaaaaa')
+
+  for (let i = 0; i < message.data.paths.length; i++) {
     let media = new Media();
     try {
-      await media.metadataService.discoverMetadata(paths[i], location);
+      await media.metadataService.discoverMetadata(message.data.paths[i], location);
       await media.save();
 
-      workerpool.workerEmit({
-        workerName: workerId,
+      let msg = {
+        workerName: message.id,
         processing: true,
         data: {
           title: media.filename,
-          total: paths.length,
+          total: message.data.paths.length,
           current: i + 1
         }
-      } as IFrontNotificationWorker);
+      } as IFrontNotificationWorker
+
+      // @ts-ignore
+      process.send(msg);
 
     } catch (e) {
-      //TODO: emit errors during discovering
+      // TODO: emit errors during discovering
       console.error(e);
     }
+
   }
 
-  workerpool.workerEmit({
-    workerName: workerId,
-    processing: false,
-  } as IFrontNotificationWorker);
-}
-
-workerpool.worker({
-  discover: discover
 });
+
