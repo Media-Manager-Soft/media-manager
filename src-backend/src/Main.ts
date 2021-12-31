@@ -93,7 +93,7 @@ export class Main {
     })
 
     ipcMain.on('async-msg', async (event, arg) => {
-      var loc = await Location.findOne(2)
+      var loc = await Location.findOne(3)
       loc?.service().discoverFiles();
     })
 

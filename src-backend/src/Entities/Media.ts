@@ -1,6 +1,6 @@
 import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Location } from "./Location";
-import { MetadataService } from "../Services/Media/Metadata/MetadataService";
+import { MediaService } from "../Services/Media/Metadata/MediaService";
 import { Thumbnail } from "./Thumbnail";
 
 const path = require('path');
@@ -8,7 +8,7 @@ const path = require('path');
 @Entity()
 export class Media extends BaseEntity {
 
-  private _mediaService: MetadataService | undefined;
+  private _mediaService: MediaService | undefined;
 
   @PrimaryGeneratedColumn('increment')
   id: number;
@@ -59,9 +59,9 @@ export class Media extends BaseEntity {
   @JoinColumn()
   thumbnail: Thumbnail;
 
-  public get metadataService() {
+  public get mediaService() {
     if (!this._mediaService) {
-      this._mediaService = new MetadataService(this);
+      this._mediaService = new MediaService(this);
     }
     return this._mediaService;
   }

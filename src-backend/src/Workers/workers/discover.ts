@@ -12,7 +12,7 @@ process.on('message', async (message) => {
   for (let i = 0; i < message.data.paths.length; i++) {
     let media = new Media();
     try {
-      await media.metadataService.discoverMetadata(message.data.paths[i], location);
+      await media.mediaService.discoverMetadata(message.data.paths[i], location);
       await media.save();
 
       let msg = {
