@@ -7,8 +7,6 @@ process.on('message', async (message) => {
   await DBConnection.createConnection()
   const location = await Location.findOne(message.data.locationId);
 
-  console.log('aaaaaaaaaaaaaaaaaaaaaaaaa')
-
   for (let i = 0; i < message.data.paths.length; i++) {
     let media = new Media();
     try {

@@ -77,8 +77,8 @@ export class MediaMetadataService {
     return this.exif.longitude
   }
 
-  async getOrientation() {
-    return this.exif.Orientation
+  getOrientation() {
+    return this.exif.orientation
   }
 
   public async storeThumb() {

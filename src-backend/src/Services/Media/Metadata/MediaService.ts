@@ -23,7 +23,7 @@ export class MediaService {
     this.media.width = this.mediaMetadataService.getWidth();
     this.media.latitude = this.mediaMetadataService.getLatitude();
     this.media.longitude = this.mediaMetadataService.getLongitude();
-    this.media.orientation = await this.mediaMetadataService.getOrientation();
+    this.media.orientation = this.mediaMetadataService.getOrientation();
     this.media.takenAt = this.mediaMetadataService.getTakenAt();
 
     await this.mediaMetadataService.storeThumb();

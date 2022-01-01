@@ -39,7 +39,7 @@ export class ExifService {
   }
 
   get orientation() {
-    return this.exif.orientation;
+    return this.exif.Orientation;
   }
 
 }
