@@ -46,7 +46,7 @@ export class Media extends BaseEntity {
   @Column({nullable: true})
   longitude: string;
 
-  @Column({nullable: true, default: () => "CURRENT_TIMESTAMP"})
+  @Column({nullable: true})
   takenAt: Date;
 
   @Column({default: () => "CURRENT_TIMESTAMP"})

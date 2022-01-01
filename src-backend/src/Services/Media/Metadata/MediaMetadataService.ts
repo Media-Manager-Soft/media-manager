@@ -1,9 +1,9 @@
-import exifr from "exifr";
 import { Thumbnail } from "../../../Entities/Thumbnail";
 import { MediaConverterService } from "../../MediaConverterService";
 import { MediaExtensionTypes } from "../../../Enums/MediaType";
 import { Location } from "../../../Entities/Location";
 import { Media } from "../../../Entities/Media";
+import { ExifService } from "./ExifService";
 
 const path = require('path');
 const sizeOf = require('image-size');
@@ -21,7 +21,7 @@ export class MediaMetadataService {
   }
 
   async getExif() {
-    this.exif = await exifr.parse(this.pathToFile);
+    this.exif = await new ExifService().setFile(this.pathToFile);
   }
 
   getFilePathInLocation() {
@@ -78,7 +78,7 @@ export class MediaMetadataService {
   }
 
   async getOrientation() {
-    return await exifr.orientation(this.pathToFile);
+    return this.exif.Orientation
   }
 
   public async storeThumb() {

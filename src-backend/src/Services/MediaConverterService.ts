@@ -2,7 +2,10 @@ import { Media } from "../Entities/Media";
 import * as fs from "fs";
 
 const dcraw = require('dcraw');
+import exifr from "exifr";
+import { promisify } from "util";
 
+const convert = require('heic-convert');
 const sharp = require('sharp');
 
 export class MediaConverterService {
@@ -19,11 +22,34 @@ export class MediaConverterService {
   }
 
   async photoThumb() {
+    let buffer;
     try {
-      return await sharp(this.media.getPathToFile()).resize(this.THUMB_WIDTH).toBuffer()
+      buffer = await sharp(this.media.getPathToFile()).resize(this.THUMB_WIDTH).toBuffer()
     } catch (e) {
-      return dcraw(fs.readFileSync(this.media.getPathToFile()), {extractThumbnail: true})
     }
+
+    if (!buffer) {
+      try {
+        let bufferPrev = dcraw(fs.readFileSync(this.media.getPathToFile()), {extractThumbnail: true})
+        buffer = await sharp(bufferPrev).resize(this.THUMB_WIDTH).toBuffer();
+      } catch (e) {
+      }
+    }
+
+    if (!buffer) {
+      try {
+        const inputBuffer = await promisify(fs.readFile)(this.media.getPathToFile());
+        const bufferPrev = await convert({
+          buffer: inputBuffer, // the HEIC file buffer
+          format: 'JPEG',      // output format
+          quality: 1,          // the jpeg compression quality, between 0 and 1
+        });
+        buffer = await sharp(bufferPrev).resize(this.THUMB_WIDTH).toBuffer();
+      } catch (e) {
+      }
+    }
+
+    return buffer;
   }
 
   async photoRawThumb() {

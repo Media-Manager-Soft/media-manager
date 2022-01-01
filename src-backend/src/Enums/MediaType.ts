@@ -15,6 +15,7 @@ export const MediaExtensionTypes: IExtensionTypes = {
   '.bmp': MediaType.PHOTO,
   '.webp': MediaType.PHOTO,
   '.tiff': MediaType.PHOTO,
+  '.heic': MediaType.PHOTO,
 
   '.cr2': MediaType.PHOTO_RAW,
   '.nef': MediaType.PHOTO_RAW,
