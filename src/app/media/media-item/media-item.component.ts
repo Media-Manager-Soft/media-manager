@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { ElectronService } from "../../core/services/electron.service";
 
 @Component({
@@ -27,6 +27,7 @@ export class MediaItemComponent implements OnInit {
 
   ngAfterViewInit() {
     this.thumbnail.nativeElement.src = this.getThumb();
+    this.thumbnail.nativeElement.class = 'rotate-' + this.media.orientation;
   }
 
   ngOnInit(): void {

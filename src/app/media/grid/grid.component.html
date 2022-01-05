@@ -1,3 +1,7 @@
 <p (click)="getMedia()">grid works!</p>
 
-<app-media-item [media]="item" *ngFor="let item of media"></app-media-item>
+<div class="media-grid-container">
+    <div class="media-item" *ngFor="let item of media">
+        <app-media-item [media]="item"></app-media-item>
+    </div>
+</div>
