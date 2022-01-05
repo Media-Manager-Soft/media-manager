@@ -26,6 +26,12 @@ export class Media extends BaseEntity {
   type: string;
 
   @Column({type: "int", nullable: true})
+  rating: number
+
+  @Column({type: "int", nullable: true})
+  flag: number
+
+  @Column({type: "int", nullable: true})
   width: number;
 
   @Column({type: "int", nullable: true})

@@ -1,12 +1,12 @@
 import { Media } from "../../../Entities/Media";
 import { Location } from "../../../Entities/Location";
-import { MediaMetadataService } from "./MediaMetadataService";
+import { MetadataService } from "./MetadataService";
 
 export class MediaService {
-  private mediaMetadataService: MediaMetadataService;
+  private mediaMetadataService: MetadataService;
 
   constructor(private media: Media) {
-    this.mediaMetadataService = new MediaMetadataService()
+    this.mediaMetadataService = new MetadataService()
   }
 
   public async discoverMetadata(pathToFile: string, location: Location) {

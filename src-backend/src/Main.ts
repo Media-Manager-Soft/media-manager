@@ -68,7 +68,7 @@ export class Main {
     })
 
     ipcMain.handle('get-media', async (event, arg) => {
-      return await Media.find({relations: ['thumbnail']});
+      return await Media.find({relations: ['thumbnail'], order: { takenAt: 'ASC'}});
     })
 
     ipcMain.handle('get-thumbnail', async (event, arg) => {

@@ -4,11 +4,12 @@ import { MediaExtensionTypes } from "../../../Enums/MediaType";
 import { Location } from "../../../Entities/Location";
 import { Media } from "../../../Entities/Media";
 import { ExifService } from "./ExifService";
+import * as Fs from "fs";
 
 const path = require('path');
 const sizeOf = require('image-size');
 
-export class MediaMetadataService {
+export class MetadataService {
   private exif: any;
   private pathToFile: string;
   private media: Media;
@@ -66,7 +67,11 @@ export class MediaMetadataService {
   }
 
   getTakenAt() {
-    return this.exif.DateTimeOriginal
+    let date = this.exif.DateTimeOriginal
+    if (!date){
+      date = Fs.statSync(this.pathToFile).mtime
+    }
+    return date;
   }
 
   getLatitude() {
