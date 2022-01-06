@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+    import { Component, OnInit } from '@angular/core';
 import { ElectronService } from "../../core/services/electron.service";
 import exifr from 'exifr'
 

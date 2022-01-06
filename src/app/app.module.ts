@@ -9,6 +9,8 @@ import { GridComponent } from './media/grid/grid.component';
 import { MediaItemComponent } from './media/media-item/media-item.component';
 import { NotificationComponent } from './notification/notification.component';
 import { WorkerComponent } from './notification/worker/worker.component';
+import { PreviewMediaComponent } from './media/preview-media/preview-media.component';
+import { NgxImageZoomModule } from "ngx-image-zoom";
 
 @NgModule({
   declarations: [
@@ -18,9 +20,11 @@ import { WorkerComponent } from './notification/worker/worker.component';
     MediaItemComponent,
     NotificationComponent,
     WorkerComponent,
+    PreviewMediaComponent,
   ],
   imports: [
     BrowserModule,
+    NgxImageZoomModule,
     AppRoutingModule,
     ReactiveFormsModule
   ],
