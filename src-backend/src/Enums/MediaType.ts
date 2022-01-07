@@ -1,7 +1,7 @@
 export enum MediaType {
-  PHOTO = "photo",
-  VIDEO = "video",
-  PHOTO_RAW = "photoRaw",
+  PHOTO = "Photo",
+  VIDEO = "Video",
+  PHOTO_RAW = "PhotoRaw",
 }
 
 interface IExtensionTypes {

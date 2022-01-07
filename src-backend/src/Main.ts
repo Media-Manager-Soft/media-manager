@@ -68,7 +68,7 @@ export class Main {
     })
 
     ipcMain.handle('get-media', async (event, arg) => {
-      return await Media.find({relations: ['thumbnail'], order: { takenAt: 'ASC'}});
+      return await Media.find({relations: ['thumbnail'], order: {takenAt: 'ASC'}});
     })
 
     ipcMain.handle('get-thumbnail', async (event, arg) => {
@@ -91,7 +91,7 @@ export class Main {
       const {dialog} = require('electron')
       return dialog.showOpenDialog({properties: ['openDirectory']});
     })
-
+    //todo: temp
     ipcMain.on('async-msg', async (event, arg) => {
       var loc = await Location.findOne(3)
       loc?.service().discoverFiles();
@@ -99,6 +99,12 @@ export class Main {
 
     ipcMain.handle('terminate-process', async (event, arg) => {
       await workerManager.terminate(arg.processId)
+    })
+
+    ipcMain.handle('get-media-preview', async (event, arg) => {
+      let media = await Media.findOne(arg.mediaId);
+// media?.converter().
+
     })
   }
 

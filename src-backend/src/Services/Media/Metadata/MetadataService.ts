@@ -1,5 +1,4 @@
 import { Thumbnail } from "../../../Entities/Thumbnail";
-import { MediaConverterService } from "../../MediaConverterService";
 import { MediaExtensionTypes } from "../../../Enums/MediaType";
 import { Location } from "../../../Entities/Location";
 import { Media } from "../../../Entities/Media";
@@ -68,7 +67,7 @@ export class MetadataService {
 
   getTakenAt() {
     let date = this.exif.DateTimeOriginal
-    if (!date){
+    if (!date) {
       date = Fs.statSync(this.pathToFile).mtime
     }
     return date;
@@ -90,8 +89,7 @@ export class MetadataService {
     try {
       if (!this.media.hasThumb()) {
         let thumb: Thumbnail = new Thumbnail()
-        let converter = new MediaConverterService(this.media)
-        thumb.thumbnail = await converter.generateThumb();
+        thumb.thumbnail = await this.media.converter().thumb()
         await thumb.save();
         this.media.thumbnail = thumb;
       }
@@ -99,6 +97,7 @@ export class MetadataService {
       console.error(e)
     }
   }
+
 
   public discoverType() {
     let ext = path.extname(this.media.filename).toLocaleLowerCase();

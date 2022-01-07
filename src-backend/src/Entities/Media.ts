@@ -2,13 +2,21 @@ import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGen
 import { Location } from "./Location";
 import { MediaService } from "../Services/Media/Metadata/MediaService";
 import { Thumbnail } from "./Thumbnail";
+import { IConverter } from "../Services/Converters/IConverter";
+import { MediaType } from "../Enums/MediaType";
+import { PhotoConverter } from "../Services/Converters/PhotoConverter";
+import { PhotoRawConverter } from "../Services/Converters/PhotoRawConverter";
+import { VideoConverter } from "../Services/Converters/VideoConverter";
 
 const path = require('path');
 
 @Entity()
 export class Media extends BaseEntity {
 
+  //TODO: move to method
   private _mediaService: MediaService | undefined;
+
+  static THUMB_WIDTH: number = 200;
 
   @PrimaryGeneratedColumn('increment')
   id: number;
@@ -65,18 +73,35 @@ export class Media extends BaseEntity {
   @JoinColumn()
   thumbnail: Thumbnail;
 
-  public get mediaService() {
+  get mediaService() {
     if (!this._mediaService) {
       this._mediaService = new MediaService(this);
     }
     return this._mediaService;
   }
 
-  public getPathToFile() {
+  getPathToFile() {
     return path.join(this.location.path, this.path, this.filename)
   }
 
-  public hasThumb(){
+  hasThumb() {
     return !!this.thumbnail;
+  }
+
+  converter(): IConverter {
+    //Todo: refactor needed
+    switch (this.type) {
+      case MediaType.PHOTO:
+        return new PhotoConverter(this)
+      case MediaType.PHOTO_RAW:
+        return new PhotoRawConverter(this)
+      case MediaType.VIDEO:
+        return new VideoConverter(this)
+    }
+
+    return new PhotoConverter(this)
+    // const className = this.type + "Converter";
+    // return new (<any>global)[className]()();
+    // return new (<any>'Converters')[/**/this.type + "Converter"]()
   }
 }
