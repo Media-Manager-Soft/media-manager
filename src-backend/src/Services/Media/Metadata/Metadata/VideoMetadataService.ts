@@ -1,108 +1,71 @@
 import { IMetadata } from "./IMetadata";
-import { path as ffmpegPath } from "@ffmpeg-installer/ffmpeg";
 
+const ffmpeg = require('../../../../plugins/ffmpeg');
 
 export class VideoMetadataService implements IMetadata {
+  private metadata: any;
+  private pathToFile: string;
 
-  async getMetadata4(pathToFile: string) {
-    var ffprobe = require('ffprobe');
-
-    ffprobe(pathToFile, { path: require('@ffprobe-installer/ffprobe').path }, function (err:any, info:any) {
-      console.log(info);
-    });
+  async getMetadata(pathToFile: string) {
+    this.pathToFile = pathToFile;
+    this.metadata = await this.readMetadata(pathToFile)
     return this;
   }
 
-  async getMetadata(pathToFile: string) {
-    const ffmpeg = require('fluent-ffmpeg')
-    const ffprobe = require('@ffprobe-installer/ffprobe');
-
-    const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
-    const ffprobePath = require('@ffprobe-installer/ffprobe').path;
-
-    const {v4: uuidv4} = require('uuid');
-
-    // var proc = new ffmpeg(pathToFile)
-    //   .setFfprobePath(ffprobePath)
-    //   .setFfmpegPath(ffmpegPath)
-    //   .takeScreenshots({
-    //     count: 1,
-    //     size: '320x240',
-    //     filename: uuidv4() + '_thumbnail-at-%s-seconds.png',
-    //     timemarks: [ '1' ] // number of seconds
-    //   }, '/Users/tomekzmudzinski/Documents/Asd', function(err:any) {
-    //     console.log('screenshots were saved')
-    //   });
-
-    //
-    // const ffmpeg = require('fluent-ffmpeg')
-    // const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
-    // const ffprobePath = require('@ffprobe-installer/ffprobe').path;
-    //
-    console.log(ffmpegPath)
-    // console.log(ffprobePath)
-    console.log(ffprobe.path)
-    // ffmpeg.setFfmpegPath(ffmpegPath);
-    // ffmpeg.setFfprobePath(ffprobe.path);
-    //
-    ffmpeg.setFfmpegPath(ffmpegPath.replace('app.asar', 'app.asar.unpacked'));
-    ffmpeg.setFfprobePath(ffprobePath.replace('app.asar', 'app.asar.unpacked'));
-
-    try {
-
-      ffmpeg(pathToFile)
-        .screenshots({
-          timestamps: ['1'],
-          filename: uuidv4() + '_____thumbnail-at-%s-seconds.png',
-          folder: '/Users/tomekzmudzinski/Documents/Asd',
-          size: '320x?'
-        });
-
-      ffmpeg.ffprobe(pathToFile, function(err:any, metadata:any) {
-        console.log('asdsad')
-        console.dir(metadata);
-        console.error(err);
-      });
-
-
-    }catch (e) {
-      console.log(e)
-    }
-    //
-    return this;
+  readMetadata(pathToFile: string) {
+    return new Promise((resolve, reject) => {
+      ffmpeg.ffprobe(pathToFile, (err: any, metadata: any) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(metadata);
+      })
+    });
   }
 
   get dateTimeOriginal(): Date | null {
-    return null;
+    return this.metadata?.format?.tags?.creation_time;
   }
 
   get imageHeight(): string {
-    return "123"; //redad size of - not working on video files
+    let data = this.getVideoStream()
+    return data?.width;
   }
 
   get imageWidth(): string {
-    return '1244';
+    let data = this.getVideoStream()
+    return data?.height;
   }
 
   get latitude(): string {
-    return "";
+    let lat = this.metadata?.format?.tags?.location;
+    return lat.replace('/', '').split('+')[1];
   }
 
   get longitude(): string {
-    return "";
+    let long = this.metadata?.format?.tags?.location;
+    return long.replace('/', '').split('+')[2];
   }
 
   get make(): string {
-    return "";
+    return this.metadata?.format?.tags?.['com.apple.quicktime.make'];
   }
 
   get model(): string {
-    return "";
+    return this.metadata?.format?.tags?.['com.apple.quicktime.model'];
   }
 
   get orientation(): number {
-    return 0;
+    let data = this.getVideoStream();
+    return data?.rotation;
   }
 
 
+  protected getVideoStream() {
+    if (this.metadata?.streams) {
+      return this.metadata.streams?.find((item: any) => {
+        return item.codec_type === 'video';
+      })
+    }
+  }
 }

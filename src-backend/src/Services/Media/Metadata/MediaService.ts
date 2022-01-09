@@ -15,7 +15,6 @@ export class MediaService {
 
     this.media.path = this.mediaMetadataService.getFilePathInLocation();
     this.media.filename = this.mediaMetadataService.getFileName();
-    this.media.type = await this.mediaMetadataService.getFileType();
 
     this.media.cameraModel = this.mediaMetadataService.getCameraModel();
     this.media.camera = this.mediaMetadataService.getCameraManufacturer();

@@ -3,12 +3,11 @@ import { MediaExtensionTypes, MediaType } from "../../../Enums/MediaType";
 import { Location } from "../../../Entities/Location";
 import { Media } from "../../../Entities/Media";
 import * as Fs from "fs";
-import { ExifService } from "./Metadata/ExifService";
+import { PhotoMetadataService } from "./Metadata/PhotoMetadataService";
 import { VideoMetadataService } from "./Metadata/VideoMetadataService";
 import { IMetadata } from "./Metadata/IMetadata";
 
 const path = require('path');
-const sizeOf = require('image-size');
 
 export class MetadataService {
   private pathToFile: string;
@@ -16,6 +15,7 @@ export class MetadataService {
   private fileMetadata: IMetadata;
 
   async setFile(media: Media, pathToFile: string, location: Location) {
+    //Todo move toMediaService
     this.media = media;
     this.media.location = location;
     this.pathToFile = pathToFile;
@@ -32,7 +32,7 @@ export class MetadataService {
       if (this.media.type === MediaType.VIDEO) {
         this.fileMetadata = await new VideoMetadataService().getMetadata(this.pathToFile);
       } else {
-        this.fileMetadata = await new ExifService().getExifForFile(this.pathToFile);
+        this.fileMetadata = await new PhotoMetadataService().getExifForFile(this.pathToFile);
       }
     }
   }
@@ -63,19 +63,11 @@ export class MetadataService {
   }
 
   getHeight() {
-    let height = parseInt(this.fileMetadata.imageHeight);
-    if (!height) {
-      height = sizeOf(this.pathToFile).height;
-    }
-    return height;
+    return parseInt(this.fileMetadata.imageHeight);
   }
 
   getWidth() {
-    let width = parseInt(this.fileMetadata.imageWidth);
-    if (!width) {
-      width = sizeOf(this.pathToFile).width;
-    }
-    return width;
+    return parseInt(this.fileMetadata.imageWidth);
   }
 
   getTakenAt() {
@@ -98,7 +90,7 @@ export class MetadataService {
     return this.fileMetadata.orientation
   }
 
-  public async storeThumb() {
+  async storeThumb() {
     try {
       if (!this.media.hasThumb()) {
         let thumb: Thumbnail = new Thumbnail()
@@ -112,7 +104,7 @@ export class MetadataService {
   }
 
 
-  public discoverType() {
+  discoverType() {
     let ext = path.extname(this.media.filename).toLocaleLowerCase();
     let type = MediaExtensionTypes[ext];
     if (type === undefined) {
