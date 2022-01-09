@@ -16,7 +16,7 @@ export class Media extends BaseEntity {
   //TODO: move to method
   private _mediaService: MediaService | undefined;
 
-  static THUMB_WIDTH: number = 200;
+  static THUMB_WIDTH: number = 400;
 
   @PrimaryGeneratedColumn('increment')
   id: number;
@@ -98,8 +98,8 @@ export class Media extends BaseEntity {
       case MediaType.VIDEO:
         return new VideoConverter(this)
     }
-
-    return new PhotoConverter(this)
+    throw new Error('Undefined type of given media')
+    // return new PhotoConverter(this)
     // const className = this.type + "Converter";
     // return new (<any>global)[className]()();
     // return new (<any>'Converters')[/**/this.type + "Converter"]()

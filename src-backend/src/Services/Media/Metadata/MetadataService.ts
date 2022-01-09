@@ -1,27 +1,40 @@
 import { Thumbnail } from "../../../Entities/Thumbnail";
-import { MediaExtensionTypes } from "../../../Enums/MediaType";
+import { MediaExtensionTypes, MediaType } from "../../../Enums/MediaType";
 import { Location } from "../../../Entities/Location";
 import { Media } from "../../../Entities/Media";
-import { ExifService } from "./ExifService";
 import * as Fs from "fs";
+import { ExifService } from "./Metadata/ExifService";
+import { VideoMetadataService } from "./Metadata/VideoMetadataService";
+import { IMetadata } from "./Metadata/IMetadata";
 
 const path = require('path');
 const sizeOf = require('image-size');
 
 export class MetadataService {
-  private exif: any;
   private pathToFile: string;
   private media: Media;
+  private fileMetadata: IMetadata;
 
   async setFile(media: Media, pathToFile: string, location: Location) {
     this.media = media;
     this.media.location = location;
     this.pathToFile = pathToFile;
-    await this.getExif();
+    this.media.type = await this.getFileType()
+    await this.getFileMetadata();
   }
 
-  async getExif() {
-    this.exif = await new ExifService().setFile(this.pathToFile);
+  async getFileMetadata() {
+    if (!this.media.type) {
+      throw new Error('No media type provided')
+    }
+
+    if (!this.fileMetadata) {
+      if (this.media.type === MediaType.VIDEO) {
+        this.fileMetadata = await new VideoMetadataService().getMetadata(this.pathToFile);
+      } else {
+        this.fileMetadata = await new ExifService().getExifForFile(this.pathToFile);
+      }
+    }
   }
 
   getFilePathInLocation() {
@@ -32,7 +45,7 @@ export class MetadataService {
     return path.basename(this.pathToFile)
   }
 
-  getFileType() {
+  async getFileType() {
     let ext = path.extname(this.pathToFile).toLocaleLowerCase();
     let type = MediaExtensionTypes[ext];
     if (type === undefined) {
@@ -42,15 +55,15 @@ export class MetadataService {
   }
 
   getCameraModel() {
-    return this.exif.Model;
+    return this.fileMetadata.model;
   }
 
   getCameraManufacturer() {
-    return this.exif.Make;
+    return this.fileMetadata.make;
   }
 
   getHeight() {
-    let height = parseInt(this.exif.ImageHeight);
+    let height = parseInt(this.fileMetadata.imageHeight);
     if (!height) {
       height = sizeOf(this.pathToFile).height;
     }
@@ -58,7 +71,7 @@ export class MetadataService {
   }
 
   getWidth() {
-    let width = parseInt(this.exif.ImageWidth);
+    let width = parseInt(this.fileMetadata.imageWidth);
     if (!width) {
       width = sizeOf(this.pathToFile).width;
     }
@@ -66,7 +79,7 @@ export class MetadataService {
   }
 
   getTakenAt() {
-    let date = this.exif.DateTimeOriginal
+    let date = this.fileMetadata.dateTimeOriginal
     if (!date) {
       date = Fs.statSync(this.pathToFile).mtime
     }
@@ -74,15 +87,15 @@ export class MetadataService {
   }
 
   getLatitude() {
-    return this.exif.latitude
+    return this.fileMetadata.latitude
   }
 
   getLongitude() {
-    return this.exif.longitude
+    return this.fileMetadata.longitude
   }
 
   getOrientation() {
-    return this.exif.orientation
+    return this.fileMetadata.orientation
   }
 
   public async storeThumb() {

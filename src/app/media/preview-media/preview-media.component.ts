@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MediaItemService } from "../media-item/media-item.service";
+import { GridService } from "../grid/grid.service";
 
 @Component({
   selector: 'app-preview-media',
@@ -11,12 +11,12 @@ export class PreviewMediaComponent implements OnInit {
   @ViewChild('viewer') viewer: any;
 
   constructor(
-    private mediaItemService: MediaItemService
+    private gridService: GridService
   ) {
   }
 
   ngOnInit(): void {
-    this.mediaItemService.currentMedia.subscribe((media: any) => {
+    this.gridService.currentMedia$.subscribe((media: any) => {
       this.media = media
       this.getThumb(media?.thumbnail.thumbnail)
     })

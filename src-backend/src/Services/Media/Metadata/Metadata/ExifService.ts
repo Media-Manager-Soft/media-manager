@@ -1,32 +1,33 @@
 import exifr from "exifr";
+import { IMetadata } from "./IMetadata";
 
-export class ExifService {
+export class ExifService implements IMetadata{
   private exif: any;
 
-  async setFile(pathToFile: string) {
-    let options = {pick: ['ExposureTime', 'FNumber', 'ISO']};
+  async getExifForFile(pathToFile: string) {
+    // let options = {pick: ['ExposureTime', 'FNumber', 'ISO']};
     //
     this.exif = await exifr.parse(pathToFile, {translateValues: false})
     return this;
   }
 
-  get Model() {
+  get model() {
     return this.exif.Model;
   }
 
-  get Make() {
+  get make() {
     return this.exif.Make;
   }
 
-  get ImageHeight() {
+  get imageHeight() {
     return this.exif.ImageHeight ?? this.exif.ExifImageHeight;
   }
 
-  get ImageWidth() {
+  get imageWidth() {
     return this.exif.ImageWidth ?? this.exif.ExifImageWidth;
   }
 
-  get DateTimeOriginal() {
+  get dateTimeOriginal() {
     return this.exif.DateTimeOriginal;
   }
 

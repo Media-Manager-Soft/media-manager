@@ -1,6 +1,6 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { ElectronService } from "../../core/services/electron.service";
-import { MediaItemService } from "./media-item.service";
+import { GridService } from "../grid/grid.service";
 
 @Component({
   selector: 'app-media-item',
@@ -12,7 +12,7 @@ export class MediaItemComponent {
   @ViewChild('thumbnail') thumbnail: any;
   constructor(
     private electronService: ElectronService,
-    private mediaItemService: MediaItemService
+    private gridService: GridService
   ) {
   }
 
@@ -33,7 +33,7 @@ export class MediaItemComponent {
   }
 
   previewMedia(media: any){
-    this.mediaItemService.changeMessage(media)
+    this.gridService.selectMedia(media)
   }
 
 }

@@ -19,4 +19,7 @@ export const MediaExtensionTypes: IExtensionTypes = {
 
   '.cr2': MediaType.PHOTO_RAW,
   '.nef': MediaType.PHOTO_RAW,
+
+  '.mov': MediaType.VIDEO,
+  '.mp4': MediaType.VIDEO,
 };

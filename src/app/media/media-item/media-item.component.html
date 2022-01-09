@@ -1,6 +1,8 @@
 <div>
     <img class="thumbnail" #thumbnail (dblclick)="previewMedia(media)">
-    <p>{{ media.id }}</p>
-    <p>{{ media.camera }}</p>
+    <p>
+        <span>{{ media.id }} </span>
+        <span> {{ media.filename }}</span>
+    </p>
 </div>
 
