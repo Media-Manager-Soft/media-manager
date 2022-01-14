@@ -6,6 +6,7 @@ import * as Fs from "fs";
 import { PhotoMetadataService } from "./Metadata/PhotoMetadataService";
 import { VideoMetadataService } from "./Metadata/VideoMetadataService";
 import { IMetadata } from "./Metadata/IMetadata";
+import { UnsupportedExtension } from "../../../Exceptions/UnsupportedExtension";
 
 const path = require('path');
 
@@ -49,7 +50,7 @@ export class MetadataService {
     let ext = path.extname(this.pathToFile).toLocaleLowerCase();
     let type = MediaExtensionTypes[ext];
     if (type === undefined) {
-      throw new Error('Unsupported extension: ' + ext)
+      throw new UnsupportedExtension(`Unsupported file type`)
     }
     return type;
   }
@@ -91,26 +92,16 @@ export class MetadataService {
   }
 
   async storeThumb() {
-    try {
-      if (!this.media.hasThumb()) {
-        let thumb: Thumbnail = new Thumbnail()
-        thumb.thumbnail = await this.media.converter().thumb()
-        await thumb.save();
-        this.media.thumbnail = thumb;
-      }
-    } catch (e) {
-      console.error(e)
+    // try {
+    if (!this.media.hasThumb()) {
+      let thumb: Thumbnail = new Thumbnail()
+      thumb.thumbnail = await this.media.converter().thumb()
+      await thumb.save();
+      this.media.thumbnail = thumb;
     }
-  }
-
-
-  discoverType() {
-    let ext = path.extname(this.media.filename).toLocaleLowerCase();
-    let type = MediaExtensionTypes[ext];
-    if (type === undefined) {
-      throw new Error('Unsupported extension: ' + ext)
-    }
-    return type;
+    // } catch (e) {
+    //   console.error(e)
+    // }
   }
 
 }

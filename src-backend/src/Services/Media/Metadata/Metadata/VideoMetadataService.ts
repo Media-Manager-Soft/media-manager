@@ -39,12 +39,12 @@ export class VideoMetadataService implements IMetadata {
 
   get latitude(): string {
     let lat = this.metadata?.format?.tags?.location;
-    return lat.replace('/', '').split('+')[1];
+    return lat?.replace('/', '').split('+')[1];
   }
 
   get longitude(): string {
     let long = this.metadata?.format?.tags?.location;
-    return long.replace('/', '').split('+')[2];
+    return long?.replace('/', '').split('+')[2];
   }
 
   get make(): string {

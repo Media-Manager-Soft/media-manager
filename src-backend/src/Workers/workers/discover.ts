@@ -26,9 +26,9 @@ process.on('message', async (message) => {
       // @ts-ignore
       process.send(msg);
 
-    } catch (e) {
+    } catch (e: any) {
       // TODO: emit errors during discovering
-      console.error(e);
+      console.error(`${e.message}: ${message.data.paths[i]}`);
     }
 
   }

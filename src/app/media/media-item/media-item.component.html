@@ -1,8 +1,8 @@
-<div>
-    <img class="thumbnail" #thumbnail (dblclick)="previewMedia(media)">
-    <p>
+<div class="image-thumbnail-container">
+    <img [class]="'rotation-' + media.orientation" #thumbnail (dblclick)="previewMedia(media)">
+    <div class="figure">
         <span>{{ media.id }} </span>
         <span> {{ media.filename }}</span>
-    </p>
+    </div>
 </div>
 
