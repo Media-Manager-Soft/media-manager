@@ -3,8 +3,13 @@
 <app-preview-media></app-preview-media>
 
 <div class="media-item-container">
-    <div class="media-item" *ngFor="let item of media">
-        <app-media-item [media]="item"></app-media-item>
-    </div>
+    <ng-container *ngFor="let item of media">
+        <p class="media-grid-separator" *ngIf="shouldSeparateGrid(item.takenAt)">
+            {{ item.takenAt | date:"yyyy.MM.dd" }}
+        </p>
+        <div class="media-item">
+            <app-media-item [media]="item"></app-media-item>
+        </div>
+    </ng-container>
 </div>
 

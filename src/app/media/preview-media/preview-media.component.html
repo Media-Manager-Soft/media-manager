@@ -1,8 +1,12 @@
 <p>preview-media works!</p>
 <p>{{ media?.id }}</p>
 
-<lib-ngx-image-zoom
+<div style="max-width: 1900px">
+    <lib-ngx-image-zoom
         #viewer
+        [enableScrollZoom]="true"
         zoomMode="toggle"
-></lib-ngx-image-zoom>
+        [magnification]="0.3"
+    ></lib-ngx-image-zoom>
+</div>
 

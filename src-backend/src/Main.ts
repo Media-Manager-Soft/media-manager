@@ -31,7 +31,7 @@ export class Main {
         webPreferences: {
           nodeIntegration: true, // Allows IPC and other APIs
           contextIsolation: false,
-          // webSecurity: false //Todo: remove if not needed in the future
+          webSecurity: false //Todo: remove if not needed in the future
         },
       });
 
@@ -101,10 +101,9 @@ export class Main {
       await workerManager.terminate(arg.processId)
     })
 
-    ipcMain.handle('get-media-preview', async (event, arg) => {
-      let media = await Media.findOne(arg.mediaId);
-// media?.converter().
-
+    ipcMain.handle('get-media-for-preview', async (event, mediaId) => {
+      let media = await Media.findOne(mediaId, {relations: ['location']});
+      return media?.getPathToFile();
     })
   }
 
