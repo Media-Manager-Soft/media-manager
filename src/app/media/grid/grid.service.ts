@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from "rxjs";
+import { Observable } from "rxjs";
 import { ElectronService } from "../../core/services/electron.service";
 
 @Injectable({
@@ -7,10 +7,10 @@ import { ElectronService } from "../../core/services/electron.service";
 })
 export class GridService {
 
-  private selectedMedia = new Subject();
-  currentMedia$ = this.selectedMedia.asObservable();
+  isPreviewOpen = false;
 
   public media$: Observable<unknown>;
+  public selectedMedia: any;
 
   constructor(
     private electronService: ElectronService,
@@ -18,7 +18,8 @@ export class GridService {
   }
 
   selectMedia(message: any) {
-    this.selectedMedia.next(message)
+    this.selectedMedia = message;
+    this.isPreviewOpen = true;
   }
 
   getMedia() {
@@ -28,7 +29,7 @@ export class GridService {
           observer.next(result)
         })
         .catch()
-        .finally(()=>{
+        .finally(() => {
           observer.complete();
         })
     });

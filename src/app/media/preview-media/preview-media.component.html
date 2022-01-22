@@ -1,12 +1,14 @@
-<p>preview-media works!</p>
-<p>{{ media?.id }}</p>
-
-<div style="max-width: 1900px">
-    <lib-ngx-image-zoom
-        #viewer
-        [enableScrollZoom]="true"
-        zoomMode="toggle"
-        [magnification]="0.3"
-    ></lib-ngx-image-zoom>
+<!--<p>preview-media works!</p>-->
+<!--<p>{{ media?.id }}</p>-->
+<div class="preview-container">
+    <div class="close-button" (click)="closeModal()">x</div>
+    <div style="max-width: 1900px">
+        <lib-ngx-image-zoom
+            #viewer
+            [enableScrollZoom]="true"
+            zoomMode="toggle"
+            [magnification]="0.3"
+        ></lib-ngx-image-zoom>
+    </div>
 </div>
 

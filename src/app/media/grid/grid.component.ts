@@ -11,7 +11,7 @@ export class GridComponent implements OnInit {
   public media: any;
   private currentSeparatorValue: string
 
-  constructor(private gridService: GridService) {
+  constructor(public gridService: GridService) {
   }
 
   ngOnInit(): void {
@@ -30,5 +30,9 @@ export class GridComponent implements OnInit {
     const result = this.currentSeparatorValue !== stringDate;
     this.currentSeparatorValue = stringDate;
     return result
+  }
+
+  modalClosed(){
+    this.gridService.isPreviewOpen = false;
   }
 }

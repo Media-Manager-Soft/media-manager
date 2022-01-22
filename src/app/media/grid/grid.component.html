@@ -1,6 +1,10 @@
 <p (click)="getMedia()">grid works!</p>
 
-<app-preview-media></app-preview-media>
+<app-preview-media
+        *ngIf="gridService.isPreviewOpen"
+        [previewItem]="gridService.selectedMedia"
+        (modalClosed)="modalClosed()"
+></app-preview-media>
 
 <div class="media-item-container">
     <ng-container *ngFor="let item of media">
