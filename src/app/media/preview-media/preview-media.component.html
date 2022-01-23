@@ -1,14 +1,27 @@
-<!--<p>preview-media works!</p>-->
-<!--<p>{{ media?.id }}</p>-->
 <div class="preview-container">
-    <div class="close-button" (click)="closeModal()">x</div>
-    <div style="max-width: 1900px">
-        <lib-ngx-image-zoom
-            #viewer
-            [enableScrollZoom]="true"
-            zoomMode="toggle"
-            [magnification]="0.3"
-        ></lib-ngx-image-zoom>
+    <div class="close-button" (document:keydown.esc)="closeModal()" (click)="closeModal()">x</div>
+    <div class="media-item-container">
+        <pinch-zoom
+                disableZoomControl="disable"
+                [backgroundColor]="'rgba(0, 0, 0, 0.0)'"
+        >
+            <img #thumb>
+        </pinch-zoom>
+    </div>
+
+    <div class="tools">
+        <button
+                (document:keydown.ARROWLEFT)="gridService.prevMediaPreview()"
+                (click)="gridService.prevMediaPreview()"
+        >
+            Prev
+        </button>
+        <button
+                (document:keydown.ARROWRIGHT)="gridService.nextMediaPreview()"
+                (click)="gridService.nextMediaPreview()"
+        >
+            Next
+        </button>
     </div>
 </div>
 

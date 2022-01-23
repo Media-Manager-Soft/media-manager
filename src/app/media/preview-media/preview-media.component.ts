@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, ViewChild, EventEmitter } from '@angular/core';
+import { Component, Input, Output, ViewChild, EventEmitter, ElementRef } from '@angular/core';
 import { GridService } from "../grid/grid.service";
 import { ElectronService } from "../../core/services/electron.service";
 
@@ -9,34 +9,26 @@ import { ElectronService } from "../../core/services/electron.service";
 })
 export class PreviewMediaComponent {
   media: any;
-  @ViewChild('viewer') viewer: any;
+  @ViewChild('thumb') thumb: ElementRef;
+  private currentIndex: number;
 
-  @Input() set previewItem(media: any) {
-    this.media = media
-    this.setImageForPreview(media)
+  @Input() set previewItemIndex(mediaIndex: any) {
+    this.currentIndex = mediaIndex;
+    this.media = this.gridService.media[mediaIndex]
+    this.setImageForPreview(this.media)
   }
 
   @Output() modalClosed = new EventEmitter<boolean>();
 
   constructor(
-    private gridService: GridService,
+    public gridService: GridService,
     private electronService: ElectronService
   ) {
   }
 
-  // ngOnInit(): void {
-  //   this.gridService.currentMedia$.subscribe((media: any) => {
-  //     this.media = media
-  //     // this.setImageForPreview(media?.thumbnail.thumbnail)
-  //     this.setImageForPreview(media)
-  //   })
-  // }
-
   protected setImageForPreview(media: any) {
     this.electronService.ipcRenderer.invoke('get-media-for-preview', media.id).then(data => {
-      this.viewer.fullImage = 'file://' + data;
-      // this.viewer.thumbImage = 'file://'+data;
-      this.getThumb(this.media.thumbnail.thumbnail)
+      this.thumb.nativeElement.src = 'file://' + data;
     })
   }
 
@@ -48,11 +40,14 @@ export class PreviewMediaComponent {
 
     reader.onload = () => {
       // this.viewer.fullImage = reader.result;
-      this.viewer.thumbImage = reader.result;
+      // this.viewer.thumbImage = reader.result;
     };
   }
 
   closeModal() {
     this.modalClosed.emit(true);
+    this.media = null;
   }
+
+
 }

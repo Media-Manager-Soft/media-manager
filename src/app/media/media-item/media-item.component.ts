@@ -8,8 +8,16 @@ import { GridService } from "../grid/grid.service";
   styleUrls: ['./media-item.component.scss']
 })
 export class MediaItemComponent {
-  @Input() media!: any;
+  media: any;
+  mediaItemIndex: number;
+
+  @Input() set mediaIndex(mediaIndex: any) {
+    this.mediaItemIndex = mediaIndex
+    this.media = this.gridService.media[mediaIndex]
+  }
+
   @ViewChild('thumbnail') thumbnail: any;
+
   constructor(
     private electronService: ElectronService,
     private gridService: GridService
@@ -32,8 +40,8 @@ export class MediaItemComponent {
     this.thumbnail.nativeElement.class = 'rotate-' + this.media.orientation;
   }
 
-  previewMedia(media: any){
-    this.gridService.selectMedia(media)
+  previewMedia() {
+    this.gridService.selectMediaIndexForPreview(this.mediaItemIndex)
   }
 
 }

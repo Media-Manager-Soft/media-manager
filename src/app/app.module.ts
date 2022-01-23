@@ -10,7 +10,7 @@ import { MediaItemComponent } from './media/media-item/media-item.component';
 import { NotificationComponent } from './notification/notification.component';
 import { WorkerComponent } from './notification/worker/worker.component';
 import { PreviewMediaComponent } from './media/preview-media/preview-media.component';
-import { NgxImageZoomModule } from "ngx-image-zoom";
+import { PinchZoomModule } from "ngx-pinch-zoom";
 
 @NgModule({
   declarations: [
@@ -24,9 +24,9 @@ import { NgxImageZoomModule } from "ngx-image-zoom";
   ],
   imports: [
     BrowserModule,
-    NgxImageZoomModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PinchZoomModule,
   ],
   bootstrap: [AppComponent]
 })

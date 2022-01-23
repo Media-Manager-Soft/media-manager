@@ -1,5 +1,5 @@
 <div class="image-thumbnail-container">
-    <img [class]="'rotation-' + media.orientation" #thumbnail (dblclick)="previewMedia(media)">
+    <img [class]="'rotation-' + media.orientation" #thumbnail (dblclick)="previewMedia()">
     <div class="figure">
         <p>{{ media.filename }}</p>
         <p>{{ media.takenAt | date:"yyyy.MM.dd HH:mm:ss"}}</p>

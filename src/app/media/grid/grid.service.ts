@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from "rxjs";
+import { Observable, Subscription } from "rxjs";
 import { ElectronService } from "../../core/services/electron.service";
 
 @Injectable({
@@ -7,19 +7,25 @@ import { ElectronService } from "../../core/services/electron.service";
 })
 export class GridService {
 
-  isPreviewOpen = false;
-
-  public media$: Observable<unknown>;
-  public selectedMedia: any;
+  public media$: Subscription;
+  public selectedMediaPreview: number | null;
+  public media: any;
 
   constructor(
     private electronService: ElectronService,
   ) {
   }
 
-  selectMedia(message: any) {
-    this.selectedMedia = message;
-    this.isPreviewOpen = true;
+  selectMediaIndexForPreview(index: number | null) {
+    this.selectedMediaPreview = index;
+  }
+
+  nextMediaPreview() {
+    this.selectedMediaPreview = (this.selectedMediaPreview ?? 0) + 1;
+  }
+
+  prevMediaPreview() {
+    this.selectedMediaPreview = (this.selectedMediaPreview ?? 0) - 1
   }
 
   getMedia() {
@@ -32,6 +38,8 @@ export class GridService {
         .finally(() => {
           observer.complete();
         })
+    }).subscribe(media => {
+      return this.media = media;
     });
   }
 }

@@ -8,7 +8,6 @@ import { GridService } from "./grid.service";
 })
 export class GridComponent implements OnInit {
 
-  public media: any;
   private currentSeparatorValue: string
 
   constructor(public gridService: GridService) {
@@ -20,9 +19,6 @@ export class GridComponent implements OnInit {
 
   getMedia() {
     this.gridService.getMedia();
-    this.gridService.media$.subscribe(media => {
-      return this.media = media;
-    });
   }
 
   shouldSeparateGrid(value: any): Boolean {
@@ -33,6 +29,6 @@ export class GridComponent implements OnInit {
   }
 
   modalClosed(){
-    this.gridService.isPreviewOpen = false;
+    this.gridService.selectMediaIndexForPreview(null);
   }
 }
