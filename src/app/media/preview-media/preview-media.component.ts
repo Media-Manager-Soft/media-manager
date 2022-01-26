@@ -9,8 +9,10 @@ import { ElectronService } from "../../core/services/electron.service";
 })
 export class PreviewMediaComponent {
   media: any;
-  @ViewChild('thumb') thumb: ElementRef;
+  @ViewChild('photoThumb') photoThumb: ElementRef;
+  @ViewChild('videoThumb') videoThumb: ElementRef;
   private currentIndex: number;
+  currentPreviewType: string;
 
   @Input() set previewItemIndex(mediaIndex: any) {
     this.currentIndex = mediaIndex;
@@ -28,8 +30,26 @@ export class PreviewMediaComponent {
 
   protected setImageForPreview(media: any) {
     this.electronService.ipcRenderer.invoke('get-media-for-preview', media.id).then(data => {
-      this.thumb.nativeElement.src = 'file://' + data;
+      this.clearViewer();
+      this.putPreviewToHtml(data)
     })
+  }
+
+  protected putPreviewToHtml(data: any) {
+    if (data.type === 'Video') {
+      this.videoThumb.nativeElement.src = 'file://' + data.data;
+      this.currentPreviewType = 'video';
+    } else if (data.type === 'PhotoRaw') {
+      this.currentPreviewType = 'photo';
+
+      const urlCreator = window.URL || window.webkitURL;
+      const blob = new Blob([data.data]);
+      this.photoThumb.nativeElement.src = urlCreator.createObjectURL(blob);
+
+    } else {
+      this.photoThumb.nativeElement.src = 'file://' + data.data;
+      this.currentPreviewType = 'photo';
+    }
   }
 
   getThumb(blobData: any) {
@@ -44,7 +64,13 @@ export class PreviewMediaComponent {
     };
   }
 
+  clearViewer() {
+    this.videoThumb.nativeElement.removeAttribute('src');
+    this.photoThumb.nativeElement.removeAttribute('src');
+  }
+
   closeModal() {
+    this.clearViewer();
     this.modalClosed.emit(true);
     this.media = null;
   }

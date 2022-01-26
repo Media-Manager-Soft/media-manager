@@ -14,5 +14,9 @@ export class PhotoConverter implements IConverter {
     let buffer = await PhotoDriver.toBuffer(this.media.getPathToFile())
     return sharp(buffer).resize(Media.THUMB_WIDTH).toBuffer()
   }
+
+  async full() {
+    return this.media.getPathToFile();
+  }
 }
 

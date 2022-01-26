@@ -13,4 +13,8 @@ export class VideoConverter implements IConverter {
     return Promise.resolve(VideoDriver.toBuffer(this.media.getPathToFile()));
   }
 
+  full(){
+    return this.media.getPathToFile();
+  }
+
 }

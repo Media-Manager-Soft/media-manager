@@ -4,9 +4,16 @@
         <pinch-zoom
                 disableZoomControl="disable"
                 [backgroundColor]="'rgba(0, 0, 0, 0.0)'"
+                [hidden]="!(currentPreviewType === 'photo')"
         >
-            <img #thumb>
+            <img #photoThumb>
         </pinch-zoom>
+
+        <video
+                [hidden]="!(currentPreviewType === 'video')"
+                controls width="100%" #videoThumb>
+        </video>
+
     </div>
 
     <div class="tools">

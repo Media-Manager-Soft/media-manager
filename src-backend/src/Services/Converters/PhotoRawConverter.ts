@@ -1,17 +1,26 @@
 import { IConverter } from "./IConverter";
 import { Media } from "../../Entities/Media";
 import * as fs from "fs";
-const dcraw = require('dcraw');
+import { PhotoConverter } from "./PhotoConverter";
+import { PhotoRawDriver } from "../Drivers/PhotoRawDriver";
+
 const sharp = require('sharp');
 
 export class PhotoRawConverter implements IConverter {
   media: Media;
-  thumb(): Promise<any> {
-    let bufferPrev = dcraw(fs.readFileSync(this.media.getPathToFile()), {extractThumbnail: true})
-    return sharp(bufferPrev).resize(Media.THUMB_WIDTH).toBuffer();
-  }
 
   constructor(media: Media) {
     this.media = media
   }
+
+  thumb(): Promise<any> {
+    let bufferPrev = PhotoRawDriver.toBuffer(this.media, {extractThumbnail: true})
+    return sharp(bufferPrev).resize(Media.THUMB_WIDTH).toBuffer();
+  }
+
+  full(): Promise<any> | string {
+    let bufferPrev = PhotoRawDriver.toBuffer(this.media, {extractThumbnail: true})
+    return sharp(bufferPrev).toBuffer();
+  }
+
 }

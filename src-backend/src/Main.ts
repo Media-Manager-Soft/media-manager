@@ -103,7 +103,10 @@ export class Main {
 
     ipcMain.handle('get-media-for-preview', async (event, mediaId) => {
       let media = await Media.findOne(mediaId, {relations: ['location']});
-      return media?.getPathToFile();
+      return {
+        type: media?.type,
+        data: await media?.converter().full()
+      }
     })
   }
 
