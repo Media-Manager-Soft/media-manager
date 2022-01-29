@@ -30,13 +30,14 @@ export class PreviewMediaComponent {
 
   protected setImageForPreview(media: any) {
     this.electronService.ipcRenderer.invoke('get-media-for-preview', media.id).then(data => {
-      this.clearViewer();
+      // this.clearViewer();
       this.putPreviewToHtml(data)
     })
   }
 
   protected putPreviewToHtml(data: any) {
     if (data.type === 'Video') {
+      this.photoThumb.nativeElement.removeAttribute('src');
       this.videoThumb.nativeElement.src = 'file://' + data.data;
       this.currentPreviewType = 'video';
     } else if (data.type === 'PhotoRaw') {
@@ -45,24 +46,26 @@ export class PreviewMediaComponent {
       const urlCreator = window.URL || window.webkitURL;
       const blob = new Blob([data.data]);
       this.photoThumb.nativeElement.src = urlCreator.createObjectURL(blob);
+      this.videoThumb.nativeElement.removeAttribute('src');
 
     } else {
+      this.videoThumb.nativeElement.removeAttribute('src');
       this.photoThumb.nativeElement.src = 'file://' + data.data;
       this.currentPreviewType = 'photo';
     }
   }
 
-  getThumb(blobData: any) {
-    let blob = new Blob([blobData], {type: 'image/webp'});
-
-    let reader = new FileReader();
-    reader.readAsDataURL(blob);
-
-    reader.onload = () => {
-      // this.viewer.fullImage = reader.result;
-      // this.viewer.thumbImage = reader.result;
-    };
-  }
+  // getThumb(blobData: any) {
+  //   let blob = new Blob([blobData], {type: 'image/webp'});
+  //
+  //   let reader = new FileReader();
+  //   reader.readAsDataURL(blob);
+  //
+  //   reader.onload = () => {
+  //     // this.viewer.fullImage = reader.result;
+  //     // this.viewer.thumbImage = reader.result;
+  //   };
+  // }
 
   clearViewer() {
     this.videoThumb.nativeElement.removeAttribute('src');

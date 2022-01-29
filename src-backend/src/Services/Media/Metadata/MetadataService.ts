@@ -92,16 +92,13 @@ export class MetadataService {
   }
 
   async storeThumb() {
-    // try {
     if (!this.media.hasThumb()) {
       let thumb: Thumbnail = new Thumbnail()
       thumb.thumbnail = await this.media.converter().thumb()
       await thumb.save();
       this.media.thumbnail = thumb;
     }
-    // } catch (e) {
-    //   console.error(e)
-    // }
+
   }
 
 }
