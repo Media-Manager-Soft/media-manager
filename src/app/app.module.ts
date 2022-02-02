@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LocationComponent } from './location/location.component';
@@ -11,6 +10,11 @@ import { NotificationComponent } from './notification/notification.component';
 import { WorkerComponent } from './notification/worker/worker.component';
 import { PreviewMediaComponent } from './media/preview-media/preview-media.component';
 import { PinchZoomModule } from "ngx-pinch-zoom";
+import { NavComponent } from './nav/nav.component';
+import { DatesComponent } from './filters/dates/dates.component';
+import { TreeViewComponent } from "./filters/dates/tree-view/tree-view.component";
+import { TreeItemComponent } from "./filters/dates/tree-view/tree-item/tree-item.component";
+
 
 @NgModule({
   declarations: [
@@ -21,6 +25,10 @@ import { PinchZoomModule } from "ngx-pinch-zoom";
     NotificationComponent,
     WorkerComponent,
     PreviewMediaComponent,
+    NavComponent,
+    DatesComponent,
+    TreeViewComponent,
+    TreeItemComponent,
   ],
   imports: [
     BrowserModule,

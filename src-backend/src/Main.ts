@@ -4,19 +4,17 @@ import * as url from "url";
 import { Location } from "./Entities/Location";
 import { Media } from "./Entities/Media";
 import { DBConnection } from "./Database/DBConnection";
-import { fork } from "child_process";
+import { NavData } from "./Data/NavData";
 
 var bus = require('./Events/eventBus');
 var workerManager = require('./Workers/WorkerManager')
 
 export class Main {
-  // private workerManager: WorkerManager;
 
   public run() {
     this.onReady();
     this.onWindowClosed();
     DBConnection.createConnection();
-    // this.workerManager = new WorkerManager();
     this.ipc()
   }
 
@@ -68,7 +66,7 @@ export class Main {
     })
 
     ipcMain.handle('get-media', async (event, arg) => {
-      return await Media.find({relations: ['thumbnail'], order: {takenAt: 'ASC'}});
+      return await Media.find({relations: ['thumbnail'], order: {takenAt: 'DESC'}});
     })
 
     ipcMain.handle('get-thumbnail', async (event, arg) => {
@@ -99,6 +97,10 @@ export class Main {
 
     ipcMain.handle('terminate-process', async (event, arg) => {
       await workerManager.terminate(arg.processId)
+    })
+
+    ipcMain.handle('get-nav-dates', async (event, arg) => {
+      return NavData.getDates();
     })
 
     ipcMain.handle('get-media-for-preview', async (event, mediaId) => {

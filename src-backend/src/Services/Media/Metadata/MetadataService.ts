@@ -91,6 +91,10 @@ export class MetadataService {
     return this.fileMetadata.orientation
   }
 
+  getFileSize() {
+    return Fs.statSync(this.pathToFile).size;
+  }
+
   async storeThumb() {
     if (!this.media.hasThumb()) {
       let thumb: Thumbnail = new Thumbnail()

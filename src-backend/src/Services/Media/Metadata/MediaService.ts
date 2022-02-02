@@ -16,14 +16,18 @@ export class MediaService {
     this.media.path = this.mediaMetadataService.getFilePathInLocation();
     this.media.filename = this.mediaMetadataService.getFileName();
 
-    this.media.cameraModel = this.mediaMetadataService.getCameraModel();
-    this.media.camera = this.mediaMetadataService.getCameraManufacturer();
-    this.media.height = this.mediaMetadataService.getHeight();
-    this.media.width = this.mediaMetadataService.getWidth();
-    this.media.latitude = this.mediaMetadataService.getLatitude();
-    this.media.longitude = this.mediaMetadataService.getLongitude();
-    this.media.orientation = this.mediaMetadataService.getOrientation();
-    this.media.takenAt = this.mediaMetadataService.getTakenAt();
+    try {
+      this.media.cameraModel = this.mediaMetadataService.getCameraModel();
+      this.media.camera = this.mediaMetadataService.getCameraManufacturer();
+      this.media.height = this.mediaMetadataService.getHeight();
+      this.media.width = this.mediaMetadataService.getWidth();
+      this.media.latitude = this.mediaMetadataService.getLatitude();
+      this.media.longitude = this.mediaMetadataService.getLongitude();
+      this.media.orientation = this.mediaMetadataService.getOrientation();
+      this.media.takenAt = this.mediaMetadataService.getTakenAt();
+      this.media.size = this.mediaMetadataService.getFileSize();
+    } catch (e) {
+    }
 
     await this.mediaMetadataService.storeThumb();
   }

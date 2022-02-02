@@ -1,0 +1,4 @@
+<div style="margin-left:20px">
+    <p [class]="{selected: item.isSelected}" (click)="toggleSelection()">{{ item.text }} - {{ item.value }}</p>
+    <app-tree-item *ngFor="let item of item.children" [item]="item" (changed)="childChanged($event)"></app-tree-item>
+</div>

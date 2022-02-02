@@ -21,8 +21,8 @@ export class DBConnection {
         Media,
         Thumbnail,
       ],
-      logging: false
-      // logging: true
+      // logging: false
+      logging: true
     },
       {
         name: "thumbnail",

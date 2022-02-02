@@ -7,9 +7,9 @@
     <!--    <div [formGroup]="newPathForm">-->
     Name: <input formControlName="name">
     Path: <input formControlName="path">
-    <button (click)="selectFolder(); $event.preventDefault()" >Choose</button>
+    <button class="btn btn-primary" (click)="selectFolder(); $event.preventDefault()" >Choose</button>
     <!--    </div>-->
-    <button [disabled]="newPathForm.invalid" type="submit">Add</button>
+    <button class="btn btn-primary" [disabled]="newPathForm.invalid" type="submit">Add</button>
 </form>
 
 <h3 (click)="send()">
