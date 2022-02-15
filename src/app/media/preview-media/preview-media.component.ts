@@ -1,6 +1,7 @@
 import { Component, Input, Output, ViewChild, EventEmitter, ElementRef } from '@angular/core';
-import { GridService } from "../grid/grid.service";
 import { ElectronService } from "../../core/services/electron.service";
+import { MediaService } from "../media.service";
+import { GridService } from "../grid/grid.service";
 
 @Component({
   selector: 'app-preview-media',
@@ -16,13 +17,14 @@ export class PreviewMediaComponent {
 
   @Input() set previewItemIndex(mediaIndex: any) {
     this.currentIndex = mediaIndex;
-    this.media = this.gridService.media[mediaIndex]
+    this.media = this.mediaService.media[mediaIndex]
     this.setImageForPreview(this.media)
   }
 
   @Output() modalClosed = new EventEmitter<boolean>();
 
   constructor(
+    public mediaService: MediaService,
     public gridService: GridService,
     private electronService: ElectronService
   ) {

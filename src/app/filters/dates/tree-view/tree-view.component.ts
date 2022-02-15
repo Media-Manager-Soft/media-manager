@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { TreeItemDto } from "./TreeItemDto";
+import { TreeItemDto } from "./tree-iten.dto";
 
 @Component({
   selector: 'app-tree-view',

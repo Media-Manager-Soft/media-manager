@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GridService } from "./grid.service";
+import { MediaService } from "../media.service";
 
 @Component({
   selector: 'app-grid',
@@ -10,16 +11,12 @@ export class GridComponent implements OnInit {
 
   private currentSeparatorValue: string
 
-  constructor(public gridService: GridService) {
+  constructor(public gridService: GridService, public mediaService: MediaService) {
   }
 
   ngOnInit(): void {
-    this.getMedia();
   }
 
-  getMedia() {
-    this.gridService.getMedia();
-  }
 
   shouldSeparateGrid(value: any): Boolean {
     const stringDate = new Date(value).toDateString();
@@ -28,7 +25,7 @@ export class GridComponent implements OnInit {
     return result
   }
 
-  modalClosed(){
+  modalClosed() {
     this.gridService.selectMediaIndexForPreview(null);
   }
 }

@@ -28,7 +28,7 @@ export class MediaService {
       this.media.size = this.mediaMetadataService.getFileSize();
     } catch (e) {
     }
-
+//TODO: Move to discover worker to store media and then create thumbnail (there will be media.id)
     await this.mediaMetadataService.storeThumb();
   }
 

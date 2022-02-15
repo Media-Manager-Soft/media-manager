@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { remove as _remove, uniq as _uniq, filter as _filter, map as _map } from 'lodash';
-import { QueryService } from "../../../query/query.service";
-import { selectionToQuery } from "./TreeItemDto";
+import { MediaService } from "../../../media/media.service";
+import { selectionToQuery } from "./tree-iten.dto";
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +10,12 @@ export class TreeViewService {
   //TODO: Separate Service to be more reusable. I.e. Use Even bus
   items: selectionToQuery[] = []; //For future use: selection Query contains child selection type.
 
-  constructor(private queryService: QueryService) {
+  constructor(private mediaService: MediaService) {
 
   }
 
   setQuery() {
-    this.queryService.setQuery({type: 'date', parameters: this.itemsPreparedForQuery()})
+    this.mediaService.setQuery({type: 'date', parameters: this.itemsPreparedForQuery()})
   }
 
   itemsPreparedForQuery() {

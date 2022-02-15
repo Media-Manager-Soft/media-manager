@@ -5,6 +5,7 @@ import { Location } from "./Entities/Location";
 import { Media } from "./Entities/Media";
 import { DBConnection } from "./Database/DBConnection";
 import { NavData } from "./Data/NavData";
+import { MediaQuery } from "./Queries/MediaQuery";
 
 var bus = require('./Events/eventBus');
 var workerManager = require('./Workers/WorkerManager')
@@ -65,8 +66,8 @@ export class Main {
       return await Location.find();
     })
 
-    ipcMain.handle('get-media', async (event, arg) => {
-      return await Media.find({relations: ['thumbnail'], order: {takenAt: 'DESC'}});
+    ipcMain.handle('get-media', async (event, queries) => {
+      return await MediaQuery.setQuery(queries.query).get();
     })
 
     ipcMain.handle('get-thumbnail', async (event, arg) => {

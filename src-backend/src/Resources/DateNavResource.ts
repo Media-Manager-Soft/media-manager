@@ -19,8 +19,6 @@ export class DateNavResource {
   appendRow(item: any) {
     this.setYear(item)
     this.setMonths(item)
-
-
   }
 
   protected setMonths(item: any) {

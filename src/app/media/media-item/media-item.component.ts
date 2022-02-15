@@ -1,6 +1,7 @@
 import { Component, Input, ViewChild } from '@angular/core';
 import { ElectronService } from "../../core/services/electron.service";
 import { GridService } from "../grid/grid.service";
+import { MediaService } from "../media.service";
 
 @Component({
   selector: 'app-media-item',
@@ -13,14 +14,15 @@ export class MediaItemComponent {
 
   @Input() set mediaIndex(mediaIndex: any) {
     this.mediaItemIndex = mediaIndex
-    this.media = this.gridService.media[mediaIndex]
+    this.media = this.mediaService.media[mediaIndex]
   }
 
   @ViewChild('thumbnail') thumbnail: any;
 
   constructor(
     private electronService: ElectronService,
-    private gridService: GridService
+    private gridService: GridService,
+    private mediaService: MediaService,
   ) {
   }
 

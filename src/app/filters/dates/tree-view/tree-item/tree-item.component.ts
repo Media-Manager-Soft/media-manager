@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { TreeItemDto } from "../TreeItemDto";
 import { countBy as _countBy } from 'lodash';
 import { TreeViewService } from "../tree-view.service";
+import { TreeItemDto } from "../tree-iten.dto";
 
 @Component({
   selector: 'app-tree-item',

@@ -1,4 +1,4 @@
-<p (click)="getMedia()">grid works!</p>
+<!--<p (click)="getMedia()">grid works!</p>-->
 
 <app-preview-media
         *ngIf="gridService.selectedMediaPreview"
@@ -7,7 +7,7 @@
 ></app-preview-media>
 
 <div class="media-item-container">
-    <ng-container *ngFor="let item of gridService.media; let i = index">
+    <ng-container *ngFor="let item of mediaService.media; let i = index">
         <p class="media-grid-separator" *ngIf="shouldSeparateGrid(item.takenAt)">
             {{ item.takenAt | date:"yyyy.MM.dd" }}
         </p>

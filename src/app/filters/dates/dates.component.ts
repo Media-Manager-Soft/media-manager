@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from "rxjs";
 import { ElectronService } from "../../core/services/electron.service";
-import { TreeItemDto } from "./tree-view/TreeItemDto";
+import { TreeItemDto } from "./tree-view/tree-iten.dto";
 
 @Component({
   selector: 'app-dates',

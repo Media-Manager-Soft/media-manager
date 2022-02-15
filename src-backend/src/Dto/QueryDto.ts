@@ -1,4 +1,4 @@
-export class QueryDto {
+export interface QueryDto {
   type: string;
   parameters: any;
 }
