@@ -1,5 +1,6 @@
 import { TreeItem } from "./Types/TreeType";
 import { find as _find } from 'lodash';
+import { start } from "repl";
 
 
 export class DateNavResource {
@@ -12,7 +13,7 @@ export class DateNavResource {
     this.data.map((item: any) => {
       this.appendRow(item)
     })
-
+    console.log(this.result)
     return this.result;
   }
 
@@ -26,34 +27,44 @@ export class DateNavResource {
       return element.value === this.getDatePart(item.takenAtDate)
     })
 
-    let monthIndex = this.result[yearIndex].children.findIndex(element => {
-      return element.value.startsWith(this.getDatePart(item.takenAtDate, 7))
+    let monthIndex = this.result[yearIndex].children.findIndex(child => {
+      const startsWith = this.getDatePart(item.takenAtDate, 7);
+      return child.value.startsWith(startsWith)
     })
-
 
     if (monthIndex === -1) { // create Month in Year
       const monthAndYear = this.getDatePart(item.takenAtDate, 7)
-      const treeItem = new TreeItem(this.retrieveText(item.takenAtDate, 'm'), monthAndYear); //month
-      this.result[yearIndex].children.push(treeItem)
-      monthIndex = 0; // Newly created item has 0 index;
+      const treeItem = new TreeItem(this.retrieveText(item.takenAtDate, 'm'), monthAndYear, item.qty); //month
+      monthIndex = this.result[yearIndex].children.push(treeItem) - 1; // Recently pushed item index
+    } else {
+      this.result[yearIndex].children[monthIndex].qty += item.qty;
     }
 
     // add day to month
     this.result[yearIndex].children[monthIndex].children.push(
       new TreeItem(
         this.retrieveText(item.takenAtDate, 'd'),
-        item.takenAtDate)
+        item.takenAtDate,
+        item.qty
+      )
     )
   }
 
   protected setYear(item: any) {
     let year = this.getDatePart(item.takenAtDate)
 
-    let yearInResult = _find(this.result, {text: year})
+    // let yearInResult = (this.result, {text: year});
+    const yearIndex = this.result.findIndex(item => {
+      return item.value === year;
+    })
 
-    if (!yearInResult) {
-      this.result.push(new TreeItem(this.retrieveText(item.takenAtDate, 'y'), year))
+
+    if (yearIndex === -1) {
+      this.result.push(new TreeItem(this.retrieveText(item.takenAtDate, 'y'), year, item.qty))
+    } else {
+      this.result[yearIndex].qty += item.qty;
     }
+
   }
 
 
@@ -61,15 +72,15 @@ export class DateNavResource {
     return date.slice(0, position);
   }
 
-  retrieveText(date:string, type:string){
+  retrieveText(date: string, type: string) {
     const dateArr = date.split('-')
     switch (type) {
       case 'y':
-        return  dateArr[0]
+        return dateArr[0]
       case 'm':
-        return  dateArr[1]
+        return dateArr[1]
       case 'd':
-        return  dateArr[2]
+        return dateArr[2]
     }
     return ''
   }

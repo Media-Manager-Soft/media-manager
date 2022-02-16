@@ -1,9 +1,10 @@
 export class TreeItemDto {
 
   text: string;
+  value: string;
+  qty: number = 0;
   isSelected = false;
   childSelectionStatus: selectionType = null;
-  value: string;
   children: TreeItemDto[] = []
 
 }

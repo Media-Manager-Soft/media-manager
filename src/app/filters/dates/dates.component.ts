@@ -32,6 +32,7 @@ export class DatesComponent implements OnInit {
           observer.complete();
         })
     }).subscribe((dates) => {
+      console.log(dates)
       this.items = dates as TreeItemDto[];
     });
   }
