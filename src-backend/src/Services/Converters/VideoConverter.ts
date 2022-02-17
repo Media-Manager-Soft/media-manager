@@ -9,7 +9,7 @@ export class VideoConverter implements IConverter {
     this.media = media
   }
 
-  thumb(): Promise<any> {
+  retrieveThumb(): Promise<any> {
     return Promise.resolve(VideoDriver.toBuffer(this.media.getPathToFile()));
   }
 

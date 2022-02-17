@@ -19,8 +19,6 @@ export class WorkerComponent implements OnInit {
 
   terminate() {
     this.electronService.ipcRenderer.invoke('terminate-process', {processId: this.id}).then(() => {
-      console.log('asd')
-      console.log(this.id)
       this.terminateProcess.emit(this.id);
     })
   }

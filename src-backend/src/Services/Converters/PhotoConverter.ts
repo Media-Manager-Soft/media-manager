@@ -10,9 +10,9 @@ export class PhotoConverter implements IConverter {
     this.media = media
   }
 
-  async thumb(): Promise<any> {
+  async retrieveThumb(): Promise<any> {
     let buffer = await PhotoDriver.toBuffer(this.media.getPathToFile())
-    return sharp(buffer).resize(Media.THUMB_WIDTH).toBuffer()
+    return sharp(buffer).toBuffer()
   }
 
   async full() {

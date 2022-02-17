@@ -3,6 +3,6 @@ import { Media } from "../../Entities/Media";
 
 export interface IConverter {
   media:Media;
-  thumb(): Promise<any>
+  retrieveThumb(): Promise<any>
   full(): Promise<any> | string
 }

@@ -12,6 +12,7 @@ process.on('message', async (message) => {
     try {
       await media.mediaService.discoverMetadata(message.data.paths[i], location);
       await media.save();
+      await media.mediaService.storeThumb();
 
       let msg = {
         workerName: message.id,

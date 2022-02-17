@@ -1,6 +1,9 @@
 import { Media } from "../../../Entities/Media";
 import { Location } from "../../../Entities/Location";
 import { MetadataService } from "./MetadataService";
+import { Thumbnail } from "../../../Entities/Thumbnail";
+
+const sharp = require('sharp');
 
 export class MediaService {
   private mediaMetadataService: MetadataService;
@@ -28,9 +31,19 @@ export class MediaService {
       this.media.size = this.mediaMetadataService.getFileSize();
     } catch (e) {
     }
-//TODO: Move to discover worker to store media and then create thumbnail (there will be media.id)
-    await this.mediaMetadataService.storeThumb();
   }
 
-
+  async storeThumb() {
+    // if (!this.media.hasThumb()) {
+    let thumb: Thumbnail = new Thumbnail()
+    thumb.mediaId = this.media.id;
+    const buffer = await this.media.converter().retrieveThumb();
+    thumb.thumbnail = await sharp(buffer)
+      .resize(Media.THUMB_WIDTH)
+      .jpeg({quality: 60, progressive: true})
+      .toBuffer()
+    await thumb.save({transaction: false});
+    return thumb;
+    // }
+  }
 }

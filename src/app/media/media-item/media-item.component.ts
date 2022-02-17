@@ -26,19 +26,16 @@ export class MediaItemComponent {
   ) {
   }
 
-  getThumb() {
-    try {
+  async setThumb() {
+    await this.electronService.ipcRenderer.invoke('get-thumbnail', {mediaId: this.media.id}).then((data) => {
       const urlCreator = window.URL || window.webkitURL;
-      const blob = new Blob([this.media.thumbnail.thumbnail]);
-      return urlCreator.createObjectURL(blob);
-    } catch (e) {
-      // request from backend
-      return '/assets/no-preview.jpg'
-    }
+      const blob = new Blob([data]);
+      this.thumbnail.nativeElement.src = urlCreator.createObjectURL(blob)
+    })
   }
 
   ngAfterViewInit() {
-    this.thumbnail.nativeElement.src = this.getThumb();
+    this.setThumb();
     this.thumbnail.nativeElement.class = 'rotate-' + this.media.orientation;
   }
 

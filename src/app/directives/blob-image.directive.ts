@@ -14,7 +14,6 @@ export class BlobImageDirective {
   }
 
   @HostListener('onchange') onMouseLeave() {
-console.log('aaaaaaa')
     this.el.src = this.getBlobUrl(this.appBlobImage);
   }
 

@@ -6,6 +6,7 @@ import { Media } from "./Entities/Media";
 import { DBConnection } from "./Database/DBConnection";
 import { NavData } from "./Data/NavData";
 import { MediaQuery } from "./Queries/MediaQuery";
+import { ThumbnailController } from "./Controllers/ThumbnailController";
 
 var bus = require('./Events/eventBus');
 var workerManager = require('./Workers/WorkerManager')
@@ -71,11 +72,7 @@ export class Main {
     })
 
     ipcMain.handle('get-thumbnail', async (event, arg) => {
-      let media = await Media.findOne(arg.mediaId);
-      if (media?.thumbnail === null) {
-        media?.metadataService.storeThumb();
-      }
-      return media.thumbnail
+      return await ThumbnailController.getThumb(arg.mediaId);
     })
 
     ipcMain.handle('store-location', async (event, arg) => {

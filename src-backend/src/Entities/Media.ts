@@ -72,10 +72,6 @@ export class Media extends BaseEntity {
   @Column({default: () => "CURRENT_TIMESTAMP"})
   updatedAt: Date;
 
-  @OneToOne(() => Thumbnail)
-  @JoinColumn()
-  thumbnail: Thumbnail;
-
   get mediaService() {
     if (!this._mediaService) {
       this._mediaService = new MediaService(this);
@@ -85,10 +81,6 @@ export class Media extends BaseEntity {
 
   getPathToFile() {
     return path.join(this.location.path, this.path, this.filename)
-  }
-
-  hasThumb() {
-    return !!this.thumbnail;
   }
 
   converter(): IConverter {

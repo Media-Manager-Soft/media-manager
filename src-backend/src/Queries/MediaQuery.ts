@@ -18,7 +18,6 @@ export class MediaQuery {
   public get(): Promise<Media[]> {
     this.applyQueriesToQueryBuilder();
     this.mediaQueryBuilder.orderBy('takenAt', 'DESC')
-    this.mediaQueryBuilder.leftJoinAndSelect('media.thumbnail', 'thumbnail')
     return this.mediaQueryBuilder.getMany()
   }
 

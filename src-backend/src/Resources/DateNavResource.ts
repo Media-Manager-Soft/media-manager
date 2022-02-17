@@ -13,7 +13,6 @@ export class DateNavResource {
     this.data.map((item: any) => {
       this.appendRow(item)
     })
-    console.log(this.result)
     return this.result;
   }
 

@@ -17,7 +17,7 @@ export class MetadataService {
 
   async setFile(media: Media, pathToFile: string, location: Location) {
     //Todo move toMediaService
-    this.media = media;
+      this.media = media;
     this.media.location = location;
     this.pathToFile = pathToFile;
     this.media.type = await this.getFileType()
@@ -95,14 +95,5 @@ export class MetadataService {
     return Fs.statSync(this.pathToFile).size;
   }
 
-  async storeThumb() {
-    if (!this.media.hasThumb()) {
-      let thumb: Thumbnail = new Thumbnail()
-      thumb.thumbnail = await this.media.converter().thumb()
-      await thumb.save();
-      this.media.thumbnail = thumb;
-    }
-
-  }
 
 }

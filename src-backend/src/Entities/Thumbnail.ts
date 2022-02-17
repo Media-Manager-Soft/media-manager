@@ -7,4 +7,8 @@ export class Thumbnail extends BaseEntity {
   id: number;
   @Column({type: "blob", nullable: true})
   thumbnail: ArrayBuffer | Buffer | Uint8Array | undefined;
+
+  @Column()
+  mediaId: number;
+  
 }
