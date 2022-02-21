@@ -2,8 +2,10 @@ import { Media } from "../../../Entities/Media";
 import { Location } from "../../../Entities/Location";
 import { MetadataService } from "./MetadataService";
 import { Thumbnail } from "../../../Entities/Thumbnail";
+import { ImgConverter } from "../../Img/ImgConverter";
 
-const sharp = require('sharp');
+// const sharp = require('sharp');
+
 
 export class MediaService {
   private mediaMetadataService: MetadataService;
@@ -39,11 +41,15 @@ export class MediaService {
     thumb.mediaId = this.media.id;
     try {
       const buffer = await this.media.converter().retrieveThumb();
-      thumb.thumbnail = await sharp(buffer)
-        .resize(Media.THUMB_WIDTH)
-        .jpeg({quality: 60, progressive: true})
+      // thumb.thumbnail = await sharp(buffer)
+      //   .resize(Media.THUMB_WIDTH)
+      //   .jpeg({quality: 60, progressive: true})
+      thumb.thumbnail = await ImgConverter.setData(buffer)
+        .resizeToThumb()
+        .toJpg({quality: 60, progressive: true})
         .toBuffer()
-    }catch (e) {
+    } catch (e) {
+      console.error(e);
       return;
     }
     await thumb.save({transaction: false});

@@ -9,7 +9,6 @@ export class PhotoMetadataService implements IMetadata {
   private pathToFile: string;
 
   async getExifForFile(pathToFile: string) {
-    // let options = {pick: ['ExposureTime', 'FNumber', 'ISO']};
     this.pathToFile = pathToFile;
     this.exif = await exiftool.read(pathToFile)
     return this;

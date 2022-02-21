@@ -1,10 +1,10 @@
 import { PathHelper } from "../../Helpers/helpers";
 import * as path from "path";
 import * as fs from "fs";
+import { ImgConverter } from "../Img/ImgConverter";
 
 const {v4: uuidv4} = require('uuid');
 const exiftool = require("exiftool-vendored").exiftool
-const sharp = require('sharp');
 
 export class ExifTool {
   static async extractAsBuffer(filePath: string) {
@@ -13,8 +13,8 @@ export class ExifTool {
     await exiftool.extractPreview(filePath, path.join(tmpPath, 'img.jpg'))
 
     let file = fs.readFileSync(path.join(tmpPath, 'img.jpg'))
-    const buffer = await sharp(file).toBuffer()
-    PathHelper.deleteTemp(tmpPath);
+    const buffer = await ImgConverter.setData(file).toBuffer()
+    PathHelper.deleteTemp(folderId);
     return buffer;
   }
 

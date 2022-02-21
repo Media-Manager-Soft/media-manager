@@ -19,7 +19,7 @@ export class LocationService {
       if (fs.statSync(dirPath + "/" + file).isDirectory()) {
         arrayOfFiles = this.getAllFiles(dirPath + "/" + file, arrayOfFiles)
       } else {
-        if (availableExtensions.includes(path.extname(file))) { // Push only available extensions
+        if (availableExtensions.includes(path.extname(file).toLowerCase())) { // Push only available extensions
           arrayOfFiles.push(path.join(dirPath, "/", file))
         }
       }

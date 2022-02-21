@@ -1,7 +1,7 @@
 import { Media } from "../../Entities/Media";
 import { IConverter } from "./IConverter";
 import { PhotoDriver } from "../Drivers/PhotoDriver";
-const sharp = require('sharp');
+import { ImgConverter } from "../Img/ImgConverter";
 
 export class PhotoConverter implements IConverter {
   media: Media;
@@ -12,7 +12,7 @@ export class PhotoConverter implements IConverter {
 
   async retrieveThumb(): Promise<any> {
     let buffer = await PhotoDriver.toBuffer(this.media.getPathToFile())
-    return sharp(buffer).toBuffer()
+    return ImgConverter.setData(buffer).toBuffer();
   }
 
   async full() {

@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import { APP_DATA } from "../configs";
 
-var path = require('path');
+const path = require('path');
 
 export class PathHelper {
   public static ensurePathExists(dir: string) {

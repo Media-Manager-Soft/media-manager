@@ -1,9 +1,9 @@
 import { promisify } from "util";
 import * as fs from "fs";
 import { ExifTool } from "../Exif/ExifTool";
+import { ImgConverter } from "../Img/ImgConverter";
 
 const convert = require('heic-convert');
-const sharp = require('sharp');
 
 export class PhotoDriver {
   static async toBuffer(pathToFile: string) {
@@ -30,7 +30,7 @@ export class PhotoDriver {
   }
 
   protected static async standardJpg(pathToFile: string) {
-    return await sharp(pathToFile).toBuffer()
+    return await ImgConverter.setData(pathToFile).toBuffer()
   }
 
   protected static async brokenJpg(pathToFile: string) {

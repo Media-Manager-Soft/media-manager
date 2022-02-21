@@ -1,7 +1,7 @@
 import { PathHelper } from "../../Helpers/helpers";
 import * as fs from "fs";
+import { ImgConverter } from "../Img/ImgConverter";
 
-const sharp = require('sharp');
 var path = require('path');
 const {v4: uuidv4} = require('uuid');
 const {Worker} = require("worker_threads");
@@ -11,7 +11,7 @@ export class VideoDriver {
     const folderId = uuidv4()
     await this.storeThumbToTemp(pathToFile, folderId);
     let files = fs.readdirSync(PathHelper.getTempPath(folderId))
-    const buffer = await sharp(PathHelper.getTempPath(folderId, files[0])).toBuffer()
+    const buffer = await ImgConverter.setData(PathHelper.getTempPath(folderId, files[0])).toBuffer()
     PathHelper.deleteTemp(folderId);
     return buffer;
   }
