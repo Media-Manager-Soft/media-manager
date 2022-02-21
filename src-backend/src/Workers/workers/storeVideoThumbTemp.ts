@@ -11,7 +11,7 @@ function storeVideoThumbTemp(pathToFile: string, pathToTemp: string) {
     ffmpeg(pathToFile)
       .screenshots({
         timestamps: ['30%'],
-        filename: '%s.webp',
+        filename: '%s.jpg',
         folder: pathToTemp,
         size: Media.THUMB_WIDTH + 'x?'
       });
