@@ -1,6 +1,5 @@
 import { PathHelper } from "../../Helpers/helpers";
 import * as fs from "fs";
-import { APP_DATA } from "../../configs";
 
 const sharp = require('sharp');
 var path = require('path');
@@ -11,22 +10,16 @@ export class VideoDriver {
   static async toBuffer(pathToFile: string) {
     const folderId = uuidv4()
     await this.storeThumbToTemp(pathToFile, folderId);
-    let files = fs.readdirSync(this.getTempPath(folderId))
-    const buffer = await sharp(this.getTempPath(folderId, files[0])).toBuffer()
-    this.deleteTemp(folderId);
+    let files = fs.readdirSync(PathHelper.getTempPath(folderId))
+    const buffer = await sharp(PathHelper.getTempPath(folderId, files[0])).toBuffer()
+    PathHelper.deleteTemp(folderId);
     return buffer;
   }
 
-  protected static getTempPath(id: string, fileName: string | null = null) {
-    let filePath = path.join(path.join(APP_DATA, 'tmp'), id);
-    if (fileName) {
-      filePath = path.join(filePath, fileName)
-    }
-    return filePath;
-  }
+
 
   protected static async storeThumbToTemp(pathToFile: string, id: string) {
-    const pathToTemp = this.getTempPath(id);
+    const pathToTemp = PathHelper.getTempPath(id);
     PathHelper.ensurePathExists(pathToTemp)
 
     const worker = new Worker(
@@ -41,7 +34,4 @@ export class VideoDriver {
     });
   }
 
-  protected static deleteTemp(folder: string) {
-    fs.rmdirSync(this.getTempPath(folder), {recursive: true});
-  }
 }

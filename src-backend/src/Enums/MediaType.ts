@@ -19,6 +19,7 @@ export const MediaExtensionTypes: IExtensionTypes = {
   '.heic': MediaType.PHOTO,
 
   '.cr2': MediaType.PHOTO_RAW,
+  '.cr3': MediaType.PHOTO_RAW,
   '.nef': MediaType.PHOTO_RAW,
 
   '.mov': MediaType.VIDEO,

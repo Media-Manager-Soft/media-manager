@@ -7,6 +7,7 @@ import { DBConnection } from "./Database/DBConnection";
 import { NavData } from "./Data/NavData";
 import { MediaQuery } from "./Queries/MediaQuery";
 import { ThumbnailController } from "./Controllers/ThumbnailController";
+import { PathHelper } from "./Helpers/helpers";
 
 var bus = require('./Events/eventBus');
 var workerManager = require('./Workers/WorkerManager')
@@ -50,7 +51,7 @@ export class Main {
       bus.on('notifyFront', (args: any) => {
         mainWindow.webContents.send("notification", args)
       })
-
+      PathHelper.deleteTemp()
     });
   }
 

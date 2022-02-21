@@ -1,4 +1,3 @@
-import { Thumbnail } from "../../../Entities/Thumbnail";
 import { MediaExtensionTypes, MediaType } from "../../../Enums/MediaType";
 import { Location } from "../../../Entities/Location";
 import { Media } from "../../../Entities/Media";
@@ -17,7 +16,7 @@ export class MetadataService {
 
   async setFile(media: Media, pathToFile: string, location: Location) {
     //Todo move toMediaService
-      this.media = media;
+    this.media = media;
     this.media.location = location;
     this.pathToFile = pathToFile;
     this.media.type = await this.getFileType()

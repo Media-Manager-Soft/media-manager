@@ -1,9 +1,6 @@
 import { IConverter } from "./IConverter";
 import { Media } from "../../Entities/Media";
 import { PhotoRawDriver } from "../Drivers/PhotoRawDriver";
-import * as fs from "fs";
-
-const dcraw = require('dcraw');
 const sharp = require('sharp');
 
 export class PhotoRawConverter implements IConverter {
@@ -18,7 +15,7 @@ export class PhotoRawConverter implements IConverter {
   }
 
   async full(): Promise<any> {
-    let bufferPrev = await PhotoRawDriver.toBufferAsProcess(this.media, {extractThumbnail: true})
+    let bufferPrev = await PhotoRawDriver.toBufferAsProcess(this.media)
     return sharp(bufferPrev).toBuffer();
   }
 

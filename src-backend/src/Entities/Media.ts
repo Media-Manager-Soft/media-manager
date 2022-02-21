@@ -1,7 +1,6 @@
 import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Location } from "./Location";
 import { MediaService } from "../Services/Media/Metadata/MediaService";
-import { Thumbnail } from "./Thumbnail";
 import { IConverter } from "../Services/Converters/IConverter";
 import { MediaType } from "../Enums/MediaType";
 import { PhotoConverter } from "../Services/Converters/PhotoConverter";

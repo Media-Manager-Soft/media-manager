@@ -1,11 +1,11 @@
-import * as fs from "fs";
+import { ExifTool } from "../Services/Exif/ExifTool";
 
-const dcraw = require('dcraw');
 const sharp = require('sharp');
 
 const pathToRawFile = process.argv.slice(2)[0];
-const res = dcraw(fs.readFileSync(pathToRawFile), {extractThumbnail: true})
-new Promise(resolve => {
+
+new Promise(async resolve => {
+  const res = await ExifTool.extractAsBuffer(pathToRawFile);
   resolve(sharp(res).toBuffer())
 }).then((res) => {
 // @ts-ignore

@@ -37,11 +37,15 @@ export class MediaService {
     // if (!this.media.hasThumb()) {
     let thumb: Thumbnail = new Thumbnail()
     thumb.mediaId = this.media.id;
-    const buffer = await this.media.converter().retrieveThumb();
-    thumb.thumbnail = await sharp(buffer)
-      .resize(Media.THUMB_WIDTH)
-      .jpeg({quality: 60, progressive: true})
-      .toBuffer()
+    try {
+      const buffer = await this.media.converter().retrieveThumb();
+      thumb.thumbnail = await sharp(buffer)
+        .resize(Media.THUMB_WIDTH)
+        .jpeg({quality: 60, progressive: true})
+        .toBuffer()
+    }catch (e) {
+      return;
+    }
     await thumb.save({transaction: false});
     return thumb;
     // }

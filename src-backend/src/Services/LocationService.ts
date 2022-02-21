@@ -1,6 +1,7 @@
 import { Location } from '../Entities/Location';
 import * as fs from "fs";
 import * as path from "path";
+import { MediaExtensionTypes } from "../Enums/MediaType";
 
 const bus = require('./../Events/eventBus');
 const workerManager = require('./../Workers/WorkerManager');
@@ -11,14 +12,16 @@ export class LocationService {
 
   protected getAllFiles(dirPath: any, arrayOfFiles: any): any {
     let files = fs.readdirSync(dirPath)
-
     arrayOfFiles = arrayOfFiles || []
-
+    const availableExtensions: string[] = Object.keys(MediaExtensionTypes);
+    //TODO: use path.join
     files.forEach((file) => {
       if (fs.statSync(dirPath + "/" + file).isDirectory()) {
         arrayOfFiles = this.getAllFiles(dirPath + "/" + file, arrayOfFiles)
       } else {
-        arrayOfFiles.push(path.join(dirPath, "/", file))
+        if (availableExtensions.includes(path.extname(file))) { // Push only available extensions
+          arrayOfFiles.push(path.join(dirPath, "/", file))
+        }
       }
     })
 

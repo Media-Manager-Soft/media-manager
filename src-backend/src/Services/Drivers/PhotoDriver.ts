@@ -1,7 +1,7 @@
 import { promisify } from "util";
 import * as fs from "fs";
+import { ExifTool } from "../Exif/ExifTool";
 
-const dcraw = require('dcraw');
 const convert = require('heic-convert');
 const sharp = require('sharp');
 
@@ -34,7 +34,7 @@ export class PhotoDriver {
   }
 
   protected static async brokenJpg(pathToFile: string) {
-    return dcraw(fs.readFileSync(pathToFile), {extractThumbnail: true})
+    return await ExifTool.extractAsBufferUsingDcraw(pathToFile);
   }
 
   protected static async heic(pathToFile: string) {

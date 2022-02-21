@@ -1,14 +1,17 @@
 import exifr from "exifr";
 import { IMetadata } from "./IMetadata";
 import sizeOf from "image-size";
-export class PhotoMetadataService implements IMetadata{
+
+const exiftool = require("exiftool-vendored").exiftool
+
+export class PhotoMetadataService implements IMetadata {
   private exif: any;
   private pathToFile: string;
 
   async getExifForFile(pathToFile: string) {
     // let options = {pick: ['ExposureTime', 'FNumber', 'ISO']};
     this.pathToFile = pathToFile;
-    this.exif = await exifr.parse(pathToFile, {translateValues: false})
+    this.exif = await exiftool.read(pathToFile)
     return this;
   }
 

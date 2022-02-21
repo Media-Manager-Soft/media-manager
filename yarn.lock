@@ -1632,6 +1632,11 @@
   resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.178.tgz#341f6d2247db528d4a13ddbb374bcdc80406f4f8"
   integrity sha512-0d5Wd09ItQWH1qFbEyQ7oTQ3GZrMfth5JkbN3EvTKLXcHLRDSXeLnlvlOn0wvxVIwK5o2M8JzP/OWz7T3NRsbw==
 
+"@types/luxon@^2.0.9":
+  version "2.0.9"
+  resolved "https://registry.yarnpkg.com/@types/luxon/-/luxon-2.0.9.tgz#782a0edfa6d699191292c13168bd496cd66b87c6"
+  integrity sha512-ZuzIc7aN+i2ZDMWIiSmMdubR9EMMSTdEzF6R+FckP4p6xdnOYKqknTo/k+xXQvciSXlNGIwA4OPU5X7JIFzYdA==
+
 "@types/minimatch@*":
   version "3.0.5"
   resolved "https://registry.npmjs.org/@types/minimatch/-/minimatch-3.0.5.tgz"
@@ -2275,6 +2280,11 @@ base64id@2.0.0, base64id@~2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/base64id/-/base64id-2.0.0.tgz"
   integrity sha512-lGe34o6EHj9y3Kts9R4ZYs/Gr+6N7MCaMlIFA3F1R2O5/m7K06AxfSeO5530PEERE6/WyEg3lsuyw4GHlPZHog==
+
+batch-cluster@^10.0.0:
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/batch-cluster/-/batch-cluster-10.0.1.tgz#887884a9d73599d3630d92e722d6a73284d06ad9"
+  integrity sha512-rbBvDysp3WrG7fA4y0VFoadW8l/22Qpe+66e/4cbAFB7+89k4DUKKsDLd4W/qKjgia0sCT1j7TZg+Wyr9TmzjQ==
 
 batch@0.6.1:
   version "0.6.1"
@@ -3139,7 +3149,7 @@ date-format@^4.0.3:
 
 dcraw@^1.0.3:
   version "1.0.3"
-  resolved "https://registry.npmjs.org/dcraw/-/dcraw-1.0.3.tgz"
+  resolved "https://registry.yarnpkg.com/dcraw/-/dcraw-1.0.3.tgz#2ce21e7abfe2a81e1a70c5a3314b509c12ac4a99"
   integrity sha512-Eer+8s95I1itFQUCOqMxNNLPLR0MPjBHxuPY7AgbdcMY/aohbJhf8/mvA+NqKUj+MWm0fEKm17CmESqbzzcvZg==
 
 debug@2.6.9, debug@^2.6.8, debug@^2.6.9:
@@ -3841,6 +3851,30 @@ exifr@^7.1.3:
   resolved "https://registry.npmjs.org/exifr/-/exifr-7.1.3.tgz"
   integrity sha512-g/aje2noHivrRSLbAUtBPWFbxKdKhgj/xr1vATDdUXPOFYJlQ62Ft0oy+72V6XLIpDJfHs6gXLbBLAolqOXYRw==
 
+exiftool-vendored.exe@12.40.0:
+  version "12.40.0"
+  resolved "https://registry.yarnpkg.com/exiftool-vendored.exe/-/exiftool-vendored.exe-12.40.0.tgz#0285fb4fc3b4495aa4c41f3784eb69b7d001a1c6"
+  integrity sha512-Ng7CGioXkX3msJzI8HxM5ZbtoUiw/4JFJSxe9d/kOqOo3nMqStB8sqtwjmilsHAyuW2JIGkUtZ+IxPkuzRrmyA==
+
+exiftool-vendored.pl@12.40.0:
+  version "12.40.0"
+  resolved "https://registry.yarnpkg.com/exiftool-vendored.pl/-/exiftool-vendored.pl-12.40.0.tgz#484b45114193167d67178f9c59af104fe8d9f177"
+  integrity sha512-yNoDhG6g8ifzgm0PPqgWTiI5vdbuTGyTgIlpy+hxeuf7M2b0x6tGtYNakjIO9Q08VDNxXIr1lEZJR2EMZ5JDTQ==
+
+exiftool-vendored@^15.11.0:
+  version "15.11.0"
+  resolved "https://registry.yarnpkg.com/exiftool-vendored/-/exiftool-vendored-15.11.0.tgz#e42c15408e53f1af8adc71702365c68389206a32"
+  integrity sha512-LN4MKogNnsDTsvCUxCCMF1wAhQgzTmGytUOekngxfdF3zDHAb0t2EdINHTZ5MO0dDtA5CvRn8/jjpA+OVifoaw==
+  dependencies:
+    "@types/luxon" "^2.0.9"
+    batch-cluster "^10.0.0"
+    he "^1.2.0"
+    luxon "^2.3.0"
+    tz-lookup "^6.1.25"
+  optionalDependencies:
+    exiftool-vendored.exe "12.40.0"
+    exiftool-vendored.pl "12.40.0"
+
 expand-template@^2.0.3:
   version "2.0.3"
   resolved "https://registry.npmjs.org/expand-template/-/expand-template-2.0.3.tgz"
@@ -4416,6 +4450,11 @@ hdr-histogram-percentiles-obj@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/hdr-histogram-percentiles-obj/-/hdr-histogram-percentiles-obj-3.0.0.tgz"
   integrity sha512-7kIufnBqdsBGcSZLPJwqHT3yhk1QTsSlFsVD3kx5ixH/AlgBs9yM1q6DPhXZ8f8gtdqgh7N7/5btRLpQsS2gHw==
+
+he@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/he/-/he-1.2.0.tgz#84ae65fa7eafb165fddb61566ae14baf05664f0f"
+  integrity sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==
 
 heic-convert@^1.2.4:
   version "1.2.4"
@@ -5374,6 +5413,11 @@ lru-cache@^6.0.0:
   integrity sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==
   dependencies:
     yallist "^4.0.0"
+
+luxon@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/luxon/-/luxon-2.3.0.tgz#bf16a7e642513c2a20a6230a6a41b0ab446d0045"
+  integrity sha512-gv6jZCV+gGIrVKhO90yrsn8qXPKD8HYZJtrUDSfEbow8Tkw84T9OnCyJhWvnJIaIF/tBuiAjZuQHUt1LddX2mg==
 
 magic-string@0.25.7, magic-string@^0.25.0:
   version "0.25.7"
@@ -8110,6 +8154,11 @@ typescript@~4.4.3:
   version "4.4.4"
   resolved "https://registry.npmjs.org/typescript/-/typescript-4.4.4.tgz"
   integrity sha512-DqGhF5IKoBl8WNf8C1gu8q0xZSInh9j1kJJMqT3a94w1JzVaBU4EXOSMrz9yDqMT0xt3selp83fuFMQ0uzv6qA==
+
+tz-lookup@^6.1.25:
+  version "6.1.25"
+  resolved "https://registry.yarnpkg.com/tz-lookup/-/tz-lookup-6.1.25.tgz#34d68a7e1ccfcb51f29a9893d2d48e4118d873cd"
+  integrity sha512-fFewT9o1uDzsW1QnUU1ValqaihFnwiUiiHr1S79/fxOzKXYYvX+EHeRnpvQJ9B3Qg67wPXT6QF2Esc4pFOrvLg==
 
 ua-parser-js@^0.7.30:
   version "0.7.31"

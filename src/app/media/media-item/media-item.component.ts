@@ -28,9 +28,11 @@ export class MediaItemComponent {
 
   async setThumb() {
     await this.electronService.ipcRenderer.invoke('get-thumbnail', {mediaId: this.media.id}).then((data) => {
-      const urlCreator = window.URL || window.webkitURL;
-      const blob = new Blob([data]);
-      this.thumbnail.nativeElement.src = urlCreator.createObjectURL(blob)
+      if (data) {
+        const urlCreator = window.URL || window.webkitURL;
+        const blob = new Blob([data]);
+        this.thumbnail.nativeElement.src = urlCreator.createObjectURL(blob)
+      }
     })
   }
 

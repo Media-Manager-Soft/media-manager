@@ -35,6 +35,7 @@
     "bootstrap": "^5.1.3",
     "dcraw": "^1.0.3",
     "exifr": "^7.1.3",
+    "exiftool-vendored": "^15.11.0",
     "ffprobe": "^1.1.2",
     "fluent-ffmpeg": "^2.1.2",
     "heic-convert": "^1.2.4",
