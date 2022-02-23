@@ -8,6 +8,7 @@ import { NavData } from "./Data/NavData";
 import { MediaQuery } from "./Queries/MediaQuery";
 import { ThumbnailController } from "./Controllers/ThumbnailController";
 import { PathHelper } from "./Helpers/helpers";
+import { UpdateMetaMetadataController } from "./Controllers/UpdateMetaMetadataController";
 
 var bus = require('./Events/eventBus');
 var workerManager = require('./Workers/WorkerManager')
@@ -110,6 +111,10 @@ export class Main {
         type: media?.type,
         data: await media?.converter().full()
       }
+    })
+
+    ipcMain.handle('update-metadata', async (event, arg) => {
+      return UpdateMetaMetadataController.update(arg.mediaId, arg.data);
     })
   }
 

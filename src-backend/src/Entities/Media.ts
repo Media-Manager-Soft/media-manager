@@ -40,6 +40,9 @@ export class Media extends BaseEntity {
   @Column({type: "int", nullable: true})
   rating: number
 
+  @Column({type: "boolean", default: false})
+  favorite: boolean
+
   @Column({type: "int", nullable: true})
   flag: number
 

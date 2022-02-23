@@ -9,7 +9,7 @@ import { MediaService } from "../media.service";
 })
 export class GridComponent implements OnInit {
 
-  private currentSeparatorValue: string
+  private currentSeparatorValue: string = ''
 
   constructor(public gridService: GridService, public mediaService: MediaService) {
   }

@@ -22,7 +22,7 @@ export class MediaItemComponent {
   constructor(
     private electronService: ElectronService,
     private gridService: GridService,
-    private mediaService: MediaService,
+    public mediaService: MediaService,
   ) {
   }
 

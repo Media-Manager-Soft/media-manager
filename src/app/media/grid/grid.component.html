@@ -6,6 +6,8 @@
         (modalClosed)="modalClosed()"
 ></app-preview-media>
 
+<h3>Add </h3>
+
 <div class="media-item-container">
     <ng-container *ngFor="let item of mediaService.media; let i = index">
         <p class="media-grid-separator" *ngIf="shouldSeparateGrid(item.takenAt)">

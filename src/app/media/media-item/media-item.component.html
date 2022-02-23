@@ -8,6 +8,7 @@
     <div class="figure">
         <p>{{ media.filename }}</p>
         <p>{{ media.takenAt | date:"yyyy.MM.dd HH:mm:ss"}}</p>
+        <p (click)="mediaService.updateMedia(media.id, {favorite: !media.favorite})">{{ media.favorite }}</p>
     </div>
 </div>
 
