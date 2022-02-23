@@ -43,8 +43,8 @@ export class Media extends BaseEntity {
   @Column({type: "boolean", default: false})
   favorite: boolean
 
-  @Column({type: "int", nullable: true})
-  flag: number
+  @Column({default: 0})
+  flag: -1 | 0 | 1
 
   @Column({type: "int", nullable: true})
   width: number;
