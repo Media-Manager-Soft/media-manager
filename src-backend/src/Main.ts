@@ -91,7 +91,9 @@ export class Main {
     //todo: temp
     ipcMain.on('async-msg', async (event, arg) => {
       var loc = await Location.findOne(1)
-      loc?.service().discoverFiles();
+      loc?.service().discoverFiles().then(() => {
+        loc?.service().removeIfNotExists()
+      });
     })
 
     ipcMain.handle('terminate-process', async (event, arg) => {

@@ -4,8 +4,6 @@ import { MetadataService } from "./MetadataService";
 import { Thumbnail } from "../../../Entities/Thumbnail";
 import { ImgConverter } from "../../Img/ImgConverter";
 
-// const sharp = require('sharp');
-
 
 export class MediaService {
   private mediaMetadataService: MetadataService;
@@ -37,13 +35,15 @@ export class MediaService {
 
   async storeThumb() {
     // if (!this.media.hasThumb()) {
-    let thumb: Thumbnail = new Thumbnail()
+    let thumb: Thumbnail | undefined = await Thumbnail.findOne({mediaId: this.media.id});
+
+    if (thumb === undefined) {
+      thumb = new Thumbnail();
+    }
+
     thumb.mediaId = this.media.id;
     try {
       const buffer = await this.media.converter().retrieveThumb();
-      // thumb.thumbnail = await sharp(buffer)
-      //   .resize(Media.THUMB_WIDTH)
-      //   .jpeg({quality: 60, progressive: true})
       thumb.thumbnail = await ImgConverter.setData(buffer)
         .resizeToThumb()
         .toJpg({quality: 60, progressive: true})
@@ -55,5 +55,23 @@ export class MediaService {
     await thumb.save({transaction: false});
     return thumb;
     // }
+  }
+
+  async shouldBeImported(): Promise<Media | null> {
+    const media = await Media.findOne({
+      where: {
+        size: this.media.size,
+        camera: this.media.camera,
+        cameraModel: this.media.cameraModel,
+        takenAt: this.media.takenAt,
+      },
+      relations: ['location']
+    })
+
+    if (media !== undefined) {
+      return media.fileExists() ? media : null;
+    }
+
+    return null;
   }
 }

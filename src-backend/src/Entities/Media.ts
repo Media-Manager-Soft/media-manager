@@ -6,6 +6,8 @@ import { MediaType } from "../Enums/MediaType";
 import { PhotoConverter } from "../Services/Converters/PhotoConverter";
 import { PhotoRawConverter } from "../Services/Converters/PhotoRawConverter";
 import { VideoConverter } from "../Services/Converters/VideoConverter";
+import * as fs from "fs";
+import { Thumbnail } from "./Thumbnail";
 
 const path = require('path');
 
@@ -80,6 +82,15 @@ export class Media extends BaseEntity {
 
   getPathToFile() {
     return path.join(this.location.path, this.path, this.filename)
+  }
+
+  fileExists() {
+    return fs.existsSync(this.getPathToFile())
+  }
+
+  removeWithThumb() {
+    Thumbnail.delete({mediaId: this.id})
+    this.remove()
   }
 
   converter(): IConverter {

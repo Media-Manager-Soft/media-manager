@@ -2,6 +2,7 @@ import { Location } from '../Entities/Location';
 import * as fs from "fs";
 import * as path from "path";
 import { MediaExtensionTypes } from "../Enums/MediaType";
+import { Media } from "../Entities/Media";
 
 const bus = require('./../Events/eventBus');
 const workerManager = require('./../Workers/WorkerManager');
@@ -36,6 +37,12 @@ export class LocationService {
     workerManager.getWorker(id).on('message', (resp: any) => {
       bus.emit('notifyFront', resp)
     })
+  }
 
+  public async removeIfNotExists() {
+    const media = await Media.find({relations: ['location']})
+    media.forEach(media => {
+      !media.fileExists() ? media.removeWithThumb() : null;
+    })
   }
 }

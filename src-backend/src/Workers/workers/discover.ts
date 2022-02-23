@@ -11,6 +11,13 @@ process.on('message', async (message) => {
     let media = new Media();
     try {
       await media.mediaService.discoverMetadata(message.data.paths[i], location);
+
+      const result = await media.mediaService.shouldBeImported();
+
+      if (!!result) {
+        media = result;
+      }
+
       await media.save();
       await media.mediaService.storeThumb();
 

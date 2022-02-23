@@ -11,7 +11,6 @@ import { TreeItemDto } from "./tree-view/tree-iten.dto";
 export class DatesComponent implements OnInit {
   private dates$: Subscription;
   public items: TreeItemDto[] = [];
-  public isFetching = true;
 
   constructor(public electronService: ElectronService) {
     this.getDates();
