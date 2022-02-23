@@ -25,6 +25,7 @@ export class MediaService {
     this.media$ = new Observable((observer) => {
       this.electronService.ipcRenderer.invoke('get-media', {query: this.queries})
         .then((result) => {
+          console.log(result)
           observer.next(result)
         })
         .catch()
@@ -43,6 +44,7 @@ export class MediaService {
     } else {
       this.queries.push(query);
     }
+    console.log(this.queries)
     this.getMedia();
   }
 

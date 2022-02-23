@@ -14,6 +14,8 @@ import { NavComponent } from './nav/nav.component';
 import { DatesComponent } from './filters/dates/dates.component';
 import { TreeViewComponent } from "./filters/dates/tree-view/tree-view.component";
 import { TreeItemComponent } from "./filters/dates/tree-view/tree-item/tree-item.component";
+import { FlagsComponent } from './filters/flags/flags.component';
+import { FavoritesComponent } from './filters/favorites/favorites.component';
 
 
 @NgModule({
@@ -29,6 +31,8 @@ import { TreeItemComponent } from "./filters/dates/tree-view/tree-item/tree-item
     DatesComponent,
     TreeViewComponent,
     TreeItemComponent,
+    FlagsComponent,
+    FavoritesComponent,
   ],
   imports: [
     BrowserModule,
