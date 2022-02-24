@@ -48,7 +48,6 @@ export class MediaQuery {
 
   private favoritesQuery(parameters: any) {
     if (parameters.favorites) {
-      // this.mediaQueryBuilder.andWhere({favorite: parameters.favorites})
       this.mediaQueryBuilder.andWhere('favorite = :fav', {fav: parameters.favorites})
     }
   }
