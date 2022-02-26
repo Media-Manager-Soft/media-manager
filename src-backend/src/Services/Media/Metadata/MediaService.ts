@@ -7,6 +7,7 @@ import { ImgConverter } from "../../Img/ImgConverter";
 
 export class MediaService {
   private mediaMetadataService: MetadataService;
+  private location: Location;
 
   constructor(private media: Media) {
     this.mediaMetadataService = new MetadataService()
@@ -16,6 +17,7 @@ export class MediaService {
 
     await this.mediaMetadataService.setFile(this.media, pathToFile, location);
 
+    this.location = location;
     this.media.path = this.mediaMetadataService.getFilePathInLocation();
     this.media.filename = this.mediaMetadataService.getFileName();
 
@@ -64,6 +66,7 @@ export class MediaService {
         camera: this.media.camera,
         cameraModel: this.media.cameraModel,
         takenAt: this.media.takenAt,
+        location: this.location,
       },
       relations: ['location']
     })

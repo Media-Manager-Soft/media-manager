@@ -6,14 +6,16 @@ import { Media } from "./Entities/Media";
 import { DBConnection } from "./Database/DBConnection";
 import { NavData } from "./Data/NavData";
 import { MediaQuery } from "./Queries/MediaQuery";
-import { ThumbnailController } from "./Controllers/ThumbnailController";
 import { PathHelper } from "./Helpers/helpers";
 import { UpdateMetaMetadataController } from "./Controllers/UpdateMetaMetadataController";
+import { ChildProcess, fork } from "child_process";
+import { ThumbnailController } from "./Controllers/ThumbnailController";
 
 var bus = require('./Events/eventBus');
 var workerManager = require('./Workers/WorkerManager')
 
 export class Main {
+  private thumbnailWorker: ChildProcess;
 
   public run() {
     this.onReady();
@@ -53,6 +55,7 @@ export class Main {
         mainWindow.webContents.send("notification", args)
       })
       PathHelper.deleteTemp()
+
     });
   }
 

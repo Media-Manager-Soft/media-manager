@@ -5,10 +5,10 @@ export class Thumbnail extends BaseEntity {
 
   @PrimaryGeneratedColumn('increment')
   id: number;
-  @Column({type: "blob", nullable: true})
+  @Column({type: "blob"})
   thumbnail: ArrayBuffer | Buffer | Uint8Array | undefined;
 
-  @Column()
+  @Column({unique: true})
   mediaId: number;
   
 }

@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { QueryDto } from "./query.dto";
-import { findIndex as _findIndex } from 'lodash';
+import { findIndex as _findIndex, forEach as _foreach } from 'lodash';
 import { Observable, Subscription } from "rxjs";
-import { findIndex } from "lodash";
 import { ElectronService } from "../core/services/electron.service";
 
 @Injectable({
@@ -14,6 +13,7 @@ export class MediaService {
 
   public media$: Subscription;
   public media: any;
+  protected cancelToken = 1;
 
   constructor(
     private electronService: ElectronService,
@@ -25,7 +25,6 @@ export class MediaService {
     this.media$ = new Observable((observer) => {
       this.electronService.ipcRenderer.invoke('get-media', {query: this.queries})
         .then((result) => {
-          console.log(result)
           observer.next(result)
         })
         .catch()
@@ -33,8 +32,27 @@ export class MediaService {
           observer.complete();
         })
     }).subscribe(media => {
-      return this.media = media;
+      this.media = media;
+      this.cancelToken++;
+      console.log(this.media)
+      this.getThumbs()
     });
+  }
+
+  getThumbs() {
+    _foreach(this.media, async (media) => {
+      console.log(media.id)
+      // if (currentCancelToken !== this.cancelToken) {
+      //   return;
+      // }
+     media.thumbnail =  await new Promise(async resolve => {
+       this.electronService.ipcRenderer.invoke('get-thumbnail', {mediaId: media.id}).then((data) => {
+          resolve(data);
+          // media.thumbnail = data;
+        })
+      })
+
+    })
   }
 
   setQuery(query: QueryDto) {
@@ -44,13 +62,13 @@ export class MediaService {
     } else {
       this.queries.push(query);
     }
-    console.log(this.queries)
+    // console.log(this.queries)
     this.getMedia();
   }
 
   updateMedia(mediaId: number, data: any) {
     this.electronService.ipcRenderer.invoke('update-metadata', {mediaId, data}).then((res) => {
-      const index = findIndex(this.media, {id: res.id});
+      const index = _findIndex(this.media, {id: res.id});
       Object.keys(data).forEach(key => {
         this.media[index][key] = res[key];
       })

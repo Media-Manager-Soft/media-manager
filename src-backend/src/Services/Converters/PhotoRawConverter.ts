@@ -11,7 +11,8 @@ export class PhotoRawConverter implements IConverter {
   }
 
   async retrieveThumb(): Promise<any> {
-    return this.full();
+    let bufferPrev = await PhotoRawDriver.toBuffer(this.media)
+    return ImgConverter.setData(bufferPrev).toBuffer();
   }
 
   async full(): Promise<any> {

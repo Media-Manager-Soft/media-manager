@@ -16,6 +16,7 @@ import { TreeViewComponent } from "./filters/dates/tree-view/tree-view.component
 import { TreeItemComponent } from "./filters/dates/tree-view/tree-item/tree-item.component";
 import { FlagsComponent } from './filters/flags/flags.component';
 import { FavoritesComponent } from './filters/favorites/favorites.component';
+import { PhotoBufferComponent } from './media/media-item/photo-buffer/photo-buffer.component';
 
 
 @NgModule({
@@ -33,6 +34,7 @@ import { FavoritesComponent } from './filters/favorites/favorites.component';
     TreeItemComponent,
     FlagsComponent,
     FavoritesComponent,
+    PhotoBufferComponent,
   ],
   imports: [
     BrowserModule,

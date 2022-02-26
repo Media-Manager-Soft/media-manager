@@ -1,12 +1,9 @@
 import { Media } from "../../Entities/Media";
 import * as child_process from "child_process";
+import { ExifTool } from "../Exif/ExifTool";
+import { ImgConverter } from "../Img/ImgConverter";
 
 export class PhotoRawDriver {
-
-  // @deprecated
-  // static toBuffer(media: Media, options: any = {}) {
-  //   return dcraw(fs.readFileSync(media.getPathToFile()), options)
-  // }
 
   static async toBufferAsProcess(media: Media, options: any = {}) {
     const path = __dirname + '/../../processes/rawToBuffer.js';
@@ -16,7 +13,12 @@ export class PhotoRawDriver {
     return new Promise(resolve => {
       a.on('message', function (message) {
         resolve(message as Uint8Array);
+        a.kill()
       });
     })
+  }
+
+  static async toBuffer(media: Media) {
+    return await ExifTool.extractAsBuffer(media.getPathToFile());
   }
 }

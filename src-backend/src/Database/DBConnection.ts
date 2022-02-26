@@ -8,9 +8,9 @@ import { Thumbnail } from "../Entities/Thumbnail";
 export class DBConnection {
   public static async createConnection() {
 
-    if (getConnectionManager().has('default')) {
-      return
-    }
+    // if (getConnectionManager().has('default')) {
+    //   return
+    // }
 
     await createConnections([
       {

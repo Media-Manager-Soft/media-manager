@@ -42,6 +42,4 @@ const workers: WorkerMap = {
   'discover': path.resolve(__dirname, '../../src/Workers/workers/discover.js'),
 }
 
-let workerManager = new WorkerManager();
-
-module.exports = workerManager;
+module.exports = new WorkerManager();
