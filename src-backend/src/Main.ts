@@ -4,7 +4,7 @@ import * as url from "url";
 import { Location } from "./Entities/Location";
 import { Media } from "./Entities/Media";
 import { DBConnection } from "./Database/DBConnection";
-import { NavData } from "./Data/NavData";
+import { NavDates } from "./Data/NavDates";
 import { MediaQuery } from "./Queries/MediaQuery";
 import { PathHelper } from "./Helpers/helpers";
 import { UpdateMetaMetadataController } from "./Controllers/UpdateMetaMetadataController";
@@ -105,7 +105,7 @@ export class Main {
     })
 
     ipcMain.handle('get-nav-dates', async (event, locationsIds) => {
-      return NavData.getDates(locationsIds);
+      return NavDates.getDates(locationsIds);
     })
 
     ipcMain.handle('get-media-for-preview', async (event, mediaId) => {

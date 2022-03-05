@@ -15,7 +15,6 @@ export class DatesService {
   }
 
   getDates(locations: number[]) {
-    console.log(locations);
     this.dates$ = new Observable((observer) => {
       this.electronService.ipcRenderer.invoke('get-nav-dates', locations)
         .then((result) => {

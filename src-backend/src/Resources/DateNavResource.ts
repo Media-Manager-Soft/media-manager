@@ -1,6 +1,5 @@
 import { TreeItem } from "./Types/TreeType";
-import { find as _find } from 'lodash';
-import { start } from "repl";
+import { find as _find, sumBy } from 'lodash';
 
 
 export class DateNavResource {
@@ -13,7 +12,8 @@ export class DateNavResource {
     this.data.map((item: any) => {
       this.appendRow(item)
     })
-    return this.result;
+
+    return [new TreeItem('All', '', sumBy(this.data, 'qty'), this.result)]
   }
 
   appendRow(item: any) {
