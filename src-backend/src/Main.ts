@@ -104,8 +104,8 @@ export class Main {
       await workerManager.terminate(arg.processId)
     })
 
-    ipcMain.handle('get-nav-dates', async (event, arg) => {
-      return NavData.getDates();
+    ipcMain.handle('get-nav-dates', async (event, locationsIds) => {
+      return NavData.getDates(locationsIds);
     })
 
     ipcMain.handle('get-media-for-preview', async (event, mediaId) => {

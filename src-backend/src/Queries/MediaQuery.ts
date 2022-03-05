@@ -1,7 +1,7 @@
 import { QueryDto } from "../Dto/QueryDto";
 import { getManager, SelectQueryBuilder } from "typeorm";
 import { datePattern } from "./patterns/dataPattern";
-import { filter as _filter } from "lodash";
+import { filter as _filter, find } from "lodash";
 
 export class MediaQuery {
   private queries: QueryDto[];
@@ -19,12 +19,26 @@ export class MediaQuery {
   }
 
   public get() {
+    if (!this.verifyQuery()) {
+      return [];
+    }
+
+    // @ts-ignore
     this.applyQueriesToQueryBuilder();
     this.mediaQueryBuilder.orderBy('takenAt', 'DESC')
     this.mediaQueryBuilder
       .from("(" + this.mediaDateSubQuery.getQuery() + ")", "media")
     // .setParameters(dateSubQuery.getParameters())
     return this.mediaQueryBuilder.getRawMany()
+  }
+
+  private verifyQuery(): boolean {
+    let dateQuery = find(this.queries, {type: 'date'});
+    // @ts-ignore
+    if (dateQuery?.parameters?.length > 0) {
+      return true;
+    }
+    return false;
   }
 
   private applyQueriesToQueryBuilder() {
@@ -56,5 +70,9 @@ export class MediaQuery {
     if (flags.length > 0) {
       this.mediaQueryBuilder.andWhere("flag IN (:...flags)", {flags})
     }
+  }
+
+  private locationsQuery(locations: []) {
+    this.mediaQueryBuilder.andWhere("locationId IN (:...locations)", {locations})
   }
 }

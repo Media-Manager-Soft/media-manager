@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, Subscription } from "rxjs";
 import { ElectronService } from "../../core/services/electron.service";
 import { TreeItemDto } from "./tree-view/tree-iten.dto";
+import { DatesService } from "./dates.service";
 
 @Component({
   selector: 'app-dates',
@@ -9,30 +10,13 @@ import { TreeItemDto } from "./tree-view/tree-iten.dto";
   styleUrls: ['./dates.component.scss']
 })
 export class DatesComponent implements OnInit {
-  private dates$: Subscription;
-  public items: TreeItemDto[] = [];
 
-  constructor(public electronService: ElectronService) {
-    this.getDates();
+  constructor(public datesService: DatesService) {
   }
 
   ngOnInit(): void {
 
   }
 
-  getDates() {
-    this.dates$ = new Observable((observer) => {
-      this.electronService.ipcRenderer.invoke('get-nav-dates')
-        .then((result) => {
-          observer.next(result)
-        })
-        .catch()
-        .finally(() => {
-          observer.complete();
-        })
-    }).subscribe((dates) => {
-      this.items = dates as TreeItemDto[];
-    });
-  }
 
 }

@@ -1,8 +1,8 @@
-<h1>Location list</h1>
 <p *ngFor="let location of locations">
-    <span>{{ location['name'] }}</span>
+    <span [class.selected]="location.isSelected" (click)="toggleSelect(location)">{{ location.name }}</span>
 </p>
-<h2>Add new</h2>
+
+<h3>Add new</h3>
 <form [formGroup]="newPathForm" (ngSubmit)="onSubmit()">
     <!--    <div [formGroup]="newPathForm">-->
     Name: <input formControlName="name">

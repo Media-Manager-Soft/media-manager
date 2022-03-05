@@ -13,7 +13,6 @@ export class MediaService {
 
   public media$: Subscription;
   public media: any;
-  protected cancelToken = 1;
 
   constructor(
     private electronService: ElectronService,
@@ -33,27 +32,20 @@ export class MediaService {
         })
     }).subscribe(media => {
       this.media = media;
-      this.cancelToken++;
-      console.log(this.media)
       this.getThumbs()
     });
   }
 
   getThumbs() {
     _foreach(this.media, async (media) => {
-      console.log(media.id)
-      // if (currentCancelToken !== this.cancelToken) {
-      //   return;
-      // }
-     media.thumbnail =  await new Promise(async resolve => {
-       this.electronService.ipcRenderer.invoke('get-thumbnail', {mediaId: media.id}).then((data) => {
+      media.thumbnail = await new Promise(async resolve => {
+        this.electronService.ipcRenderer.invoke('get-thumbnail', {mediaId: media.id}).then((data) => {
           resolve(data);
-          // media.thumbnail = data;
         })
       })
-
     })
   }
+
 
   setQuery(query: QueryDto) {
     let q = _findIndex(this.queries, {type: query.type})
@@ -62,7 +54,6 @@ export class MediaService {
     } else {
       this.queries.push(query);
     }
-    // console.log(this.queries)
     this.getMedia();
   }
 

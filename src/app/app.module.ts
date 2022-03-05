@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LocationComponent } from './location/location.component';
 import { ReactiveFormsModule } from "@angular/forms";
 import { GridComponent } from './media/grid/grid.component';
 import { MediaItemComponent } from './media/media-item/media-item.component';
@@ -17,12 +16,12 @@ import { TreeItemComponent } from "./filters/dates/tree-view/tree-item/tree-item
 import { FlagsComponent } from './filters/flags/flags.component';
 import { FavoritesComponent } from './filters/favorites/favorites.component';
 import { PhotoBufferComponent } from './media/media-item/photo-buffer/photo-buffer.component';
+import { LocationsComponent } from './filters/locations/locations.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    LocationComponent,
     GridComponent,
     MediaItemComponent,
     NotificationComponent,
@@ -35,6 +34,7 @@ import { PhotoBufferComponent } from './media/media-item/photo-buffer/photo-buff
     FlagsComponent,
     FavoritesComponent,
     PhotoBufferComponent,
+    LocationsComponent,
   ],
   imports: [
     BrowserModule,
