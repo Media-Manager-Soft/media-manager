@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { QueryDto } from "./query.dto";
-import { findIndex as _findIndex, forEach as _foreach } from 'lodash';
+import { findIndex as _findIndex } from 'lodash';
 import { Observable, Subscription } from "rxjs";
 import { ElectronService } from "../core/services/electron.service";
 
@@ -10,19 +10,23 @@ import { ElectronService } from "../core/services/electron.service";
 export class MediaService {
 
   private queries: QueryDto[] = []
+  private pagination = {
+    skip: 0,
+    take: 0,
+  }
 
   public media$: Subscription;
-  public media: any;
+  public media: any[] = [];
 
   constructor(
     private electronService: ElectronService,
   ) {
-    this.getMedia();
+    this.resetPagination();
   }
 
   getMedia() {
     this.media$ = new Observable((observer) => {
-      this.electronService.ipcRenderer.invoke('get-media', {query: this.queries})
+      this.electronService.ipcRenderer.invoke('get-media', {query: this.queries, pagination: this.pagination})
         .then((result) => {
           observer.next(result)
         })
@@ -30,10 +34,21 @@ export class MediaService {
         .finally(() => {
           observer.complete();
         })
-    }).subscribe(media => {
-      this.media = media;
+    }).subscribe((media) => {
+      // @ts-ignore
+      this.media.push(...media)
       this.getThumbs()
     });
+  }
+
+  public incrementPagination(){
+    this.pagination.skip += 30;
+    this.pagination.take = 30;
+  }
+
+  public resetPagination(){
+    this.pagination.skip = 0;
+    this.pagination.take = 30;
   }
 
   async getThumbs() {
@@ -58,6 +73,8 @@ export class MediaService {
     } else {
       this.queries.push(query);
     }
+    this.resetPagination();
+    this.media = [];
     this.getMedia();
   }
 

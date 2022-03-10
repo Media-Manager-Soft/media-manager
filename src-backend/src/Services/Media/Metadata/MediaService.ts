@@ -50,11 +50,10 @@ export class MediaService {
         .resizeToThumb()
         .toJpg({quality: 60, progressive: true})
         .toBuffer()
+      await thumb.save({transaction: false});
     } catch (e) {
       console.error(e);
-      return;
     }
-    await thumb.save({transaction: false});
     return thumb;
     // }
   }

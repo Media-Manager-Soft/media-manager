@@ -73,7 +73,7 @@ export class Main {
     })
 
     ipcMain.handle('get-media', async (event, queries) => {
-      return await MediaQuery.setQuery(queries.query).get();
+      return MediaQuery.setQuery(queries.query, queries.pagination).get();
     })
 
     ipcMain.handle('get-thumbnail', async (event, arg) => {
@@ -92,7 +92,8 @@ export class Main {
       const {dialog} = require('electron')
       return dialog.showOpenDialog({properties: ['openDirectory']});
     })
-    //todo: temp
+
+    //todo: for Develop only
     ipcMain.on('async-msg', async (event, arg) => {
       var loc = await Location.findOne(1)
       loc?.service().discoverFiles().then(() => {

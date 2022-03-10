@@ -8,13 +8,15 @@ export class MediaQuery {
   private mediaQueryBuilder: SelectQueryBuilder<any>;
   private mediaDateSubQuery: SelectQueryBuilder<any>
 
-  public static setQuery(query: QueryDto[]) {
+  public static setQuery(query: QueryDto[], pagination: { skip: 0, take: 10 }) {
     const c = new this
     c.queries = query
     c.mediaQueryBuilder = getManager().createQueryBuilder()
     c.mediaDateSubQuery = getManager().createQueryBuilder()
       .select("*")
       .from('media', 'm')
+    c.mediaQueryBuilder.take(pagination.take);
+    c.mediaQueryBuilder.skip(pagination.skip);
     return c;
   }
 
@@ -23,22 +25,17 @@ export class MediaQuery {
       return [];
     }
 
-    // @ts-ignore
     this.applyQueriesToQueryBuilder();
-    this.mediaQueryBuilder.orderBy('takenAt', 'DESC')
     this.mediaQueryBuilder
       .from("(" + this.mediaDateSubQuery.getQuery() + ")", "media")
     // .setParameters(dateSubQuery.getParameters())
+    this.mediaQueryBuilder.orderBy('takenAt', 'DESC')
     return this.mediaQueryBuilder.getRawMany()
   }
 
   private verifyQuery(): boolean {
     let dateQuery = find(this.queries, {type: 'date'});
-    // @ts-ignore
-    if (dateQuery?.parameters?.length > 0) {
-      return true;
-    }
-    return false;
+    return dateQuery?.parameters?.length > 0;
   }
 
   private applyQueriesToQueryBuilder() {

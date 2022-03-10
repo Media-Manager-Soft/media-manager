@@ -31,7 +31,7 @@ export class LocationsComponent implements OnInit {
         //TODO: Get data from eg. local storage
         this.locations[0].isSelected = true;
       }
-      this.setQuery();
+      this.setDateByLocation();
     });
   }
 
@@ -49,10 +49,17 @@ export class LocationsComponent implements OnInit {
     this.setQuery();
   }
 
+  getSelected() {
+    return map(filter(this.locations, {isSelected: true}), 'id');
+  }
+
+  setDateByLocation() {
+    this.datesService.getDates(this.getSelected());
+  }
+
   setQuery() {
-    let selected = map(filter(this.locations, {isSelected: true}), 'id');
-    this.mediaService.setQuery({type: 'locations', parameters: selected})
-    this.datesService.getDates(selected);
+    this.setDateByLocation();
+    this.mediaService.setQuery({type: 'locations', parameters: this.getSelected()})
   }
 
   onSubmit() {
@@ -73,6 +80,7 @@ export class LocationsComponent implements OnInit {
       });
   }
 
+  //TODO: For DEV Only
   send() {
     this.electronService.ipcRenderer.send('async-msg', 'ping')
   }

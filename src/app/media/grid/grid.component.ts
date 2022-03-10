@@ -28,4 +28,10 @@ export class GridComponent implements OnInit {
   modalClosed() {
     this.gridService.selectMediaIndexForPreview(null);
   }
+
+  onScroll() {
+    this.mediaService.incrementPagination();
+    this.mediaService.getMedia();
+  }
+
 }

@@ -1,4 +1,4 @@
-$navSize: 220px;
+$navSize: 250px;
 
 .app-container{
   nav.filters {
@@ -6,6 +6,7 @@ $navSize: 220px;
     height: 100%;
     width: $navSize;
     position: fixed;
+    overflow: scroll;
     z-index: 1;
     top: 0;
     left: 0;

@@ -17,6 +17,7 @@ import { FlagsComponent } from './filters/flags/flags.component';
 import { FavoritesComponent } from './filters/favorites/favorites.component';
 import { PhotoBufferComponent } from './media/media-item/photo-buffer/photo-buffer.component';
 import { LocationsComponent } from './filters/locations/locations.component';
+import { InfiniteScrollModule } from "ngx-infinite-scroll";
 
 
 @NgModule({
@@ -40,6 +41,7 @@ import { LocationsComponent } from './filters/locations/locations.component';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    InfiniteScrollModule,
     PinchZoomModule,
   ],
   bootstrap: [AppComponent]

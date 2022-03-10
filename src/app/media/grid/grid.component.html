@@ -6,9 +6,14 @@
         (modalClosed)="modalClosed()"
 ></app-preview-media>
 
-<h3>Add </h3>
-
-<div class="media-item-container">
+<div class="media-item-container"
+     style="background-color: antiquewhite"
+     infiniteScroll
+     [infiniteScrollDistance]="3"
+     [infiniteScrollThrottle]="50"
+     [fromRoot]="true"
+     (scrolled)="onScroll()"
+>
     <ng-container *ngFor="let item of mediaService.media; let i = index">
 <!--        <p class="media-grid-separator" *ngIf="shouldSeparateGrid(item.takenAt)">-->
 <!--            {{ item.takenAt | date:"yyyy.MM.dd" }}-->
@@ -18,4 +23,3 @@
         </div>
     </ng-container>
 </div>
-
