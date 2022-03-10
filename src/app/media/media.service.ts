@@ -36,16 +36,20 @@ export class MediaService {
     });
   }
 
-  getThumbs() {
-    _foreach(this.media, async (media) => {
-      media.thumbnail = await new Promise(async resolve => {
-        this.electronService.ipcRenderer.invoke('get-thumbnail', {mediaId: media.id}).then((data) => {
-          resolve(data);
-        })
+  async getThumbs() {
+    for (let step = 0; step < this.media.length;) {
+      this.media[step].thumbnail = await this.getThumbFromBackend(this.media[step]);
+      step++;
+    }
+  }
+
+  async getThumbFromBackend(media: any) {
+    return await new Promise(async resolve => {
+      this.electronService.ipcRenderer.invoke('get-thumbnail', {mediaId: media.id}).then((data) => {
+        resolve(data);
       })
     })
   }
-
 
   setQuery(query: QueryDto) {
     let q = _findIndex(this.queries, {type: query.type})

@@ -10,9 +10,9 @@
 
 <div class="media-item-container">
     <ng-container *ngFor="let item of mediaService.media; let i = index">
-        <p class="media-grid-separator" *ngIf="shouldSeparateGrid(item.takenAt)">
-            {{ item.takenAt | date:"yyyy.MM.dd" }}
-        </p>
+<!--        <p class="media-grid-separator" *ngIf="shouldSeparateGrid(item.takenAt)">-->
+<!--            {{ item.takenAt | date:"yyyy.MM.dd" }}-->
+<!--        </p>-->
         <div class="media-item">
             <app-media-item [mediaIndex]="i"></app-media-item>
         </div>

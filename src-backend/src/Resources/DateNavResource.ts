@@ -1,5 +1,5 @@
 import { TreeItem } from "./Types/TreeType";
-import { find as _find, sumBy } from 'lodash';
+import { sumBy } from 'lodash';
 
 
 export class DateNavResource {
