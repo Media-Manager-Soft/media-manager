@@ -41,12 +41,12 @@ export class MediaService {
     });
   }
 
-  public incrementPagination(){
+  public incrementPagination() {
     this.pagination.skip += 30;
     this.pagination.take = 30;
   }
 
-  public resetPagination(){
+  public resetPagination() {
     this.pagination.skip = 0;
     this.pagination.take = 30;
   }
@@ -66,16 +66,14 @@ export class MediaService {
     })
   }
 
-  setQuery(query: QueryDto) {
-    let q = _findIndex(this.queries, {type: query.type})
-    if (q > -1) {
-      this.queries[q] = query;
-    } else {
-      this.queries.push(query);
-    }
+  setQuery(query: QueryDto, getMedia = true) {
+    // @ts-ignore
+    this.queries[query.type] = query.parameters;
     this.resetPagination();
     this.media = [];
-    this.getMedia();
+    if (getMedia) {
+      this.getMedia();
+    }
   }
 
   updateMedia(mediaId: number, data: any) {

@@ -9,7 +9,7 @@ export class NavDates {
        FROM "media"
        WHERE locationId IN (` + locationIds.join(',') + `)
         group by takenAtDate
-       order by takenAtDate DESC`
+       order by takenAtDate ASC`
     );
     return new DateNavResource(data).resource();
   }

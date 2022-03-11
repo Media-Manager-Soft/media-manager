@@ -32,6 +32,7 @@ export class LocationsComponent implements OnInit {
         this.locations[0].isSelected = true;
       }
       this.setDateByLocation();
+      this.setQuery(false)
     });
   }
 
@@ -57,9 +58,9 @@ export class LocationsComponent implements OnInit {
     this.datesService.getDates(this.getSelected());
   }
 
-  setQuery() {
+  setQuery(getMedia = true) {
     this.setDateByLocation();
-    this.mediaService.setQuery({type: 'locations', parameters: this.getSelected()})
+    this.mediaService.setQuery({type: 'locations', parameters: this.getSelected()}, getMedia)
   }
 
   onSubmit() {
