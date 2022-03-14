@@ -22,11 +22,26 @@ export class TreeItemComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  async toggleSelection() {
+  async toggleSelection($event: any) {
+    if ($event.ctrlKey || $event.metaKey) {
+      await this.multipleSelection()
+    } else {
+      await this.singleSelection()
+    }
+  }
+
+  async singleSelection() {
+    let desiredValue = this.item.isSelected;
+    this.treeService.unselectAll();
+    this.item.isSelected = desiredValue;
+    await this.multipleSelection();
+  }
+
+  async multipleSelection() {
     let desiredValue = !this.item.isSelected;
     await this.toggleRecursive(this.item, desiredValue)
     this.changed.emit(desiredValue);
-    this.treeService.setQuery(); //TODO: set new data
+    this.treeService.setQuery();
   }
 
   toggleRecursive(item: TreeItemDto, desiredValue: boolean) {

@@ -14,6 +14,7 @@ export class DatesService {
   constructor(public electronService: ElectronService) {
   }
 
+
   getDates(locations: number[]) {
     this.dates$ = new Observable((observer) => {
       this.electronService.ipcRenderer.invoke('get-nav-dates', locations)
@@ -27,6 +28,20 @@ export class DatesService {
     }).subscribe((dates) => {
       this.items = dates as TreeItemDto[];
     });
+  }
+
+  unselectAll() {
+    this.items.forEach((item) => {
+      this.unselectAllChildren(item)
+    })
+  }
+
+  private unselectAllChildren(item: TreeItemDto) {
+    item.isSelected = false;
+    item.children.forEach((child) => {
+      child.isSelected = false;
+      this.unselectAllChildren(child);
+    })
   }
 
 }

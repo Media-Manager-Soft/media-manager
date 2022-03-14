@@ -1,7 +1,8 @@
 <div style="margin-left:20px">
     <p
             [class]="{selected: item.isSelected}"
-            (click)="toggleSelection()">
+            (click)="toggleSelection($event)"
+    >
         {{ item.text }} ({{ item.qty }}) - <span style="font-size: 0.8rem; color:gray">{{ item.value }}</span>
     </p>
     <app-tree-item
