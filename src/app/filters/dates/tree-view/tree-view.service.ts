@@ -15,7 +15,24 @@ export class TreeViewService {
   }
 
   setQuery() {
+    this.dateService.noDates = false;
     this.mediaService.setQuery({type: 'date', parameters: this.prepareItemsForQuery()})
+  }
+  addItem(value: selectionToQuery) {
+    this.items.push(value)
+    _uniq(this.items)
+  }
+
+  removeItem(value: selectionToQuery) {
+    _remove(this.items, function (item: selectionToQuery) {
+      return item.value === value.value;
+    });
+    _uniq(this.items)
+  }
+
+  unselectAll() {
+    this.items = [];
+    this.dateService.unselectAll();
   }
 
   prepareItemsForQuery() {
@@ -44,22 +61,5 @@ export class TreeViewService {
     //
     // })
     // return _map(dataItems, 'value');
-  }
-
-  addItem(value: selectionToQuery) {
-    this.items.push(value)
-    _uniq(this.items)
-  }
-
-  removeItem(value: selectionToQuery) {
-    _remove(this.items, function (item: selectionToQuery) {
-      return item.value === value.value;
-    });
-    _uniq(this.items)
-  }
-
-  unselectAll() {
-    this.items = [];
-    this.dateService.unselectAll();
   }
 }

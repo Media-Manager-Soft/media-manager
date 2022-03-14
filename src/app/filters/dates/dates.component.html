@@ -2,3 +2,5 @@
         [items]="datesService.items"
 >
 </app-tree-view>
+
+<p [class]="{selected: datesService.noDates}" (click)="noDatesToggle()">No dates</p>

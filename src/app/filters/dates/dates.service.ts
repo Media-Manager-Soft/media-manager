@@ -10,6 +10,7 @@ export class DatesService {
 
   private dates$: Subscription;
   public items: TreeItemDto[] = [];
+  public noDates = false;
 
   constructor(public electronService: ElectronService) {
   }
@@ -43,5 +44,7 @@ export class DatesService {
       this.unselectAllChildren(child);
     })
   }
+
+
 
 }
