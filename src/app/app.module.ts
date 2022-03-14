@@ -18,6 +18,7 @@ import { FavoritesComponent } from './filters/favorites/favorites.component';
 import { PhotoBufferComponent } from './media/media-item/photo-buffer/photo-buffer.component';
 import { LocationsComponent } from './filters/locations/locations.component';
 import { InfiniteScrollModule } from "ngx-infinite-scroll";
+import { NoDateComponent } from './filters/no-date/no-date.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { InfiniteScrollModule } from "ngx-infinite-scroll";
     FavoritesComponent,
     PhotoBufferComponent,
     LocationsComponent,
+    NoDateComponent,
   ],
   imports: [
     BrowserModule,

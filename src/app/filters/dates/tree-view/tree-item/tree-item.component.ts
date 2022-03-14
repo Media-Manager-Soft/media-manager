@@ -65,6 +65,8 @@ export class TreeItemComponent implements OnInit {
       this.item.isSelected = true
       this.item.childSelectionStatus = 'full'
     }
+
+    this.changed.emit(this.item.isSelected);
   }
 
 

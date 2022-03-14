@@ -15,10 +15,10 @@ export class TreeViewService {
   }
 
   setQuery() {
-    this.mediaService.setQuery({type: 'date', parameters: this.itemsPreparedForQuery()})
+    this.mediaService.setQuery({type: 'date', parameters: this.prepareItemsForQuery()})
   }
 
-  itemsPreparedForQuery() {
+  prepareItemsForQuery() {
 
     let dataItems = [...this.items];
 

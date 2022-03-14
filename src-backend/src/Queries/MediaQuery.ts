@@ -20,7 +20,7 @@ export class MediaQuery {
     this.applyQueriesToQueryBuilder();
     this.mediaQueryBuilder.orderBy('takenAt', 'ASC')
     this.mediaQueryBuilder.from('media', 'media')
-    if (!this.skipDataQuery){
+    if (!this.skipDataQuery) {
       return [];
     }
     return this.mediaQueryBuilder.getRawMany()
@@ -32,6 +32,7 @@ export class MediaQuery {
     this.favoritesQuery();
     this.flagsQuery();
     this.locationsQuery();
+    this.noDateQuery();
   }
 
   private dateQuery() {
@@ -49,7 +50,7 @@ export class MediaQuery {
   private favoritesQuery() {
     if (this.queries.favorites?.favorites) {
       this.skipDataQuery = true;
-      this.mediaQueryBuilder.andWhere('favorite = :fav', {fav: this.queries.favorites.favorites})
+      this.mediaQueryBuilder.andWhere('favorite = true')
     }
   }
 
@@ -63,6 +64,15 @@ export class MediaQuery {
   private locationsQuery() {
     if (this.queries.locations?.length > 0) {
       this.mediaQueryBuilder.andWhere("locationId IN (:...locations)", {locations: this.queries.locations})
+    }
+  }
+
+  private noDateQuery() {
+    if (this.queries.no_dates?.no_dates) {
+      this.skipDataQuery = true;
+      this.mediaQueryBuilder.where("takenAt IS NULL")
+    } else {
+      this.mediaQueryBuilder.andWhere("takenAt IS NOT NULL")
     }
   }
 }

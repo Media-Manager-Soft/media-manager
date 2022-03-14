@@ -8,7 +8,8 @@ export class NavDates {
               COUNT("id")                     as qty
        FROM "media"
        WHERE locationId IN (` + locationIds.join(',') + `)
-        group by takenAtDate
+       AND takenAt IS NOT NULL
+       group by takenAtDate
        order by takenAtDate ASC`
     );
     return new DateNavResource(data).resource();
