@@ -1,6 +1,11 @@
-<app-tree-view
-        [items]="datesService.items"
->
-</app-tree-view>
+<div style="margin-left: -20px">
+    <app-tree-view
+            [items]="datesService.items"
+    >
+    </app-tree-view>
+</div>
 
-<p [class]="{selected: datesService.noDates}" (click)="noDatesToggle()">No dates</p>
+<p class="selection" [class]="{selected: datesService.noDates}" (click)="noDatesToggle()">
+    <icon-no-dates></icon-no-dates>
+    Without dates
+</p>

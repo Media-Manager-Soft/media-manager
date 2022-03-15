@@ -5,12 +5,16 @@ import { filter as _filter } from "lodash";
 export class MediaQuery {
   private queries: any;
   private mediaQueryBuilder: SelectQueryBuilder<any>;
+  private mediaDateSubQuery: SelectQueryBuilder<any>
   private skipDataQuery = false;
 
   public static setQuery(query: any, pagination: { skip: 0, take: 10 }) {
     const c = new this
     c.queries = query
     c.mediaQueryBuilder = getManager().createQueryBuilder()
+    c.mediaDateSubQuery = getManager().createQueryBuilder()
+      .select("*")
+      .from('media', 'm')
     c.mediaQueryBuilder.take(pagination.take);
     c.mediaQueryBuilder.skip(pagination.skip);
     return c;
@@ -19,7 +23,9 @@ export class MediaQuery {
   public get() {
     this.applyQueriesToQueryBuilder();
     this.mediaQueryBuilder.orderBy('takenAt', 'ASC')
-    this.mediaQueryBuilder.from('media', 'media')
+    this.mediaQueryBuilder
+      .from("(" + this.mediaDateSubQuery.getQuery() + ")", "media")
+    // .setParameters(dateSubQuery.getParameters())
     if (!this.skipDataQuery) {
       return [];
     }
@@ -42,7 +48,7 @@ export class MediaQuery {
       })
       valuesToFind.map(value => {
         this.skipDataQuery = true;
-        this.mediaQueryBuilder.orWhere(`STRFTIME("${pattern.pattern}", "takenAt") = "${value}"`)
+        this.mediaDateSubQuery.orWhere(`STRFTIME("${pattern.pattern}", "takenAt") = "${value}"`)
       })
     })
   }
@@ -50,7 +56,7 @@ export class MediaQuery {
   private favoritesQuery() {
     if (this.queries.favorites?.favorites) {
       this.skipDataQuery = true;
-      this.mediaQueryBuilder.andWhere('favorite = true')
+      this.mediaQueryBuilder.andWhere('favorite = :fav', {fav: this.queries.favorites.favorites})
     }
   }
 

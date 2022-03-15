@@ -1,0 +1,60 @@
+
+.selection {
+  color: $gray-500;
+  padding: 5px 10px;
+  margin: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+
+  &.dates{
+    padding: 2px 10px;
+    margin: 2px;
+    &.selected {
+      background-color: $gray-700 !important;
+    }
+  }
+
+  &:hover {
+    background-color: $gray-800;
+  }
+
+  svg{
+    padding-top:5px;
+  }
+
+  &.selected {
+    background-color: $primary !important;
+    color: white;
+    transition: all 0.3s ease;
+  }
+}
+
+
+
+h4{
+  margin-top: 15px;
+  margin-bottom: 10px;
+  &:first-of-type{
+    margin-top: 0;
+  }
+}
+
+
+nav.filters {
+  padding: 15px;
+  user-select: none;
+  color: $gray-200;
+  background-color: $gray-900;
+  height: 100%;
+  width: $navSize;
+  position: fixed;
+  overflow-y: auto;
+  z-index: 1;
+  top: 0;
+  left: 0;
+}
+
+section {
+  margin-left: $navSize + 15;
+}

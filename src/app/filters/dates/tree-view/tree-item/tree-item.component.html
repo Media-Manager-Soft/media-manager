@@ -1,13 +1,25 @@
-<div style="margin-left:20px">
-    <p
+<div style="margin-left:17px">
+    <div
+            class="selection dates"
             [class]="{selected: item.isSelected}"
-            (click)="toggleSelection($event)"
+            style="display: flex;"
     >
-        {{ item.text }} ({{ item.qty }}) - <span style="font-size: 0.8rem; color:gray">{{ item.value }}</span>
-    </p>
-    <app-tree-item
-            *ngFor="let item of item.children"
-            [item]="item"
-            (changed)="childChanged($event)"
-    ></app-tree-item>
+
+        <div style="width: 20px;">
+            <icon-chevron [open]="item.isCollapsed" *ngIf="item.children.length > 0" (click)="item.isCollapsed = !item.isCollapsed"></icon-chevron>
+        </div>
+
+        <div (click)="toggleSelection($event)" style="display: flex; width: 100%; justify-content:space-between">
+            <span style="flex-grow: 1">{{ item.text }}</span>
+            <span style="font-size: 0.7rem; align-self: flex-end; margin-bottom:2px">({{ item.qty }})</span>
+        </div>
+
+    </div>
+    <div *ngIf="item.isCollapsed">
+        <app-tree-item
+                *ngFor="let item of item.children"
+                [item]="item"
+                (changed)="childChanged($event)"
+        ></app-tree-item>
+    </div>
 </div>

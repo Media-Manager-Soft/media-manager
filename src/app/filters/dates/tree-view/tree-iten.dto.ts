@@ -4,6 +4,7 @@ export class TreeItemDto {
   value: string;
   qty: number = 0;
   isSelected = false;
+  isCollapsed = false;
   childSelectionStatus: selectionType = null;
   children: TreeItemDto[] = []
 

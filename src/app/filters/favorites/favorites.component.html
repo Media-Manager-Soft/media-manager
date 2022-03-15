@@ -1,2 +1,4 @@
-<h2>Favorites</h2>
-<p [class]="{selected: selected}" (click)="toggle()">favorites</p>
+<p class="selection" [class.selected]="selected" (click)="toggle()">
+    <icon-favorite></icon-favorite>
+    Favorites
+</p>

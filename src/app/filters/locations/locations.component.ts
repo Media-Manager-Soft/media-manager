@@ -13,6 +13,7 @@ import { DatesService } from "../dates/dates.service";
 export class LocationsComponent implements OnInit {
 
   locations: location[];
+  isModalOpen = false;
 
   constructor(
     private electronService: ElectronService,

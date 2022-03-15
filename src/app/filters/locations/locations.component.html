@@ -1,17 +1,33 @@
-<p *ngFor="let location of locations">
-    <span [class.selected]="location.isSelected" (click)="toggleSelect(location)">{{ location.name }}</span>
+<h4 (click)="isModalOpen = !isModalOpen">Locations</h4>
+<p *ngFor="let location of locations" class="selection" [class.selected]="location.isSelected" (click)="toggleSelect(location)">
+    {{ location.name }}
 </p>
 
-<h3>Add new</h3>
-<form [formGroup]="newPathForm" (ngSubmit)="onSubmit()">
-    <!--    <div [formGroup]="newPathForm">-->
-    Name: <input formControlName="name">
-    Path: <input formControlName="path">
-    <button class="btn btn-primary" (click)="selectFolder(); $event.preventDefault()" >Choose</button>
-    <!--    </div>-->
-    <button class="btn btn-primary" [disabled]="newPathForm.invalid" type="submit">Add</button>
-</form>
+<!--// Bootsrap-->
+<!--<div class="d-grid gap-2 d-md-block">-->
+<!--    <p-->
+<!--            *ngFor="let location of locations"-->
+<!--            class="btn btn-sm"-->
+<!--            [class.btn-primary]="location.isSelected"-->
+<!--            [class.btn-secondary]="!location.isSelected"-->
+<!--            (click)="toggleSelect(location)"-->
+<!--    >-->
+<!--        {{ location.name }}-->
+<!--    </p>-->
+<!--</div>-->
 
-<h3 (click)="send()">
-    load location
-</h3>
+<div *ngIf="isModalOpen">
+    <h3>Add new</h3>
+    <form [formGroup]="newPathForm" (ngSubmit)="onSubmit()">
+        <!--    <div [formGroup]="newPathForm">-->
+        Name: <input formControlName="name">
+        Path: <input formControlName="path">
+        <button class="btn btn-primary" (click)="selectFolder(); $event.preventDefault()">Choose</button>
+        <!--    </div>-->
+        <button class="btn btn-primary" [disabled]="newPathForm.invalid" type="submit">Add</button>
+    </form>
+
+    <h3 (click)="send()">
+        load location
+    </h3>
+</div>
