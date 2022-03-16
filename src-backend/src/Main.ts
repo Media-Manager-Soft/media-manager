@@ -8,14 +8,12 @@ import { NavDates } from "./Data/NavDates";
 import { MediaQuery } from "./Queries/MediaQuery";
 import { PathHelper } from "./Helpers/helpers";
 import { UpdateMetaMetadataController } from "./Controllers/UpdateMetaMetadataController";
-import { ChildProcess, fork } from "child_process";
 import { ThumbnailController } from "./Controllers/ThumbnailController";
 
 var bus = require('./Events/eventBus');
 var workerManager = require('./Workers/WorkerManager')
 
 export class Main {
-  private thumbnailWorker: ChildProcess;
 
   public run() {
     this.onReady();

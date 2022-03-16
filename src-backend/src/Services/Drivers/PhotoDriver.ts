@@ -11,12 +11,14 @@ export class PhotoDriver {
     try {
       buffer = await this.standardJpg(pathToFile)
     } catch (e) {
+      console.error(e)
     }
 
     if (!buffer) {
       try {
         buffer = await this.brokenJpg(pathToFile)
       } catch (e) {
+        console.error(e)
       }
     }
 
@@ -24,6 +26,7 @@ export class PhotoDriver {
       try {
         buffer = await this.heic(pathToFile)
       } catch (e) {
+        console.error(e)
       }
     }
     return buffer;

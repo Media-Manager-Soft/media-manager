@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ElectronService } from "../../core/services/electron.service";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MediaService } from "../../media/media.service";
-import { filter, find, map } from "lodash"
+import { countBy, filter, find, map } from "lodash"
 import { DatesService } from "../dates/dates.service";
 
 @Component({
@@ -46,6 +46,13 @@ export class LocationsComponent implements OnInit {
 
   toggleSelect(location: any) {
     let loc = find(this.locations, {id: location.id});
+    const selQty = countBy(this.locations, (location) => {
+      return location.isSelected;
+    })
+    // @ts-ignore
+    if (selQty.true === 1 && !!location.isSelected){
+      return;
+    }
     // @ts-ignore
     loc.isSelected = !loc.isSelected;
     this.setQuery();

@@ -31,7 +31,6 @@ export class LocationService {
 
   public async discoverFiles() {
     let paths = this.getAllFiles(this.location.path, []);
-
     let id = workerManager.runProcess('discover', {paths: paths, locationId: this.location.id})
 
     workerManager.getWorker(id).on('message', (resp: any) => {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'icon-favorite',
@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 export class FavoriteComponent implements OnInit {
 
   constructor() { }
+
+  @Input()
+  filled: false;
 
   ngOnInit(): void {
   }

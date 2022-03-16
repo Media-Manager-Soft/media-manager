@@ -32,6 +32,7 @@ export class MediaService {
       this.media.takenAt = this.mediaMetadataService.getTakenAt();
       this.media.size = this.mediaMetadataService.getFileSize();
     } catch (e) {
+      console.error(e)
     }
   }
 

@@ -1,4 +1,3 @@
-import exifr from "exifr";
 import { IMetadata } from "./IMetadata";
 import sizeOf from "image-size";
 
@@ -43,11 +42,11 @@ export class PhotoMetadataService implements IMetadata {
   }
 
   get latitude() {
-    return this.exif.latitude
+    return this.exif.GPSLatitude
   }
 
   get longitude() {
-    return this.exif.longitude
+    return this.exif.GPSLongitude
   }
 
   get orientation() {

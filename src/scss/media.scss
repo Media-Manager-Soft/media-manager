@@ -10,20 +10,28 @@ p.media-grid-separator {
   background-color: darkgrey;
 }
 
+.media-favorite{
+  margin: 12px;
+  opacity: 0.8;
+  position: absolute;
+  color: $gray-500;
+}
+
 .media-item {
   text-align: center;
   //width: 200px;
   //flex-basis: 200px;
+  background-color: $gray-700;
+  border: 1px solid $gray-900;
+  border-radius: 5px;
 
   .image-thumbnail-container {
     height: 100%;
     display: grid;
-    border-radius: 5px;
-    border: 1px solid #dadada;
     grid-template-rows: minmax(60px, 1fr);
 
     .figure {
-      background-color: #f3f3f3;
+      color: $gray-500;
       font-size: 12px;
       overflow: hidden;
       align-self: end;
