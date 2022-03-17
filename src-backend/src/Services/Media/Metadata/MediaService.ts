@@ -62,10 +62,7 @@ export class MediaService {
   async shouldBeImported(): Promise<Media | null> {
     const media = await Media.findOne({
       where: {
-        size: this.media.size,
-        camera: this.media.camera,
-        cameraModel: this.media.cameraModel,
-        takenAt: this.media.takenAt,
+        checkSum: this.media.checkSum,
         location: this.location,
       },
       relations: ['location']

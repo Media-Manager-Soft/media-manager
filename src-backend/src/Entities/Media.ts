@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Location } from "./Location";
 import { MediaService } from "../Services/Media/Metadata/MediaService";
 import { IConverter } from "../Services/Converters/IConverter";
@@ -60,6 +60,9 @@ export class Media extends BaseEntity {
 
   @Column({nullable: true})
   cameraModel: string;
+
+  @Column()
+  checkSum: string;
 
   @Column({nullable: true})
   latitude: string;

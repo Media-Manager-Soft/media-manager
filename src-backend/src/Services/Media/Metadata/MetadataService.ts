@@ -1,13 +1,14 @@
 import { MediaExtensionTypes, MediaType } from "../../../Enums/MediaType";
 import { Location } from "../../../Entities/Location";
 import { Media } from "../../../Entities/Media";
-import * as Fs from "fs";
+import * as fs from "fs";
 import { PhotoMetadataService } from "./Metadata/PhotoMetadataService";
 import { VideoMetadataService } from "./Metadata/VideoMetadataService";
 import { IMetadata } from "./Metadata/IMetadata";
 import { UnsupportedExtension } from "../../../Exceptions/UnsupportedExtension";
 
 const path = require('path');
+const checksum = require('checksum')
 
 export class MetadataService {
   private pathToFile: string;
@@ -20,6 +21,7 @@ export class MetadataService {
     this.media.location = location;
     this.pathToFile = pathToFile;
     this.media.type = await this.getFileType()
+    this.media.checkSum = await this.getCheckSum();
     await this.getFileMetadata();
   }
 
@@ -92,8 +94,15 @@ export class MetadataService {
   }
 
   getFileSize() {
-    return Fs.statSync(this.pathToFile).size;
+    return fs.statSync(this.pathToFile).size;
   }
 
+  getCheckSum(): Promise<string> {
+    return new Promise(resolve => {
+      fs.readFile(this.pathToFile, function (err: NodeJS.ErrnoException | null, data: Buffer) {
+        resolve(checksum(data))
+      })
+    })
+  }
 
 }
