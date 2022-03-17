@@ -15,7 +15,7 @@ export class FavoritesComponent {
 
   toggle() {
     this.selected = !this.selected;
-    this.mediaService.setQuery({type: 'favorites', parameters: {favorites: this.selected}})
+    this.mediaService.setQuery({type: 'favorites', parameters: {favorites: this.selected}}).getMedia();
   }
 
 }

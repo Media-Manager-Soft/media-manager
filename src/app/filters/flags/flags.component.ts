@@ -20,7 +20,7 @@ export class FlagsComponent {
   toggle(key: string, value: boolean) {
     // @ts-ignore
     this.selected[key] = value;
-    this.mediaService.setQuery({type: 'flags', parameters: this.selectedToArray()})
+    this.mediaService.setQuery({type: 'flags', parameters: this.selectedToArray()}).getMedia();
   }
 
   selectedToArray() {

@@ -66,14 +66,12 @@ export class MediaService {
     })
   }
 
-  setQuery(query: QueryDto, getMedia = true) {
+  setQuery(query: QueryDto) {
     // @ts-ignore
     this.queries[query.type] = query.parameters;
     this.resetPagination();
     this.media = [];
-    if (getMedia) {
-      this.getMedia();
-    }
+    return this;
   }
 
   updateMedia(mediaId: number, data: any) {

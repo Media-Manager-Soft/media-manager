@@ -51,13 +51,13 @@ export class DatesService {
     this.noDates = value === null ? !this.noDates : value;
     if (this.noDates) {
       this.unselectAll();
-      this.mediaService.setQuery({type: 'date', parameters: {}}, false)
+      this.mediaService.setQuery({type: 'date', parameters: {}})
     }
-    this.mediaService.setQuery({type: 'no_dates', parameters: {no_dates: this.noDates}}, getData)
+    this.mediaService.setQuery({type: 'no_dates', parameters: {no_dates: this.noDates}}).getMedia();
   }
 
   setQuery(data: any) {
     this.noDatesToggle(false, false)
-    this.mediaService.setQuery({type: 'date', parameters: data})
+    this.mediaService.setQuery({type: 'date', parameters: data}).getMedia();
   }
 }

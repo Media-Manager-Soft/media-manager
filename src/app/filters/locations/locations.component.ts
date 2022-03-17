@@ -68,7 +68,7 @@ export class LocationsComponent implements OnInit {
 
   setQuery(getMedia = true) {
     this.setDateByLocation();
-    this.mediaService.setQuery({type: 'locations', parameters: this.getSelected()}, getMedia)
+    this.mediaService.setQuery({type: 'locations', parameters: this.getSelected()}).getMedia();
   }
 
   onSubmit() {
