@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { remove as _remove, uniq as _uniq, map as _map } from 'lodash';
-import { MediaService } from "../../../media/media.service";
 import { selectionToQuery } from "./tree-iten.dto";
 import { DatesService } from "../dates.service";
 
@@ -11,12 +10,11 @@ export class TreeViewService {
   //TODO: Separate Service to be more reusable. I.e. Use Even bus
   items: selectionToQuery[] = []; //For future use: selection Query contains child selection type.
 
-  constructor(private mediaService: MediaService, private dateService: DatesService) {
+  constructor(private dateService: DatesService) {
   }
 
   setQuery() {
-    this.dateService.noDates = false;
-    this.mediaService.setQuery({type: 'date', parameters: this.prepareItemsForQuery()})
+    this.dateService.setQuery(this.prepareItemsForQuery())
   }
   addItem(value: selectionToQuery) {
     this.items.push(value)

@@ -34,11 +34,12 @@ export class MediaQuery {
 
 
   private applyQueriesToQueryBuilder() {
-    this.dateQuery();
+    if (!this.noDateQuery()) {
+      this.dateQuery();
+    }
     this.favoritesQuery();
     this.flagsQuery();
     this.locationsQuery();
-    this.noDateQuery();
   }
 
   private dateQuery() {
@@ -77,8 +78,10 @@ export class MediaQuery {
     if (this.queries.no_dates?.no_dates) {
       this.skipDataQuery = true;
       this.mediaQueryBuilder.where("takenAt IS NULL")
+      return true;
     } else {
-      this.mediaQueryBuilder.andWhere("takenAt IS NOT NULL")
+      this.mediaQueryBuilder.where("takenAt IS NOT NULL")
+      return false;
     }
   }
 }

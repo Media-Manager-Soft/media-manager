@@ -4,7 +4,6 @@
             [class]="{selected: item.isSelected}"
             style="display: flex;"
     >
-
         <div style="width: 20px;">
             <icon-chevron [open]="item.isCollapsed" *ngIf="item.children.length > 0" (click)="item.isCollapsed = !item.isCollapsed"></icon-chevron>
         </div>

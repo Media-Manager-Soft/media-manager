@@ -5,7 +5,7 @@
     </app-tree-view>
 </div>
 
-<p class="selection" [class]="{selected: datesService.noDates}" (click)="noDatesToggle()">
+<p class="selection" [class]="{selected: datesService.noDates}" (click)="datesService.noDatesToggle()">
     <icon-no-dates></icon-no-dates>
     Without dates
 </p>
