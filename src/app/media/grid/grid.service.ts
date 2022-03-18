@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subscription } from "rxjs";
-import { ElectronService } from "../../core/services/electron.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class GridService {
 
-  public selectedMediaPreview: number | null;
+  public selectedMediaPreview: number | null = null;
 
 
   selectMediaIndexForPreview(index: number | null) {

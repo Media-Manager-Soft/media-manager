@@ -1,6 +1,6 @@
 <!--<p (click)="getMedia()">grid works!</p>-->
 <app-preview-media
-        *ngIf="gridService.selectedMediaPreview"
+        *ngIf="gridService.selectedMediaPreview !== null"
         [previewItemIndex]="gridService.selectedMediaPreview"
         (modalClosed)="modalClosed()"
 ></app-preview-media>

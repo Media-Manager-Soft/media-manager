@@ -21,7 +21,6 @@ export class MetadataService {
     this.media.location = location;
     this.pathToFile = pathToFile;
     this.media.type = await this.getFileType()
-    this.media.checkSum = await this.getCheckSum();
     await this.getFileMetadata();
   }
 
@@ -77,8 +76,16 @@ export class MetadataService {
     // if (!date) { //Store incorrect date of media that has no exif taken at date time
     //   date = Fs.statSync(this.pathToFile).mtime
     // }
-    // return date;
     return this.fileMetadata.dateTimeOriginal;
+
+    // return as Date object
+    // @ts-ignore
+    // let date = new Date(this.fileMetadata.dateTimeOriginal)
+    // if (date.toString() !== 'Invalid Date') {
+    //   return date;
+    // } else {
+    //   return null;
+    // }
   }
 
   getLatitude() {
@@ -97,12 +104,5 @@ export class MetadataService {
     return fs.statSync(this.pathToFile).size;
   }
 
-  getCheckSum(): Promise<string> {
-    return new Promise(resolve => {
-      fs.readFile(this.pathToFile, function (err: NodeJS.ErrnoException | null, data: Buffer) {
-        resolve(checksum(data))
-      })
-    })
-  }
-
 }
+

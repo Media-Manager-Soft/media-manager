@@ -1,34 +1,32 @@
 <div class="preview-container">
-    <div class="close-button" (document:keydown.esc)="closeModal()" (click)="closeModal()">x</div>
-    <div class="media-item-container">
+    <!--    <div class="close-button" (document:keydown.esc)="closeModal()" (click)="closeModal()">x</div>-->
+    <div class="media-preview-container" [hidden]="!(currentPreviewType === 'photo')">
         <pinch-zoom
                 disableZoomControl="disable"
                 [backgroundColor]="'rgba(0, 0, 0, 0.0)'"
-                [hidden]="!(currentPreviewType === 'photo')"
         >
             <img #photoThumb>
         </pinch-zoom>
-
+    </div>
+    <div class="media-preview-container" [hidden]="!(currentPreviewType === 'video')">
         <video
-                [hidden]="!(currentPreviewType === 'video')"
                 controls width="100%" #videoThumb>
         </video>
-
-    </div>
-
-    <div class="tools">
-        <button
-                (document:keydown.ARROWLEFT)="gridService.prevMediaPreview()"
-                (click)="gridService.prevMediaPreview()"
-        >
-            Prev
-        </button>
-        <button
-                (document:keydown.ARROWRIGHT)="gridService.nextMediaPreview()"
-                (click)="gridService.nextMediaPreview()"
-        >
-            Next
-        </button>
     </div>
 </div>
+
+<!--    <div class="tools">-->
+<!--        <button-->
+<!--                (document:keydown.ARROWLEFT)="gridService.prevMediaPreview()"-->
+<!--                (click)="gridService.prevMediaPreview()"-->
+<!--        >-->
+<!--            Prev-->
+<!--        </button>-->
+<!--        <button-->
+<!--                (document:keydown.ARROWRIGHT)="gridService.nextMediaPreview()"-->
+<!--                (click)="gridService.nextMediaPreview()"-->
+<!--        >-->
+<!--            Next-->
+<!--        </button>-->
+<!--    </div>-->
 

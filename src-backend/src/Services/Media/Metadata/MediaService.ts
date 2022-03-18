@@ -31,6 +31,7 @@ export class MediaService {
       this.media.orientation = this.mediaMetadataService.getOrientation();
       this.media.takenAt = this.mediaMetadataService.getTakenAt();
       this.media.size = this.mediaMetadataService.getFileSize();
+      this.media.uniqueHash = await this.generateUniqueHash();
     } catch (e) {
       console.error(e)
     }
@@ -62,8 +63,7 @@ export class MediaService {
   async shouldBeImported(): Promise<Media | null> {
     const media = await Media.findOne({
       where: {
-        checkSum: this.media.checkSum,
-        location: this.location,
+        uniqueHash: this.media.uniqueHash,
       },
       relations: ['location']
     })
@@ -73,5 +73,19 @@ export class MediaService {
     }
 
     return null;
+  }
+
+  async generateUniqueHash() {
+    const checksum = require('checksum');
+    const fs = require('fs');
+    const data = {
+      size: this.media.size,
+      locationId: this.media.location.id,
+      camera: this.media.camera,
+      cameraModel: this.media.cameraModel,
+      takenAt: this.media.takenAt,
+      modifyTime: fs.statSync(this.media.getPathToFile()).mtime,
+    }
+    return await checksum(JSON.stringify(data))
   }
 }

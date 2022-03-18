@@ -32,7 +32,6 @@ export class PreviewMediaComponent {
 
   protected setImageForPreview(media: any) {
     this.electronService.ipcRenderer.invoke('get-media-for-preview', media.id).then(data => {
-      // this.clearViewer();
       this.putPreviewToHtml(data)
     })
   }

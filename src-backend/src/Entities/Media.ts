@@ -19,6 +19,8 @@ export class Media extends BaseEntity {
 
   static THUMB_WIDTH: number = 400;
 
+  static UPDATABLE_COLUMNS = ['type', 'size', 'width', 'height', 'camera', 'cameraModel', 'latitude', 'longitude', 'takenAt', 'microtime']
+
   @PrimaryGeneratedColumn('increment')
   id: number;
 
@@ -61,8 +63,8 @@ export class Media extends BaseEntity {
   @Column({nullable: true})
   cameraModel: string;
 
-  @Column()
-  checkSum: string;
+  @Column({nullable: true})
+  uniqueHash: string;
 
   @Column({nullable: true})
   latitude: string;

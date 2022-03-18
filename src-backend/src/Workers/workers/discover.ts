@@ -12,9 +12,13 @@ process.on('message', async (message) => {
     try {
       await media.mediaService.discoverMetadata(message.data.paths[i], location);
 
-      const result = await media.mediaService.shouldBeImported();
+      let result = await media.mediaService.shouldBeImported();
 
-      if (!!result) {
+      if (!!result) { // result - Media from db (if exists)
+        Media.UPDATABLE_COLUMNS.forEach((column) => {
+          // @ts-ignore
+          result[column] = media[column];
+        })
         media = result;
       }
 

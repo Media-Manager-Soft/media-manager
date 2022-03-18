@@ -43,4 +43,6 @@ export const MediaExtensionTypes: IExtensionTypes = {
   '.raw': MediaType.VIDEO,
   '.webm': MediaType.VIDEO,
   '.avi': MediaType.VIDEO,
+  '.mpeg': MediaType.VIDEO,
+  '.mpg': MediaType.VIDEO,
 };
