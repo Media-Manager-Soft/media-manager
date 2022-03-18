@@ -47,13 +47,16 @@ export class DatesService {
   }
 
 
-  noDatesToggle(value: boolean | null = null) {
+  noDatesToggle(value: boolean | null = null, getData = false) {
     this.noDates = value === null ? !this.noDates : value;
     if (this.noDates) {
       this.unselectAll();
       this.mediaService.setQuery({type: 'date', parameters: {}})
     }
-    this.mediaService.setQuery({type: 'no_dates', parameters: {no_dates: this.noDates}}).getMedia();
+    this.mediaService.setQuery({type: 'no_dates', parameters: {no_dates: this.noDates}});
+    if (getData) {
+      this.mediaService.getMedia();
+    }
   }
 
   setQuery(data: any) {

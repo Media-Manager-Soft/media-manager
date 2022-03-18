@@ -6,6 +6,8 @@ import { FlagFilledComponent } from './icons/flag-filled/flag-filled.component';
 import { RejectedComponent } from './icons/rejected/rejected.component';
 import { NoDatesComponent } from './icons/no-dates/no-dates.component';
 import { ChevronComponent } from "./icons/chevron/chevron.component";
+import { CloseComponent } from './icons/close/close.component';
+import { SpinnerComponent } from './icons/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +16,9 @@ import { ChevronComponent } from "./icons/chevron/chevron.component";
     FlagFilledComponent,
     RejectedComponent,
     NoDatesComponent,
-    ChevronComponent
+    ChevronComponent,
+    CloseComponent,
+    SpinnerComponent
   ],
   exports: [
     FavoriteComponent,
@@ -22,7 +26,9 @@ import { ChevronComponent } from "./icons/chevron/chevron.component";
     FlagFilledComponent,
     RejectedComponent,
     NoDatesComponent,
-    ChevronComponent
+    ChevronComponent,
+    CloseComponent,
+    SpinnerComponent
   ],
   imports: [
     CommonModule

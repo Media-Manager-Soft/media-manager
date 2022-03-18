@@ -14,6 +14,7 @@ export class PreviewMediaComponent {
   @ViewChild('videoThumb') videoThumb: ElementRef;
   private currentIndex: number;
   currentPreviewType: string;
+  isLoading = false;
 
   @Input() set previewItemIndex(mediaIndex: any) {
     this.currentIndex = mediaIndex;
@@ -31,8 +32,10 @@ export class PreviewMediaComponent {
   }
 
   protected setImageForPreview(media: any) {
+    this.isLoading = true;
     this.electronService.ipcRenderer.invoke('get-media-for-preview', media.id).then(data => {
       this.putPreviewToHtml(data)
+      this.isLoading = false;
     })
   }
 

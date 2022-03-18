@@ -1,11 +1,12 @@
 <div class="preview-container">
-    <!--    <div class="close-button" (document:keydown.esc)="closeModal()" (click)="closeModal()">x</div>-->
+    <icon-close class="close-button" (document:keydown.esc)="closeModal()" (click)="closeModal()"></icon-close>
+    <icon-spinner class="spinner" *ngIf="isLoading"></icon-spinner>
     <div class="media-preview-container" [hidden]="!(currentPreviewType === 'photo')">
         <pinch-zoom
                 disableZoomControl="disable"
                 [backgroundColor]="'rgba(0, 0, 0, 0.0)'"
         >
-            <img #photoThumb>
+            <img #photoThumb [class.blur]="isLoading">
         </pinch-zoom>
     </div>
     <div class="media-preview-container" [hidden]="!(currentPreviewType === 'video')">
@@ -13,20 +14,20 @@
                 controls width="100%" #videoThumb>
         </video>
     </div>
-</div>
 
-<!--    <div class="tools">-->
-<!--        <button-->
-<!--                (document:keydown.ARROWLEFT)="gridService.prevMediaPreview()"-->
-<!--                (click)="gridService.prevMediaPreview()"-->
-<!--        >-->
-<!--            Prev-->
-<!--        </button>-->
-<!--        <button-->
-<!--                (document:keydown.ARROWRIGHT)="gridService.nextMediaPreview()"-->
-<!--                (click)="gridService.nextMediaPreview()"-->
-<!--        >-->
-<!--            Next-->
-<!--        </button>-->
-<!--    </div>-->
+    <div class="tools">
+        <button
+                (document:keydown.ARROWLEFT)="gridService.prevMediaPreview()"
+                (click)="gridService.prevMediaPreview()"
+        >
+            Prev
+        </button>
+        <button
+                (document:keydown.ARROWRIGHT)="gridService.nextMediaPreview()"
+                (click)="gridService.nextMediaPreview()"
+        >
+            Next
+        </button>
+    </div>
+</div>
 
