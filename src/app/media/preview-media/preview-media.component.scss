@@ -22,21 +22,11 @@
     }
   }
 
-  .tools {
+  .tool-container {
     position: fixed;
     top: 30px;
-    padding: 14px;
-    border-radius: 10px;
-    backdrop-filter: blur(20px);
-    box-shadow: 0px 0px 50px -21px rgb(80, 80, 82);
-    border: solid 1px rgb(80, 80, 82, 0.2);
-    opacity: 0.3;
-    transition: all 0.3s ease;
-    &:hover{
-      opacity: 1;
-      transition: all 0.3s ease;
-    }
   }
+
 
   .close-button {
     cursor: pointer;

@@ -19,6 +19,7 @@ import { PhotoBufferComponent } from './media/media-item/photo-buffer/photo-buff
 import { LocationsComponent } from './filters/locations/locations.component';
 import { InfiniteScrollModule } from "ngx-infinite-scroll";
 import { IconsModule } from "./icons/icons.module";
+import { PreviewToolsComponent } from './media/preview-media/preview-tools/preview-tools.component';
 
 
 @NgModule({
@@ -37,6 +38,7 @@ import { IconsModule } from "./icons/icons.module";
     FavoritesComponent,
     PhotoBufferComponent,
     LocationsComponent,
+    PreviewToolsComponent,
   ],
   imports: [
     IconsModule,

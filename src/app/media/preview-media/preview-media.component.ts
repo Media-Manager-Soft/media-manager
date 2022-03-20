@@ -12,7 +12,7 @@ export class PreviewMediaComponent {
   media: any;
   @ViewChild('photoThumb') photoThumb: ElementRef;
   @ViewChild('videoThumb') videoThumb: ElementRef;
-  private currentIndex: number;
+  currentIndex: number;
   currentPreviewType: string;
   isLoading = false;
 
@@ -26,7 +26,6 @@ export class PreviewMediaComponent {
 
   constructor(
     public mediaService: MediaService,
-    public gridService: GridService,
     private electronService: ElectronService
   ) {
   }

@@ -15,20 +15,8 @@
                 controls width="100%" #videoThumb>
         </video>
     </div>
-
-    <div class="tools">
-        <button
-                (document:keydown.ARROWLEFT)="gridService.prevMediaPreview()"
-                (click)="gridService.prevMediaPreview()"
-        >
-            Prev
-        </button>
-        <button
-                (document:keydown.ARROWRIGHT)="gridService.nextMediaPreview()"
-                (click)="gridService.nextMediaPreview()"
-        >
-            Next
-        </button>
+    <div class="tool-container">
+        <app-preview-tools [mediaItemIndex]="currentIndex"></app-preview-tools>
     </div>
 </div>
 

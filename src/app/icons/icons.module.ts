@@ -8,6 +8,7 @@ import { NoDatesComponent } from './icons/no-dates/no-dates.component';
 import { ChevronComponent } from "./icons/chevron/chevron.component";
 import { CloseComponent } from './icons/close/close.component';
 import { SpinnerComponent } from './icons/spinner/spinner.component';
+import { ArrowComponent } from './icons/arrow/arrow.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { SpinnerComponent } from './icons/spinner/spinner.component';
     NoDatesComponent,
     ChevronComponent,
     CloseComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    ArrowComponent
   ],
   exports: [
     FavoriteComponent,
@@ -28,7 +30,8 @@ import { SpinnerComponent } from './icons/spinner/spinner.component';
     NoDatesComponent,
     ChevronComponent,
     CloseComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    ArrowComponent
   ],
   imports: [
     CommonModule
