@@ -1,13 +1,16 @@
 import { IMetadata } from "./IMetadata";
 
 const ffmpeg = require('../../../../plugins/ffmpeg');
+const exiftool = require("exiftool-vendored").exiftool
 
-export class VideoMetadataService implements IMetadata {
-  private metadata: any;
-  private pathToFile: string;
+export class VideoMetadataService implements IMetadata{
+  private exifMetadata: any;
+  protected metadata: any;
+  protected pathToFile: string;
 
   async getMetadata(pathToFile: string) {
     this.pathToFile = pathToFile;
+    this.exifMetadata = await exiftool.read(pathToFile)
     this.metadata = await this.readMetadata(pathToFile)
     return this;
   }
@@ -28,13 +31,11 @@ export class VideoMetadataService implements IMetadata {
   }
 
   get imageHeight(): string {
-    let data = this.getVideoStream()
-    return data?.width;
+    return this.getVideoStream()?.width
   }
 
   get imageWidth(): string {
-    let data = this.getVideoStream()
-    return data?.height;
+    return this.getVideoStream()?.height
   }
 
   get latitude(): string {
@@ -47,12 +48,12 @@ export class VideoMetadataService implements IMetadata {
     return long?.replace('/', '').split('+')[2];
   }
 
-  get make(): string {
-    return this.metadata?.format?.tags?.['com.apple.quicktime.make'];
+  get model() {
+    return this.exifMetadata.Model;
   }
 
-  get model(): string {
-    return this.metadata?.format?.tags?.['com.apple.quicktime.model'];
+  get make() {
+    return this.exifMetadata.Make;
   }
 
   get orientation(): number {

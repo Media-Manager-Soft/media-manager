@@ -1,5 +1,7 @@
 export interface IMetadata {
 
+  getMetadata(pathToFile: string): Promise<IMetadata>
+
   get model(): string;
 
   get make(): string;

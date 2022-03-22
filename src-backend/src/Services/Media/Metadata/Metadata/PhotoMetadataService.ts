@@ -4,25 +4,25 @@ import sizeOf from "image-size";
 const exiftool = require("exiftool-vendored").exiftool
 
 export class PhotoMetadataService implements IMetadata {
-  private exif: any;
-  private pathToFile: string;
+  protected metadata: any;
+  protected pathToFile: string;
 
-  async getExifForFile(pathToFile: string) {
+  async getMetadata(pathToFile: string) {
     this.pathToFile = pathToFile;
-    this.exif = await exiftool.read(pathToFile)
+    this.metadata = await exiftool.read(pathToFile)
     return this;
   }
 
   get model() {
-    return this.exif.Model;
+    return this.metadata.Model;
   }
 
   get make() {
-    return this.exif.Make;
+    return this.metadata.Make;
   }
 
   get imageHeight() {
-    let height = this.exif.ImageHeight ?? this.exif.ExifImageHeight;
+    let height = this.metadata.ImageHeight ?? this.metadata.ExifImageHeight;
     if (!height) {
       height = sizeOf(this.pathToFile).height;
     }
@@ -30,7 +30,7 @@ export class PhotoMetadataService implements IMetadata {
   }
 
   get imageWidth() {
-    let width = this.exif.ImageWidth ?? this.exif.ExifImageWidth;
+    let width = this.metadata.ImageWidth ?? this.metadata.ExifImageWidth;
     if (!width) {
       width = sizeOf(this.pathToFile).width;
     }
@@ -38,19 +38,19 @@ export class PhotoMetadataService implements IMetadata {
   }
 
   get dateTimeOriginal() {
-    return this.exif.DateTimeOriginal;
+    return this.metadata.DateTimeOriginal;
   }
 
   get latitude() {
-    return this.exif.GPSLatitude
+    return this.metadata.GPSLatitude
   }
 
   get longitude() {
-    return this.exif.GPSLongitude
+    return this.metadata.GPSLongitude
   }
 
   get orientation() {
-    return this.exif.Orientation;
+    return this.metadata.Orientation;
   }
 
 }

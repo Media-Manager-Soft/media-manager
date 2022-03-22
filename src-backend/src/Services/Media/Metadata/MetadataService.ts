@@ -33,7 +33,7 @@ export class MetadataService {
       if (this.media.type === MediaType.VIDEO) {
         this.fileMetadata = await new VideoMetadataService().getMetadata(this.pathToFile);
       } else {
-        this.fileMetadata = await new PhotoMetadataService().getExifForFile(this.pathToFile);
+        this.fileMetadata = await new PhotoMetadataService().getMetadata(this.pathToFile);
       }
     }
   }
