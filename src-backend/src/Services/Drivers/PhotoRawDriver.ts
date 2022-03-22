@@ -1,7 +1,6 @@
 import { Media } from "../../Entities/Media";
 import * as child_process from "child_process";
 import { ExifTool } from "../Exif/ExifTool";
-import { ImgConverter } from "../Img/ImgConverter";
 
 export class PhotoRawDriver {
 
