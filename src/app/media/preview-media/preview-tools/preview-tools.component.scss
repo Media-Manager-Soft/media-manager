@@ -17,9 +17,11 @@
     cursor: pointer;
     //margin-top: 3px;
     color: white;
-    opacity: 0.5;
+    opacity: 0.3;
+    transition: all 0.3s ease-in-out;
   }
   .checked{
     opacity: 1;
+    transition: all 0.3s ease-in;
   }
 }

@@ -1,5 +1,5 @@
 import { TreeItem } from "./Types/TreeType";
-import { sumBy } from 'lodash';
+import { orderBy, sumBy } from 'lodash';
 
 
 export class DateNavResource {
@@ -13,7 +13,9 @@ export class DateNavResource {
       this.appendRow(item)
     })
 
-    return [new TreeItem('All', '', sumBy(this.data, 'qty'), this.result)]
+    return orderBy(this.result, ['value'], ['desc'])
+
+    // return [new TreeItem('All', '', sumBy(this.data, 'qty'), this.result)]
   }
 
   appendRow(item: any) {

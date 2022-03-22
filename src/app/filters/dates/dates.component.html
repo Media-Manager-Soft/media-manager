@@ -1,3 +1,13 @@
+<p style="margin-left: 10px; margin-bottom:10px;" class="selection" [class]="{selected: datesService.allDates}" (click)="datesService.getAllDates()">
+    All dates
+</p>
+
+<p style="margin-bottom:10px; margin-left: 10px; " class="selection" [class]="{selected: datesService.noDates}" (click)="datesService.noDatesToggle(null, true)">
+    <!--    <icon-no-dates></icon-no-dates>-->
+    Without dates
+</p>
+
+
 <div style="margin-left: -20px">
     <app-tree-view
             [items]="datesService.items"
@@ -5,7 +15,3 @@
     </app-tree-view>
 </div>
 
-<p class="selection" [class]="{selected: datesService.noDates}" (click)="datesService.noDatesToggle(null, true)">
-    <icon-no-dates></icon-no-dates>
-    Without dates
-</p>

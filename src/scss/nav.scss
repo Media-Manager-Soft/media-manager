@@ -1,8 +1,11 @@
 
 .selection {
   color: $gray-500;
-  padding: 5px 10px;
-  margin: 5px;
+  //padding: 5px 10px; blue ver
+  //margin: 5px;
+  padding: 2px 10px 4px 10px;
+  margin: 2px;
+
   cursor: pointer;
   transition: all 0.3s ease;
   border-radius: 4px;
@@ -24,7 +27,8 @@
   }
 
   &.selected {
-    background-color: $primary !important;
+    //background-color: $primary !important; blue ver
+    background-color: $gray-700 !important;
     color: white;
     transition: all 0.3s ease;
   }

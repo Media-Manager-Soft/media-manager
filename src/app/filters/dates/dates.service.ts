@@ -12,6 +12,7 @@ export class DatesService {
   private dates$: Subscription;
   public items: TreeItemDto[] = [];
   public noDates = false;
+  public allDates = true;
 
   constructor(public electronService: ElectronService, private mediaService: MediaService) {
   }
@@ -49,6 +50,7 @@ export class DatesService {
 
   noDatesToggle(value: boolean | null = null, getData = false) {
     this.noDates = value === null ? !this.noDates : value;
+    this.allDates = false;
     if (this.noDates) {
       this.unselectAll();
       this.mediaService.setQuery({type: 'date', parameters: {}})
@@ -59,8 +61,17 @@ export class DatesService {
     }
   }
 
+  getAllDates() {
+    this.noDates = false;
+    this.allDates = true;
+    this.mediaService.setQuery({type: 'no_dates', parameters: {no_dates: false}});
+    this.unselectAll();
+    this.mediaService.setQuery({type: 'date', parameters: null}).getMedia();
+  }
+
   setQuery(data: any) {
     this.noDatesToggle(false)
+    this.allDates = false;
     this.mediaService.setQuery({type: 'date', parameters: data}).getMedia();
   }
 }

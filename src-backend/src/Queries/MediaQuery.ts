@@ -22,7 +22,7 @@ export class MediaQuery {
 
   public get() {
     this.applyQueriesToQueryBuilder();
-    this.mediaQueryBuilder.orderBy('takenAt', 'ASC')
+    this.mediaQueryBuilder.orderBy('takenAt', 'DESC')
     this.mediaQueryBuilder
       .from("(" + this.mediaDateSubQuery.getQuery() + ")", "media")
     // .setParameters(dateSubQuery.getParameters())
@@ -43,6 +43,12 @@ export class MediaQuery {
   }
 
   private dateQuery() {
+    if (!this.queries.date){
+      this.mediaQueryBuilder.andWhere("takenAt IS NOT NULL");
+      this.skipDataQuery = true;
+      return;
+    }
+
     datePattern.map((pattern) => {
       let valuesToFind = _filter(this.queries.date, (date) => {
         return date.length === pattern.length;

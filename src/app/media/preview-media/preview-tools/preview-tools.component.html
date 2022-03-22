@@ -1,5 +1,6 @@
 <div class="tools">
     <icon-arrow
+            class="checked"
             position="left"
             (document:keydown.ARROWLEFT)="gridService.prevMediaPreview()"
             (click)="gridService.prevMediaPreview()"
@@ -29,5 +30,6 @@
             (document:keydown.ARROWRIGHT)="gridService.nextMediaPreview()"
             (click)="gridService.nextMediaPreview()"
             position="right"
+            class="checked"
     ></icon-arrow>
 </div>

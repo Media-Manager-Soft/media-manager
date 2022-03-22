@@ -51,14 +51,14 @@ export class MediaService {
     this.pagination.take = 30;
   }
 
-  async getThumbs() {
+  protected async getThumbs() {
     for (let step = 0; step < this.media.length;) {
       this.media[step].thumbnail = await this.getThumbFromBackend(this.media[step]);
       step++;
     }
   }
 
-  async getThumbFromBackend(media: any) {
+  protected async getThumbFromBackend(media: any) {
     return await new Promise(async resolve => {
       this.electronService.ipcRenderer.invoke('get-thumbnail', {mediaId: media.id}).then((data) => {
         resolve(data);
