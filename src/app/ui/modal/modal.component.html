@@ -1,0 +1,21 @@
+<div *ngIf="isOpen" class="modal-bg light no-blur">
+    <div class="modal">
+
+        <div class="body">
+            <div class="title">
+                {{ title }}
+            </div>
+
+            <div class="content">
+                <ng-content></ng-content>
+            </div>
+
+            <div class="footer">
+                <ng-content select="[footerAction]"></ng-content>
+                <button class="btn btn-primary btn-sm" style="margin-left: 10px" (click)="close()" (document:keydown.escape)="close()">Cancel</button>
+            </div>
+
+
+        </div>
+    </div>
+</div>

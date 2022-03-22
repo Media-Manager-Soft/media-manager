@@ -1,7 +1,6 @@
 import { Component, Input, Output, ViewChild, EventEmitter, ElementRef } from '@angular/core';
 import { ElectronService } from "../../core/services/electron.service";
 import { MediaService } from "../media.service";
-import { GridService } from "../grid/grid.service";
 
 @Component({
   selector: 'app-preview-media',

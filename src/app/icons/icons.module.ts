@@ -9,6 +9,8 @@ import { ChevronComponent } from "./icons/chevron/chevron.component";
 import { CloseComponent } from './icons/close/close.component';
 import { SpinnerComponent } from './icons/spinner/spinner.component';
 import { ArrowComponent } from './icons/arrow/arrow.component';
+import { EditComponent } from './icons/edit/edit.component';
+import { PlusComponent } from './icons/plus/plus.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { ArrowComponent } from './icons/arrow/arrow.component';
     ChevronComponent,
     CloseComponent,
     SpinnerComponent,
-    ArrowComponent
+    ArrowComponent,
+    EditComponent,
+    PlusComponent
   ],
   exports: [
     FavoriteComponent,
@@ -31,7 +35,9 @@ import { ArrowComponent } from './icons/arrow/arrow.component';
     ChevronComponent,
     CloseComponent,
     SpinnerComponent,
-    ArrowComponent
+    ArrowComponent,
+    EditComponent,
+    PlusComponent
   ],
   imports: [
     CommonModule

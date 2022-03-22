@@ -1,4 +1,4 @@
-<div class="preview-container">
+<div class="modal-bg preview-container">
     <icon-close class="close-button" (document:keydown.esc)="closeModal()" (click)="closeModal()"></icon-close>
     <icon-spinner class="spinner" *ngIf="isLoading"></icon-spinner>
     <div class="media-preview-container" [hidden]="!(currentPreviewType === 'photo')">

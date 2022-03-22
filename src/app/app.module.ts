@@ -20,6 +20,7 @@ import { LocationsComponent } from './filters/locations/locations.component';
 import { InfiniteScrollModule } from "ngx-infinite-scroll";
 import { IconsModule } from "./icons/icons.module";
 import { PreviewToolsComponent } from './media/preview-media/preview-tools/preview-tools.component';
+import { ModalComponent } from './ui/modal/modal.component';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { PreviewToolsComponent } from './media/preview-media/preview-tools/previ
     PhotoBufferComponent,
     LocationsComponent,
     PreviewToolsComponent,
+    ModalComponent,
   ],
   imports: [
     IconsModule,

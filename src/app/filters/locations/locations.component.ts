@@ -50,7 +50,7 @@ export class LocationsComponent implements OnInit {
       return location.isSelected;
     })
     // @ts-ignore
-    if (selQty.true === 1 && !!location.isSelected){
+    if (selQty.true === 1 && !!location.isSelected) {
       return;
     }
     // @ts-ignore
@@ -74,6 +74,7 @@ export class LocationsComponent implements OnInit {
   onSubmit() {
     this.createLocation(this.newPathForm.value).then(() => {
       this.getLocations();
+      this.isModalOpen = false;
     });
   }
 

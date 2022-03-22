@@ -1,33 +1,24 @@
-<h4 (click)="isModalOpen = !isModalOpen">Locations</h4>
-<p *ngFor="let location of locations" class="selection" [class.selected]="location.isSelected" (click)="toggleSelect(location)">
-    {{ location.name }}
-</p>
-
-<!--// Bootsrap-->
-<!--<div class="d-grid gap-2 d-md-block">-->
-<!--    <p-->
-<!--            *ngFor="let location of locations"-->
-<!--            class="btn btn-sm"-->
-<!--            [class.btn-primary]="location.isSelected"-->
-<!--            [class.btn-secondary]="!location.isSelected"-->
-<!--            (click)="toggleSelect(location)"-->
-<!--    >-->
-<!--        {{ location.name }}-->
-<!--    </p>-->
-<!--</div>-->
-
-<div *ngIf="isModalOpen">
-    <h3>Add new</h3>
-    <form [formGroup]="newPathForm" (ngSubmit)="onSubmit()">
-        <!--    <div [formGroup]="newPathForm">-->
-        Name: <input formControlName="name">
-        Path: <input formControlName="path">
-        <button class="btn btn-primary" (click)="selectFolder(); $event.preventDefault()">Choose</button>
-        <!--    </div>-->
-        <button class="btn btn-primary" [disabled]="newPathForm.invalid" type="submit">Add</button>
-    </form>
-
-    <h3 (click)="send()">
-        load location
-    </h3>
+<div class="location">
+    <h4>Locations</h4>
+    <icon-plus style="cursor:pointer;" (click)="isModalOpen = true"></icon-plus>
 </div>
+<div *ngFor="let location of locations" class="selection location" [class.selected]="location.isSelected">
+    <span (click)="toggleSelect(location)">{{ location.name }}</span>
+    <icon-edit></icon-edit>
+</div>
+
+<form [formGroup]="newPathForm" (ngSubmit)="onSubmit()">
+    <app-modal title="Location" [(isOpen)]="isModalOpen">
+        <div class="form-group">
+            <input formControlName="name" type="email" class="form-control form-control-sm" id="locationName" aria-describedby="emailHelp" placeholder="Enter name">
+        </div>
+        <div class="form-group">
+            <button class="btn btn-primary btn-sm btn-block" style="width: 100%; margin-top: 10px;" (click)="selectFolder(); $event.preventDefault()">Choose</button>
+            <input type="hidden" formControlName="path">
+        </div>
+        <button footerAction class="btn btn-success btn-sm" [disabled]="newPathForm.invalid" type="submit">Add</button>
+        <!--    <h3 (click)="send()">-->
+        <!--        load location-->
+        <!--    </h3>-->
+    </app-modal>
+</form>
