@@ -52,6 +52,7 @@ export class MediaService {
         .resizeToThumb()
         .toJpg({quality: 60, progressive: true})
         .toBuffer()
+      thumb.locationId = this.media.location.id;
       await thumb.save({transaction: false});
     } catch (e) {
       console.error(e);

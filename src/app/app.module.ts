@@ -21,6 +21,8 @@ import { InfiniteScrollModule } from "ngx-infinite-scroll";
 import { IconsModule } from "./icons/icons.module";
 import { PreviewToolsComponent } from './media/preview-media/preview-tools/preview-tools.component';
 import { ModalComponent } from './ui/modal/modal.component';
+import { LocationAddFormComponent } from './filters/locations/location-add-form/location-add-form.component';
+import { LocationEditFormComponent } from './filters/locations/location-edit-form/location-edit-form.component';
 
 
 @NgModule({
@@ -41,6 +43,8 @@ import { ModalComponent } from './ui/modal/modal.component';
     LocationsComponent,
     PreviewToolsComponent,
     ModalComponent,
+    LocationAddFormComponent,
+    LocationEditFormComponent,
   ],
   imports: [
     IconsModule,

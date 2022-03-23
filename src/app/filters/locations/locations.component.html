@@ -1,24 +1,20 @@
 <div class="location">
     <h4>Locations</h4>
-    <icon-plus style="cursor:pointer;" (click)="isModalOpen = true"></icon-plus>
+    <icon-plus style="cursor:pointer;" (click)="isAddModalOpen = true"></icon-plus>
 </div>
 <div *ngFor="let location of locations" class="selection location" [class.selected]="location.isSelected">
     <span (click)="toggleSelect(location)">{{ location.name }}</span>
-    <icon-edit></icon-edit>
+    <icon-cog
+            style="opacity: 0.5"
+            (click)="locationEditForm.openModal(location)"
+    ></icon-cog>
 </div>
 
-<form [formGroup]="newPathForm" (ngSubmit)="onSubmit()">
-    <app-modal title="Location" [(isOpen)]="isModalOpen">
-        <div class="form-group">
-            <input formControlName="name" type="email" class="form-control form-control-sm" id="locationName" aria-describedby="emailHelp" placeholder="Enter name">
-        </div>
-        <div class="form-group">
-            <button class="btn btn-primary btn-sm btn-block" style="width: 100%; margin-top: 10px;" (click)="selectFolder(); $event.preventDefault()">Choose</button>
-            <input type="hidden" formControlName="path">
-        </div>
-        <button footerAction class="btn btn-success btn-sm" [disabled]="newPathForm.invalid" type="submit">Add</button>
-        <!--    <h3 (click)="send()">-->
-        <!--        load location-->
-        <!--    </h3>-->
-    </app-modal>
-</form>
+<app-location-add-form
+        (locationAdded)="locationCreated()"
+        [(isModalOpen)]="isAddModalOpen"
+></app-location-add-form>
+
+<app-location-edit-form
+        (locationDeleted)="locationRemoved($event)"
+></app-location-edit-form>

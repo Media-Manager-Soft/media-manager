@@ -1,7 +1,6 @@
-import { app, BrowserWindow, dialog, ipcMain } from "electron";
+import { app, BrowserWindow, ipcMain } from "electron";
 import * as path from "path";
 import * as url from "url";
-import { Location } from "./Entities/Location";
 import { Media } from "./Entities/Media";
 import { DBConnection } from "./Database/DBConnection";
 import { NavDates } from "./Data/NavDates";
@@ -9,6 +8,7 @@ import { MediaQuery } from "./Queries/MediaQuery";
 import { PathHelper } from "./Helpers/helpers";
 import { UpdateMetaMetadataController } from "./Controllers/UpdateMetaMetadataController";
 import { ThumbnailController } from "./Controllers/ThumbnailController";
+import { LocationController } from "./Controllers/LocationController";
 
 var bus = require('./Events/eventBus');
 var workerManager = require('./Workers/WorkerManager')
@@ -66,9 +66,6 @@ export class Main {
   }
 
   protected ipc() {
-    ipcMain.handle('get-locations', async () => {
-      return await Location.find();
-    })
 
     ipcMain.handle('get-media', async (event, queries) => {
       return MediaQuery.setQuery(queries.query, queries.pagination).get();
@@ -78,25 +75,8 @@ export class Main {
       return await ThumbnailController.getThumb(arg.mediaId);
     })
 
-    ipcMain.handle('store-location', async (event, arg) => {
-      let location = new Location;
-      location.path = arg.path;
-      location.name = arg.name;
-      await location.save();
-      location.service().discoverFiles();
-    })
-
-    ipcMain.handle('select-folder', (event, arg) => {
-      const {dialog} = require('electron')
-      return dialog.showOpenDialog({properties: ['openDirectory']});
-    })
-
-    //todo: for Develop only
-    ipcMain.on('async-msg', async (event, arg) => {
-      var loc = await Location.findOne(1)
-      loc?.service().discoverFiles().then(() => {
-        loc?.service().removeIfNotExists()
-      });
+    ipcMain.handle('locations', async (event, arg) => {
+      return LocationController.dispatch(arg.action, arg.data)
     })
 
     ipcMain.handle('terminate-process', async (event, arg) => {

@@ -1,0 +1,15 @@
+<form [formGroup]="locationForm" (ngSubmit)="onSubmit()">
+    <app-modal title="Create location" [isOpen]="isModalOpen" (isOpenChange)="close()">
+        <div class="form-group">
+            <input formControlName="name"  type="email" class="form-control form-control-sm" id="locationName" aria-describedby="emailHelp" placeholder="Enter name">
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-primary btn-sm btn-block" style="width: 100%; margin-top: 10px;" (click)="selectFolder(); $event.preventDefault()">Choose</button>
+            <input type="hidden" formControlName="path">
+        </div>
+
+        <button footerAction class="btn btn-success btn-sm" [disabled]="locationForm.invalid" type="submit">Add</button>
+
+    </app-modal>
+</form>

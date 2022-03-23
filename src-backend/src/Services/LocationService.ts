@@ -29,9 +29,13 @@ export class LocationService {
     return arrayOfFiles
   }
 
-  public async discoverFiles() {
+  public async discoverFiles(regenerateThumb: boolean = true) {
     let paths = this.getAllFiles(this.location.path, []);
-    let id = workerManager.runProcess('discover', {paths: paths, locationId: this.location.id})
+    let id = workerManager.runProcess('discover', {
+      paths: paths,
+      locationId: this.location.id,
+      regenerateThumbs: regenerateThumb
+    })
 
     workerManager.getWorker(id).on('message', (resp: any) => {
       bus.emit('notifyFront', resp)

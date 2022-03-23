@@ -23,7 +23,10 @@ process.on('message', async (message) => {
       }
 
       await media.save();
-      await media.mediaService.storeThumb();
+
+      if (message.data.regenerateThumbs === true) {
+        await media.mediaService.storeThumb();
+      }
 
       let msg = {
         workerName: message.id,

@@ -10,5 +10,7 @@ export class Thumbnail extends BaseEntity {
 
   @Column({unique: true})
   mediaId: number;
-  
+
+  @Column()
+  locationId: number;
 }

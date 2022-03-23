@@ -4,7 +4,10 @@
             class="media-favorite"
             [filled]="media.favorite"
     ></icon-favorite>
-    <app-photo-buffer [buffer]="media.thumbnail" (dblclick)="previewMedia()"></app-photo-buffer>
+    <app-photo-buffer
+            [buffer]="media.thumbnail"
+            (dblclick)="previewMedia()"
+    ></app-photo-buffer>
     <div class="figure">
         <p>{{ media.filename }}</p>
         <p>{{ media.takenAt | date:"yyyy.MM.dd HH:mm:ss"}}</p>

@@ -1,19 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ElectronService } from "../../core/services/electron.service";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { MediaService } from "../../media/media.service";
-import { countBy, filter, find, map } from "lodash"
+import { countBy, filter, find, map, remove } from "lodash"
 import { DatesService } from "../dates/dates.service";
+import { ILocation } from "./ILocation";
+import { LocationEditFormComponent } from "./location-edit-form/location-edit-form.component";
 
 @Component({
   selector: 'app-locations',
   templateUrl: './locations.component.html',
   styleUrls: ['./locations.component.scss']
 })
+
 export class LocationsComponent implements OnInit {
 
-  locations: location[];
-  isModalOpen = false;
+  @ViewChild(LocationEditFormComponent) locationEditForm: LocationEditFormComponent;
+
+  locations: ILocation[];
+  isAddModalOpen = false;
 
   constructor(
     private electronService: ElectronService,
@@ -21,24 +25,19 @@ export class LocationsComponent implements OnInit {
     private datesService: DatesService) {
   }
 
-  newPathForm = new FormGroup({
-    path: new FormControl('', [Validators.required]),
-    name: new FormControl('', [Validators.required]),
-  });
-
   ngOnInit(): void {
-    this.getLocations().then((data) => {
+    this.getLocations().then(() => {
       if (this.locations.length > 0) {
         //TODO: Get data from eg. local storage
         this.locations[0].isSelected = true;
       }
       this.setDateByLocation();
-      this.setQuery(false)
+      this.setQuery()
     });
   }
 
   async getLocations() {
-    await this.electronService.ipcRenderer.invoke('get-locations').then((result) => {
+    await this.electronService.ipcRenderer.invoke('locations', {action: 'get'}).then((result) => {
       this.locations = result;
     })
     return this.locations;
@@ -66,42 +65,23 @@ export class LocationsComponent implements OnInit {
     this.datesService.getDates(this.getSelected());
   }
 
-  setQuery(getMedia = true) {
+  setQuery() {
     this.setDateByLocation();
     this.mediaService.setQuery({type: 'locations', parameters: this.getSelected()}).getMedia();
   }
 
-  onSubmit() {
-    this.createLocation(this.newPathForm.value).then(() => {
-      this.getLocations();
-      this.isModalOpen = false;
-    });
+  locationCreated() {
+    this.getLocations();
+    this.isAddModalOpen = false;
   }
 
-  selectFolder() {
-    this.electronService.ipcRenderer.invoke('select-folder')
-      .then((rsp) => {
-        if (!rsp.canceled) {
-          this.newPathForm.patchValue({'path': rsp.filePaths[0]});
-        }
-      })
-      .catch(e => {
-
-      });
+  locationRemoved(ev: any) {
+    if (ev.isSelected) {
+      this.toggleSelect(ev);
+    }
+    this.setDateByLocation();
+    remove(this.locations, {id: ev.id})
+    this.mediaService.setQuery({type: 'locations', parameters: this.getSelected()}).getMedia();
   }
 
-  //TODO: For DEV Only
-  send() {
-    this.electronService.ipcRenderer.send('async-msg', 'ping')
-  }
-
-  async createLocation(data: any) {
-    await this.electronService.ipcRenderer.invoke('store-location', data);
-  }
-
-}
-
-interface location {
-  isSelected: boolean;
-  name: string;
 }

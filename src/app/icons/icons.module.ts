@@ -11,6 +11,7 @@ import { SpinnerComponent } from './icons/spinner/spinner.component';
 import { ArrowComponent } from './icons/arrow/arrow.component';
 import { EditComponent } from './icons/edit/edit.component';
 import { PlusComponent } from './icons/plus/plus.component';
+import { CogComponent } from './icons/cog/cog.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { PlusComponent } from './icons/plus/plus.component';
     SpinnerComponent,
     ArrowComponent,
     EditComponent,
-    PlusComponent
+    PlusComponent,
+    CogComponent
   ],
   exports: [
     FavoriteComponent,
@@ -37,7 +39,8 @@ import { PlusComponent } from './icons/plus/plus.component';
     SpinnerComponent,
     ArrowComponent,
     EditComponent,
-    PlusComponent
+    PlusComponent,
+    CogComponent
   ],
   imports: [
     CommonModule
