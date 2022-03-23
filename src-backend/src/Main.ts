@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow, ipcMain, Notification } from "electron";
 import * as path from "path";
 import * as url from "url";
 import { Media } from "./Entities/Media";
@@ -48,12 +48,15 @@ export class Main {
           slashes: true
         })
       );
-
       bus.on('notifyFront', (args: any) => {
         mainWindow.webContents.send("notification", args)
       })
-      PathHelper.deleteTemp()
 
+      bus.on('notifyDesktop', (args: any) => {
+        new Notification({ title: args.title, body: args.body }).show()
+      })
+
+      PathHelper.deleteTemp()
     });
   }
 
@@ -81,6 +84,7 @@ export class Main {
 
     ipcMain.handle('terminate-process', async (event, arg) => {
       await workerManager.terminate(arg.processId)
+
     })
 
     ipcMain.handle('get-nav-dates', async (event, locationsIds) => {

@@ -38,7 +38,7 @@ export class LocationService {
     })
 
     workerManager.getWorker(id).on('message', (resp: any) => {
-      bus.emit('notifyFront', resp)
+      bus.emit(resp.type, resp.msg)
     })
   }
 

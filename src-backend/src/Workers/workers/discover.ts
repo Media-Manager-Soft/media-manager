@@ -37,7 +37,8 @@ process.on('message', async (message) => {
 
   }
   notify(message.id, false, 'Finish!', 1, 1)
-
+  // @ts-ignore
+  process.send({type: 'notifyDesktop', msg: {title: 'Finished!', body: `Synchronized ${message.data.paths.length} media file(s)`}});
 });
 
 function notify(workerName:string, processing: boolean, title:string, total:number, current:number) {
@@ -53,6 +54,6 @@ function notify(workerName:string, processing: boolean, title:string, total:numb
   } as IFrontNotificationWorker
 
   // @ts-ignore
-  process.send(msg);
+  process.send({type: 'notifyFront', msg});
 }
 
