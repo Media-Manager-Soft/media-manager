@@ -8,18 +8,26 @@ import { ElectronService } from "../../core/services/electron.service";
 })
 
 export class WorkerComponent implements OnInit {
-  @Input() id: string;
-  @Input() title: string;
-  @Input() current: number;
-  @Input() max: number;
-  @Output() terminateProcess = new EventEmitter<string>();
 
-  constructor(private electronService: ElectronService) { }
+  @Input()
+  data: any;
+
+  show = true;
+
+  @Output()
+  terminateProcess = new EventEmitter<string>();
+
+  constructor(private electronService: ElectronService) {
+  }
 
 
   terminate() {
-    this.electronService.ipcRenderer.invoke('terminate-process', {processId: this.id}).then(() => {
-      this.terminateProcess.emit(this.id);
+    if (!confirm('Are you sure you want stop this process?')) {
+      return;
+    }
+    this.show = false;
+    this.electronService.ipcRenderer.invoke('terminate-process', {processId: this.data.workerName}).then(() => {
+      this.terminateProcess.emit(this.data.workerName);
     })
   }
 

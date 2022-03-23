@@ -1,5 +1,7 @@
-<p>worker works!</p>
-<p>{{ id }}</p>
-<p>{{ title }}</p>
-<progress id="file" [max]="max" [value]="current">  </progress>
-<p style="color: red" (click)="terminate()">STOP</p>
+<div class="worker" *ngIf="data.processing && show">
+    <icon-circle-close class="close" (click)="terminate()"></icon-circle-close>
+    <p class="title">{{ data.job }} ({{ data.data.current }}/{{data.data.total}})</p>
+    <p class="title">{{ data.data.title }}</p>
+    <progress [max]="data.data.total" [value]="data.data.current"></progress>
+</div>
+

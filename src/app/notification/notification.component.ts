@@ -9,15 +9,11 @@ import { BehaviorSubject, Observable } from "rxjs";
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NotificationComponent implements OnInit {
-  text = 'aaa'
+  text = ''
   workers: any = {};
-  time: Observable<object>;
-  subject = new BehaviorSubject(123);
-
 
   constructor(private electronService: ElectronService, private cdr: ChangeDetectorRef) {
   }
-
 
   get workersKeys() {
     return Object.keys(this.workers);

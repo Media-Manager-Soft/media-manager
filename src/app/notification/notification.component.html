@@ -1,10 +1,8 @@
-<h2>notification works!</h2>
-
-<app-worker *ngFor="let worker of workersKeys"
-            [title]="workers[worker].data?.title"
-            [id]="workers[worker].workerName"
-            [max]="workers[worker].data?.total"
-            [current]="workers[worker].data?.current"
-            (terminateProcess)="processTerminated($event)"
-></app-worker>
-
+<div class="container">
+    <div *ngFor="let worker of workersKeys">
+        <app-worker
+                [data]="this.workers[worker]"
+                (terminateProcess)="processTerminated($event)"
+        ></app-worker>
+    </div>
+</div>

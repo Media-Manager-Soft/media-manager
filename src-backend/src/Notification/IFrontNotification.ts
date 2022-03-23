@@ -1,4 +1,5 @@
 interface IFrontNotificationWorker {
+  job: string,
   workerName: string,
   processing: Boolean,
   data?: {

@@ -28,18 +28,7 @@ process.on('message', async (message) => {
         await media.mediaService.storeThumb();
       }
 
-      let msg = {
-        workerName: message.id,
-        processing: true,
-        data: {
-          title: media.filename,
-          total: message.data.paths.length,
-          current: i + 1
-        }
-      } as IFrontNotificationWorker
-
-      // @ts-ignore
-      process.send(msg);
+      notify(message.id, true, media.filename, message.data.paths.length, i + 1)
 
     } catch (e: any) {
       // TODO: emit errors during discovering
@@ -47,6 +36,23 @@ process.on('message', async (message) => {
     }
 
   }
+  notify(message.id, false, 'Finish!', 1, 1)
 
 });
+
+function notify(workerName:string, processing: boolean, title:string, total:number, current:number) {
+  let msg = {
+    job: 'Syncing',
+    workerName: workerName,
+    processing: processing,
+    data: {
+      title: title,
+      total: total,
+      current: current
+    }
+  } as IFrontNotificationWorker
+
+  // @ts-ignore
+  process.send(msg);
+}
 

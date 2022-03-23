@@ -14,6 +14,7 @@ import { PlusComponent } from './icons/plus/plus.component';
 import { CogComponent } from './icons/cog/cog.component';
 import { ExclamationTriangleComponent } from './icons/exclamation-triangle/exclamation-triangle.component';
 import { ArrowRepeatComponent } from './icons/arrow-repeat/arrow-repeat.component';
+import { CircleCloseComponent } from './icons/circle-close/circle-close.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ArrowRepeatComponent } from './icons/arrow-repeat/arrow-repeat.componen
     PlusComponent,
     CogComponent,
     ExclamationTriangleComponent,
-    ArrowRepeatComponent
+    ArrowRepeatComponent,
+    CircleCloseComponent
   ],
   exports: [
     FavoriteComponent,
@@ -46,7 +48,8 @@ import { ArrowRepeatComponent } from './icons/arrow-repeat/arrow-repeat.componen
     PlusComponent,
     CogComponent,
     ExclamationTriangleComponent,
-    ArrowRepeatComponent
+    ArrowRepeatComponent,
+    CircleCloseComponent
   ],
   imports: [
     CommonModule
