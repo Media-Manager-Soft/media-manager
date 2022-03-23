@@ -2,6 +2,7 @@ import { Location } from "../Entities/Location";
 import { dialog } from "electron";
 import { Media } from "../Entities/Media";
 import { Thumbnail } from "../Entities/Thumbnail";
+import { LocationResource } from "../Resources/LocationResource";
 
 export class LocationController {
   static dispatch(action: string, data: any) {
@@ -10,7 +11,7 @@ export class LocationController {
   }
 
   static async get() {
-    return await Location.find();
+    return LocationResource.collection(await Location.find());
   }
 
   static async store(data: any) {

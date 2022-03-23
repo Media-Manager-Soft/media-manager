@@ -19,6 +19,8 @@ export class Location extends BaseEntity {
   @Column({type: "int", default: () => "CURRENT_TIMESTAMP"})
   createdAt: Date;
 
+  pathExists?: boolean;
+
   public service() {
     return new LocationService(this)
   }

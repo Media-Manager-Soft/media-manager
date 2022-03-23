@@ -12,6 +12,8 @@ import { ArrowComponent } from './icons/arrow/arrow.component';
 import { EditComponent } from './icons/edit/edit.component';
 import { PlusComponent } from './icons/plus/plus.component';
 import { CogComponent } from './icons/cog/cog.component';
+import { ExclamationTriangleComponent } from './icons/exclamation-triangle/exclamation-triangle.component';
+import { ArrowRepeatComponent } from './icons/arrow-repeat/arrow-repeat.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import { CogComponent } from './icons/cog/cog.component';
     ArrowComponent,
     EditComponent,
     PlusComponent,
-    CogComponent
+    CogComponent,
+    ExclamationTriangleComponent,
+    ArrowRepeatComponent
   ],
   exports: [
     FavoriteComponent,
@@ -40,7 +44,9 @@ import { CogComponent } from './icons/cog/cog.component';
     ArrowComponent,
     EditComponent,
     PlusComponent,
-    CogComponent
+    CogComponent,
+    ExclamationTriangleComponent,
+    ArrowRepeatComponent
   ],
   imports: [
     CommonModule

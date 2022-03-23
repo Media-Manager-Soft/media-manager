@@ -3,4 +3,5 @@ export interface ILocation {
   isSelected: boolean;
   name: string;
   path: string;
+  pathExists: boolean;
 }
