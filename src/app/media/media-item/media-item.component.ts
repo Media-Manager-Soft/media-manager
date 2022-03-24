@@ -28,4 +28,11 @@ export class MediaItemComponent {
     this.gridService.selectMediaIndexForPreview(this.mediaItemIndex)
   }
 
+  setFlag(value:number){
+    if (value === this.media.flag){
+      value = 0;
+    }
+    this.mediaService.updateMedia(this.media.id, {flag: value})
+  }
+
 }

@@ -1,1 +1,40 @@
+@import "/src/scss/variables";
+
+.figure {
+  color: $gray-500;
+  font-size: 12px;
+  overflow: hidden;
+  padding: 10px;
+}
+
+.action-container {
+  position: relative;
+
+  .action {
+    cursor: pointer;
+    color: white;
+    opacity: 0.3;
+    position: absolute;
+    margin: 14px 14px 7px 14px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transition: all 0.3s ease;
+      opacity: 1;
+    }
+
+    &.picked {
+      bottom: 0;
+    }
+
+    &.rejected {
+      bottom: 0;
+      right: 0;
+    }
+
+    &.selected {
+      opacity: 1;
+    }
+  }
+}
 
