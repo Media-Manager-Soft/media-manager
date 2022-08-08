@@ -1,4 +1,4 @@
-<div *ngIf="isOpen" class="modal-bg light no-blur">
+<div *ngIf="isOpen" class="modal-bg light">
     <div class="modal">
 
         <div class="body">
@@ -14,7 +14,6 @@
                 <ng-content select="[footerAction]"></ng-content>
                 <button class="btn btn-primary btn-sm" style="margin-left: 10px" (click)="close()" (document:keydown.escape)="close()">Cancel</button>
             </div>
-
 
         </div>
     </div>
