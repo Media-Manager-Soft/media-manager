@@ -44,6 +44,9 @@ export class LocationsComponent implements OnInit {
   }
 
   toggleSelect(location: any) {
+    if (location?.pathExists === false){
+      return;
+    }
     let loc = find(this.locations, {id: location.id});
     const selQty = countBy(this.locations, (location) => {
       return location.isSelected;

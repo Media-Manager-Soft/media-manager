@@ -1,26 +1,30 @@
 <div class="location">
-    <h4>Locations</h4>
-    <div>
-        <icon-arrow-repeat style="cursor:pointer; margin-right: 10px" (click)="getLocations()"></icon-arrow-repeat>
-        <icon-plus style="cursor:pointer;" (click)="isAddModalOpen = true"></icon-plus>
-    </div>
+  <h4>Locations</h4>
+  <div>
+    <icon-arrow-repeat style="cursor:pointer; margin-right: 10px" (click)="getLocations()"></icon-arrow-repeat>
+    <icon-plus style="cursor:pointer;" (click)="isAddModalOpen = true"></icon-plus>
+  </div>
 </div>
 <div *ngFor="let location of locations" class="selection location" [class.selected]="location.isSelected">
-    <span (click)="toggleSelect(location)">
+
+    <span class="location" (click)="toggleSelect(location)">
         {{ location.name }}
-        <icon-exclamation-triangle *ngIf="!location.pathExists"></icon-exclamation-triangle>
+      <div class="tooltip" *ngIf="!location.pathExists">
+        <icon-exclamation-triangle></icon-exclamation-triangle>
+        <span class="tooltiptext">Location offline</span>
+      </div>
     </span>
-    <icon-cog
-            style="opacity: 0.5"
-            (click)="locationEditForm.openModal(location)"
-    ></icon-cog>
+  <icon-cog
+    style="opacity: 0.5"
+    (click)="locationEditForm.openModal(location)"
+  ></icon-cog>
 </div>
 
 <app-location-add-form
-        (locationAdded)="locationCreated()"
-        [(isModalOpen)]="isAddModalOpen"
+  (locationAdded)="locationCreated()"
+  [(isModalOpen)]="isAddModalOpen"
 ></app-location-add-form>
 
 <app-location-edit-form
-        (locationDeleted)="locationRemoved($event)"
+  (locationDeleted)="locationRemoved($event)"
 ></app-location-edit-form>

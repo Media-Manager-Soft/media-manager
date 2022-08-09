@@ -1,29 +1,34 @@
 <app-modal title="Edit location" (isOpenChange)="isModalOpen = !isModalOpen" [isOpen]="isModalOpen">
-    <div class="form-group">
-        <input class="form-control form-control-sm" id="locationName" [value]="location?.name" (input)="up($event)" aria-describedby="emailHelp" placeholder="Enter name">
-        <button class="btn btn-success btn-sm" [disabled]="newName?.length === 0" style="width: 100%; margin-top: 10px;" (click)="update()">Save</button>
-    </div>
+  <div class="form-group">
+    <input class="form-control form-control-sm" id="locationName" [value]="location?.name" (input)="up($event)"
+           aria-describedby="emailHelp" placeholder="Enter name">
+    <button class="btn btn-success btn-sm" [disabled]="newName?.length === 0" style="width: 100%; margin-top: 10px;"
+            (click)="update()">Save
+    </button>
+  </div>
 
-    <h4 style="margin-top:10px">Path</h4>
-    {{ location?.path }}
-    <h4 style="margin-top:10px">
-        Synchronize items
-    </h4>
-    <div class="form-group">
-        <div class="form-check" style="margin-top: 10px;">
-            <input class="form-check-input" type="checkbox" [checked]="removeMissing" (change)="removeMissing = !removeMissing" id="removeMissingItems">
-            <label class="form-check-label" for="removeMissingItems">
-                Remove missing items
-            </label>
-        </div>
-        <div class="form-check" style="margin-top: 10px;">
-            <input class="form-check-input" type="checkbox" [checked]="regenerateThumbs" (change)="regenerateThumbs = !regenerateThumbs" id="regenerateThumbs">
-            <label class="form-check-label" for="regenerateThumbs">
-                Regenerate thumbnails
-            </label>
-        </div>
-        <button class="btn btn-success btn-sm" style="width: 100%; margin-top: 5px;" (click)="sync()">Synchronize</button>
-        <button class="btn btn-danger btn-sm" style="width: 100%; margin-top: 10px;" (click)="delete()">Delete</button>
+  <h4 style="margin-top:10px">Path</h4>
+  <input class="form-control form-control-sm" disabled [value]="location?.path"/>
+  <h4 style="margin-top:10px">
+    Synchronize items
+  </h4>
+  <div class="form-group">
+    <div class="form-check" style="margin-top: 10px;">
+      <input class="form-check-input" type="checkbox" [checked]="removeMissing"
+             (change)="removeMissing = !removeMissing" id="removeMissingItems">
+      <label class="form-check-label" for="removeMissingItems">
+        Remove missing items
+      </label>
     </div>
+    <div class="form-check" style="margin-top: 10px;">
+      <input class="form-check-input" type="checkbox" [checked]="regenerateThumbs"
+             (change)="regenerateThumbs = !regenerateThumbs" id="regenerateThumbs">
+      <label class="form-check-label" for="regenerateThumbs">
+        Regenerate thumbnails
+      </label>
+    </div>
+    <button [disabled]="!location?.pathExists" class="btn btn-success btn-sm" style="width: 100%; margin-top: 5px;" (click)="sync()">Synchronize</button>
+    <button class="btn btn-danger btn-sm" style="width: 100%; margin-top: 10px;" (click)="delete()">Delete</button>
+  </div>
 
 </app-modal>
