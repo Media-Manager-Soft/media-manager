@@ -1,28 +1,28 @@
 <div class="action-container">
-    <icon-favorite
-            (click)="mediaService.updateMedia(media.id, {favorite: !media.favorite})"
-            class="action"
-            [filled]="media.favorite"
-    ></icon-favorite>
-    <icon-flag-filled
-            class="action picked"
-            (click)="setFlag(1)"
-            [class.selected]="media.flag == 1"
-    ></icon-flag-filled>
-    <icon-rejected
-            class="action rejected"
-            (click)="setFlag(-1)"
-            [class.selected]="media.flag == -1"
-    ></icon-rejected>
+  <icon-favorite
+    (click)="mediaService.updateMedia(media.id, {favorite: !media.favorite})"
+    class="action"
+    [filled]="media.favorite"
+  ></icon-favorite>
+  <icon-flag-filled
+    class="action picked"
+    (click)="setFlag(1)"
+    [class.selected]="media.flag == 1"
+  ></icon-flag-filled>
+  <icon-rejected
+    class="action rejected"
+    (click)="setFlag(-1)"
+    [class.selected]="media.flag == -1"
+  ></icon-rejected>
 
-    <app-photo-buffer
-            [buffer]="media.thumbnail"
-            (dblclick)="previewMedia()"
-    ></app-photo-buffer>
+  <app-photo-buffer
+    [buffer]="media.thumbnail"
+    (dblclick)="previewMedia()"
+  ></app-photo-buffer>
 </div>
 
 <div class="figure">
-    <p>{{ media.filename }}</p>
-    <p>{{ media.takenAt | date:"yyyy.MM.dd HH:mm:ss"}}</p>
+  <p>{{ media.filename }}</p>
+  <p *ngIf="media.takenAt">{{ media.takenAt | date:"yyyy.MM.dd HH:mm:ss"}}</p>
 </div>
 

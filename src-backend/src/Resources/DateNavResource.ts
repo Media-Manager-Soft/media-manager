@@ -1,5 +1,5 @@
 import { TreeItem } from "./Types/TreeType";
-import { orderBy, sumBy } from 'lodash';
+import { orderBy } from 'lodash';
 
 
 export class DateNavResource {

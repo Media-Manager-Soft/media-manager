@@ -8,7 +8,7 @@ export class NavDates {
               COUNT("id")                     as qty
        FROM "media"
        WHERE locationId IN (` + locationIds.join(',') + `)
-       AND takenAt IS NOT NULL
+       AND takenAtDate IS NOT NULL
        group by takenAtDate
        order by takenAtDate ASC`
     );
