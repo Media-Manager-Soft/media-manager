@@ -23,6 +23,7 @@ import { PreviewToolsComponent } from './media/preview-media/preview-tools/previ
 import { ModalComponent } from './ui/modal/modal.component';
 import { LocationAddFormComponent } from './filters/locations/location-add-form/location-add-form.component';
 import { LocationEditFormComponent } from './filters/locations/location-edit-form/location-edit-form.component';
+import { ImportComponent } from './components/import/import.component';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { LocationEditFormComponent } from './filters/locations/location-edit-for
     ModalComponent,
     LocationAddFormComponent,
     LocationEditFormComponent,
+    ImportComponent,
   ],
   imports: [
     IconsModule,

@@ -1,13 +1,15 @@
-import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Location } from "./Location";
-import { MediaService } from "../Services/Media/Metadata/MediaService";
-import { IConverter } from "../Services/Converters/IConverter";
-import { MediaType } from "../Enums/MediaType";
-import { PhotoConverter } from "../Services/Converters/PhotoConverter";
-import { PhotoRawConverter } from "../Services/Converters/PhotoRawConverter";
-import { VideoConverter } from "../Services/Converters/VideoConverter";
+import {BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
+import {Location} from "./Location";
+import {MediaService} from "../Services/Media/Metadata/MediaService";
+import {IConverter} from "../Services/Converters/IConverter";
+import {MediaType} from "../Enums/MediaType";
+import {PhotoConverter} from "../Services/Converters/PhotoConverter";
+import {PhotoRawConverter} from "../Services/Converters/PhotoRawConverter";
+import {VideoConverter} from "../Services/Converters/VideoConverter";
 import * as fs from "fs";
-import { Thumbnail } from "./Thumbnail";
+import {Thumbnail} from "./Thumbnail";
+import moment = require("moment");
+import {Moment} from "moment";
 
 const path = require('path');
 
@@ -19,7 +21,7 @@ export class Media extends BaseEntity {
 
   static THUMB_WIDTH: number = 400;
 
-  static UPDATABLE_COLUMNS = ['type', 'size', 'width', 'height', 'camera', 'cameraModel', 'latitude', 'longitude', 'takenAt', 'microtime']
+  static UPDATABLE_COLUMNS = ['type', 'size', 'width', 'height', 'camera', 'cameraModel', 'latitude', 'longitude', 'takenAt', 'originalPath']
 
   @PrimaryGeneratedColumn('increment')
   id: number;
@@ -73,7 +75,7 @@ export class Media extends BaseEntity {
   longitude: string;
 
   @Column({nullable: true, type: 'datetime'})
-  takenAt: Date | null;
+  takenAt: string | null | undefined;
 
   @Column({default: () => "CURRENT_TIMESTAMP"})
   createdAt: Date;
@@ -81,11 +83,17 @@ export class Media extends BaseEntity {
   @Column({default: () => "CURRENT_TIMESTAMP"})
   updatedAt: Date;
 
+  originalPath: string;
+
   get mediaService() {
     if (!this._mediaService) {
       this._mediaService = new MediaService(this);
     }
     return this._mediaService;
+  }
+
+  getMomentTakenAt(): Moment {
+    return moment(this.takenAt);
   }
 
   getPathToFile() {

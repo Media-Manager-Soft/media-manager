@@ -1,8 +1,8 @@
-import { Location } from '../Entities/Location';
+import {Location} from '../Entities/Location';
 import * as fs from "fs";
 import * as path from "path";
-import { MediaExtensionTypes } from "../Enums/MediaType";
-import { Media } from "../Entities/Media";
+import {MediaExtensionTypes} from "../Enums/MediaType";
+import {Media} from "../Entities/Media";
 
 const bus = require('./../Events/eventBus');
 const workerManager = require('./../Workers/WorkerManager');
@@ -29,7 +29,21 @@ export class LocationService {
     return arrayOfFiles
   }
 
-  public async discoverFiles(regenerateThumb: boolean = true) {
+  public async importFiles(path: string, locationId: number, action: string) {
+    let paths = this.getAllFiles(path, []);
+    let id = workerManager.runProcess('discover', {
+      paths: paths,
+      locationId: locationId,
+      regenerateThumbs: true,
+      action: action,
+    })
+
+    workerManager.getWorker(id).on('message', (resp: any) => {
+      bus.emit(resp.type, resp.msg)
+    })
+  }
+
+  public async syncFiles(regenerateThumb: boolean = true) {
     let paths = this.getAllFiles(this.location.path, []);
     let id = workerManager.runProcess('discover', {
       paths: paths,

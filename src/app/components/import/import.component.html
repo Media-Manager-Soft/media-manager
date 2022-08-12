@@ -1,0 +1,65 @@
+<button
+  type="button"
+  class="btn btn-sm btn-success"
+  style="margin-top: 8px; width: 100%"
+  (click)="isModalOpen = !isModalOpen"
+>
+  <!--  <icon-plus style="cursor:pointer"></icon-plus>-->
+  Import
+</button>
+
+<form [formGroup]="importForm" (ngSubmit)="onSubmit()">
+  <app-modal title="Import media" (isOpenChange)="isModalOpen = !isModalOpen" [isOpen]="isModalOpen">
+
+    <div class="alert alert-warning" role="alert">
+      No location found. Please add a location before import.
+    </div>
+
+    <div class="form-group">
+      <label for="location">Select location</label>
+      <select class="form-control form-control-sm" id="location" formControlName="locationId">
+        <option disabled selected>Choose</option>
+        <option *ngFor="let location of locations" [value]="location.id">{{ location.name }}</option>
+      </select>
+    </div>
+
+    <div class="form-group" style="margin-top: 15px">
+      <div class="form-check form-check-inline">
+        <input class="form-check-input"
+               type="radio"
+               name="action"
+               id="copy-media"
+               value="copy"
+               formControlName="action"
+        >
+        <label class="form-check-label" for="copy-media">Copy</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input"
+               type="radio"
+               name="action"
+               id="move-media"
+               value="move"
+               formControlName="action"
+        >
+        <label class="form-check-label" for="move-media">Move</label>
+      </div>
+    </div>
+
+    <div class="form-group" style="margin-top:10px;">
+      <input type="text" disabled [value]="importForm.value.path" class="form-control form-control-sm">
+    </div>
+
+    <div class="form-group">
+      <button
+        class="btn btn-primary btn-sm btn-block" style="width: 100%; margin-top: 10px;"
+        (click)="selectFolder(); $event.preventDefault()">
+        Choose
+      </button>
+      <input type="hidden" formControlName="path">
+    </div>
+
+
+    <button [disabled]="!importForm.valid" footerAction class="btn btn-success btn-sm" type="submit">Import</button>
+  </app-modal>
+</form>

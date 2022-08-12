@@ -1,25 +1,19 @@
-import { MediaExtensionTypes, MediaType } from "../../../Enums/MediaType";
-import { Location } from "../../../Entities/Location";
-import { Media } from "../../../Entities/Media";
+import {MediaExtensionTypes, MediaType} from "../../../Enums/MediaType";
+import {Media} from "../../../Entities/Media";
 import * as fs from "fs";
-import { PhotoMetadataService } from "./Metadata/PhotoMetadataService";
-import { VideoMetadataService } from "./Metadata/VideoMetadataService";
-import { IMetadata } from "./Metadata/IMetadata";
-import { UnsupportedExtension } from "../../../Exceptions/UnsupportedExtension";
+import {PhotoMetadataService} from "./Metadata/PhotoMetadataService";
+import {VideoMetadataService} from "./Metadata/VideoMetadataService";
+import {IMetadata} from "./Metadata/IMetadata";
+import {UnsupportedExtension} from "../../../Exceptions/UnsupportedExtension";
 
 const path = require('path');
-const checksum = require('checksum')
 
 export class MetadataService {
-  private pathToFile: string;
   private media: Media;
   private fileMetadata: IMetadata;
 
-  async setFile(media: Media, pathToFile: string, location: Location) {
-    //Todo move toMediaService
+  async setFile(media: Media) {
     this.media = media;
-    this.media.location = location;
-    this.pathToFile = pathToFile;
     this.media.type = await this.getFileType()
     await this.getFileMetadata();
   }
@@ -31,23 +25,23 @@ export class MetadataService {
 
     if (!this.fileMetadata) {
       if (this.media.type === MediaType.VIDEO) {
-        this.fileMetadata = await new VideoMetadataService().getMetadata(this.pathToFile);
+        this.fileMetadata = await new VideoMetadataService().getMetadata(this.media.originalPath);
       } else {
-        this.fileMetadata = await new PhotoMetadataService().getMetadata(this.pathToFile);
+        this.fileMetadata = await new PhotoMetadataService().getMetadata(this.media.originalPath);
       }
     }
   }
 
   getFilePathInLocation() {
-    return path.dirname(this.pathToFile.replace(this.media.location.path, ''))
+    return path.dirname(this.media.originalPath.replace(this.media.location.path, ''))
   }
 
   getFileName() {
-    return path.basename(this.pathToFile)
+    return path.basename(this.media.originalPath)
   }
 
   async getFileType() {
-    let ext = path.extname(this.pathToFile).toLocaleLowerCase();
+    let ext = path.extname(this.media.originalPath).toLocaleLowerCase();
     let type = MediaExtensionTypes[ext];
     if (type === undefined) {
       throw new UnsupportedExtension(`Unsupported file type`)
@@ -74,12 +68,14 @@ export class MetadataService {
   getTakenAt() {
     // let date = this.fileMetadata.dateTimeOriginal
     // if (!date) { //Store incorrect date of media that has no exif taken at date time
-    //   date = Fs.statSync(this.pathToFile).mtime
+    //   date = Fs.statSync(this.media.originalPath).mtime
     // }
-    return this.fileMetadata.dateTimeOriginal;
+    // return this.fileMetadata.dateTimeOriginal;
 
     // return as Date object
     // @ts-ignore
+    return this.fileMetadata.dateTimeOriginal?.toString();
+
     // let date = new Date(this.fileMetadata.dateTimeOriginal)
     // if (date.toString() !== 'Invalid Date') {
     //   return date;
@@ -101,7 +97,7 @@ export class MetadataService {
   }
 
   getFileSize() {
-    return fs.statSync(this.pathToFile).size;
+    return fs.statSync(this.media.originalPath).size;
   }
 
 }

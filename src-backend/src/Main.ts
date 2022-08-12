@@ -1,14 +1,14 @@
-import { app, BrowserWindow, ipcMain, Notification } from "electron";
+import {app, BrowserWindow, ipcMain, Notification} from "electron";
 import * as path from "path";
 import * as url from "url";
-import { Media } from "./Entities/Media";
-import { DBConnection } from "./Database/DBConnection";
-import { NavDates } from "./Data/NavDates";
-import { MediaQuery } from "./Queries/MediaQuery";
-import { PathHelper } from "./Helpers/helpers";
-import { UpdateMetaMetadataController } from "./Controllers/UpdateMetaMetadataController";
-import { ThumbnailController } from "./Controllers/ThumbnailController";
-import { LocationController } from "./Controllers/LocationController";
+import {Media} from "./Entities/Media";
+import {DBConnection} from "./Database/DBConnection";
+import {NavDates} from "./Data/NavDates";
+import {MediaQuery} from "./Queries/MediaQuery";
+import {PathHelper} from "./Helpers/helpers";
+import {UpdateMetaMetadataController} from "./Controllers/UpdateMetaMetadataController";
+import {ThumbnailController} from "./Controllers/ThumbnailController";
+import {LocationController} from "./Controllers/LocationController";
 
 var bus = require('./Events/eventBus');
 var workerManager = require('./Workers/WorkerManager')
@@ -53,7 +53,7 @@ export class Main {
       })
 
       bus.on('notifyDesktop', (args: any) => {
-        new Notification({ title: args.title, body: args.body }).show()
+        new Notification({title: args.title, body: args.body}).show()
       })
 
       PathHelper.deleteTemp()
@@ -84,7 +84,6 @@ export class Main {
 
     ipcMain.handle('terminate-process', async (event, arg) => {
       await workerManager.terminate(arg.processId)
-
     })
 
     ipcMain.handle('get-nav-dates', async (event, locationsIds) => {

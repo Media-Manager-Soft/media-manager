@@ -1,13 +1,15 @@
-import { Media } from "../../../Entities/Media";
-import { Location } from "../../../Entities/Location";
-import { MetadataService } from "./MetadataService";
-import { Thumbnail } from "../../../Entities/Thumbnail";
-import { ImgConverter } from "../../Img/ImgConverter";
+import {Media} from "../../../Entities/Media";
+import {Location} from "../../../Entities/Location";
+import {MetadataService} from "./MetadataService";
+import {Thumbnail} from "../../../Entities/Thumbnail";
+import {ImgConverter} from "../../Img/ImgConverter";
+import {PathHelper} from "../../../Helpers/helpers";
 
+const fs = require('fs');
+const path = require('path');
 
 export class MediaService {
   private mediaMetadataService: MetadataService;
-  private location: Location;
 
   constructor(private media: Media) {
     this.mediaMetadataService = new MetadataService()
@@ -15,9 +17,12 @@ export class MediaService {
 
   public async discoverMetadata(pathToFile: string, location: Location) {
 
-    await this.mediaMetadataService.setFile(this.media, pathToFile, location);
+    this.media.originalPath = pathToFile;
 
-    this.location = location;
+    this.media.location = location;
+
+    await this.mediaMetadataService.setFile(this.media);
+
     this.media.path = this.mediaMetadataService.getFilePathInLocation();
     this.media.filename = this.mediaMetadataService.getFileName();
 
@@ -35,6 +40,39 @@ export class MediaService {
     } catch (e) {
       console.error(e)
     }
+  }
+
+  async copyOrMoveFileToLocation(action: 'move' | 'copy') {
+    let takenAt = this.media.getMomentTakenAt()
+
+    let dir = !this.media.takenAt
+      ? path.join(this.media.location.path, 'No_date')
+      : path.join(this.media.location.path, takenAt.year().toString(), takenAt.format("MM"), takenAt.format('DD').toString());
+
+    let newPath = path.join(dir, this.media.filename)
+
+    PathHelper.ensurePathExists(dir);
+
+    if (fs.existsSync(newPath)) {
+      this.media.filename = PathHelper.addSuffixForDuplicatedFile(this.media.filename);
+      newPath = path.join(dir, this.media.filename)
+    }
+
+    try {
+      await this[action](this.media.originalPath, newPath)
+      this.media.originalPath = newPath;
+      this.media.path = this.mediaMetadataService.getFilePathInLocation();
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  async move(from: string, to: string) {
+    await fs.renameSync(from, to);
+  }
+
+  async copy(from: string, to: string) {
+    await fs.copyFileSync(from, to);
   }
 
   async storeThumb() {
@@ -84,8 +122,9 @@ export class MediaService {
       locationId: this.media.location.id,
       camera: this.media.camera,
       cameraModel: this.media.cameraModel,
+      // @ts-ignore
       takenAt: this.media.takenAt,
-      modifyTime: fs.statSync(this.media.getPathToFile()).mtime,
+      modifyTime: fs.statSync(this.media.originalPath).mtime,
     }
     return await checksum(JSON.stringify(data))
   }

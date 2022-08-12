@@ -1,8 +1,8 @@
-import { Location } from "../Entities/Location";
-import { dialog } from "electron";
-import { Media } from "../Entities/Media";
-import { Thumbnail } from "../Entities/Thumbnail";
-import { LocationResource } from "../Resources/LocationResource";
+import {Location} from "../Entities/Location";
+import {dialog} from "electron";
+import {Media} from "../Entities/Media";
+import {Thumbnail} from "../Entities/Thumbnail";
+import {LocationResource} from "../Resources/LocationResource";
 
 export class LocationController {
   static dispatch(action: string, data: any) {
@@ -19,7 +19,7 @@ export class LocationController {
     location.path = data.path;
     location.name = data.name;
     await location.save();
-    location.service().discoverFiles();
+    location.service().syncFiles();
   }
 
   static async update(data: any) {
@@ -28,9 +28,14 @@ export class LocationController {
     loc.save();
   }
 
+  static async import(data: any) {
+    const loc = await Location.findOne(data.locationId)
+    loc?.service().importFiles(data.path, parseInt(data.locationId), data.action)
+  }
+
   static async sync(data: any) {
     const loc = await Location.findOne(data.locationId);
-    loc?.service().discoverFiles(data.regenerateThumbs).then(() => {
+    loc?.service().syncFiles(data.regenerateThumbs).then(() => {
       if (data.removeMissing) {
         loc?.service().removeIfNotExists()
       }

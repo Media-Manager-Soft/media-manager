@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import { APP_DATA } from "../configs";
+import {APP_DATA} from "../configs";
 
 const path = require('path');
 
@@ -22,5 +22,9 @@ export class PathHelper {
     if (fs.existsSync(this.getTempPath(folder))) {
       fs.rmdirSync(this.getTempPath(folder), {recursive: true});
     }
+  }
+
+  public static addSuffixForDuplicatedFile(fileName: string) {
+    return path.basename(fileName, path.extname(fileName)) + ' [duplicate]' + path.extname(fileName);
   }
 }

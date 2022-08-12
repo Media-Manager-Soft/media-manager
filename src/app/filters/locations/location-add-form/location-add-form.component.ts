@@ -48,6 +48,7 @@ export class LocationAddFormComponent {
   async createLocation(data: any) {
     await this.electronService.ipcRenderer.invoke('locations', {action: 'store', data});
   }
+
   close(){
     this.isModalOpenChange.emit(false);
   }
