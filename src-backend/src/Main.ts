@@ -14,6 +14,7 @@ var bus = require('./Events/eventBus');
 var workerManager = require('./Workers/WorkerManager')
 
 export class Main {
+  private mainWindow: Electron.CrossProcessExports.BrowserWindow;
 
   public run() {
     this.onReady();
@@ -23,10 +24,9 @@ export class Main {
   }
 
   protected onReady() {
-    let mainWindow: BrowserWindow;
 
     app.on("ready", () => {
-      mainWindow = new BrowserWindow({
+      this.mainWindow = new BrowserWindow({
         width: 1400,
         height: 900,
         // icon: path.join(__dirname, "../bin/dist/MB/favicon/icon.png"),
@@ -37,22 +37,27 @@ export class Main {
         },
       });
 
-      mainWindow.webContents.openDevTools();
-
       const isDev = process.argv.some(val => val === '--serve')
 
-      mainWindow.loadURL(
+      if (isDev) {
+        this.mainWindow.webContents.openDevTools();
+      }
+
+      this.mainWindow.loadURL(
         url.format({
           pathname: isDev ? 'localhost:4200' : path.resolve(__dirname, '../../../MB/index.html'),
           protocol: isDev ? 'http:' : 'file:',
           slashes: true
         })
       );
-      bus.on('notifyFront', (args: any) => {
-        mainWindow.webContents.send("notification", args)
+
+      bus.on('notifyFront', (args: any) => { // Frontend notifications
+        this.mainWindow.webContents.send("notification", args)
+        let progressVal = args.processing ? (args.data.current * 100 / args.data.total) / 100 : -1;
+        this.mainWindow.setProgressBar(progressVal)
       })
 
-      bus.on('notifyDesktop', (args: any) => {
+      bus.on('notifyDesktop', (args: any) => { // System notifications
         new Notification({title: args.title, body: args.body}).show()
       })
 
@@ -83,6 +88,7 @@ export class Main {
     })
 
     ipcMain.handle('terminate-process', async (event, arg) => {
+      this.mainWindow.setProgressBar(-1);
       await workerManager.terminate(arg.processId)
     })
 
