@@ -9,6 +9,7 @@ import {PathHelper} from "./Helpers/helpers";
 import {UpdateMetaMetadataController} from "./Controllers/UpdateMetaMetadataController";
 import {ThumbnailController} from "./Controllers/ThumbnailController";
 import {LocationController} from "./Controllers/LocationController";
+import {MediaActionsController} from "./Controllers/MediaActionsController";
 
 var bus = require('./Events/eventBus');
 var workerManager = require('./Workers/WorkerManager')
@@ -85,6 +86,10 @@ export class Main {
 
     ipcMain.handle('locations', async (event, arg) => {
       return LocationController.dispatch(arg.action, arg.data)
+    })
+
+    ipcMain.handle('media-actions', async (event, arg) => {
+      return MediaActionsController.dispatch(arg.action, arg.data)
     })
 
     ipcMain.handle('terminate-process', async (event, arg) => {

@@ -1,13 +1,13 @@
 <div class="location">
   <h4>Locations</h4>
   <div>
-    <icon-arrow-repeat style="cursor:pointer; margin-right: 10px" (click)="getLocations()"></icon-arrow-repeat>
-    <icon-plus style="cursor:pointer;" (click)="isAddModalOpen = true"></icon-plus>
+    <icon-arrow-repeat style="cursor:pointer; margin-right: 10px" (click)="locationService.getLocations()"></icon-arrow-repeat>
+    <icon-plus style="cursor:pointer;" (click)="locationService.isAddModalOpen = true"></icon-plus>
   </div>
 </div>
-<div *ngFor="let location of locations" class="selection location" [class.selected]="location.isSelected">
+<div *ngFor="let location of locationService.locations" class="selection location" [class.selected]="location.isSelected">
 
-    <span class="location" (click)="toggleSelect(location)">
+    <span class="location" (click)="locationService.toggleSelect(location)">
         {{ location.name }}
       <div class="tooltip" *ngIf="!location.pathExists">
         <icon-exclamation-triangle></icon-exclamation-triangle>
@@ -21,14 +21,14 @@
 </div>
 
 <app-location-add-form
-  (locationAdded)="locationCreated()"
-  [(isModalOpen)]="isAddModalOpen"
+  (locationAdded)="locationService.locationCreated()"
+  [(isModalOpen)]="locationService.isAddModalOpen"
 ></app-location-add-form>
 
 <app-location-edit-form
-  (locationDeleted)="locationRemoved($event)"
+  (locationDeleted)="locationService.locationRemoved($event)"
 ></app-location-edit-form>
 
 <app-import
-  [locations]="locations"
+  [locations]="locationService.locations"
 ></app-import>

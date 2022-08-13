@@ -1,12 +1,15 @@
 <p class="selection" (click)="toggle('picked', !selected.picked)" [class]="{selected: selected.picked}">
-    <icon-flag-filled></icon-flag-filled>
-    Picked
+  <icon-flag-filled></icon-flag-filled>
+  Picked
 </p>
 <p class="selection" (click)="toggle('none', !selected.none)" [class]="{selected: selected.none}">
-    <icon-flag></icon-flag>
-    None
+  <icon-flag></icon-flag>
+  None
 </p>
-<p class="selection" (click)="toggle('rejected', !selected.rejected)" [class]="{selected: selected.rejected}">
+<p class="selection columns" (click)="toggle('rejected', !selected.rejected)" [class]="{selected: selected.rejected}">
+  <span>
     <icon-rejected></icon-rejected>
     Rejected
+  </span>
+  <icon-circle-close (click)="deleteRejected($event)"></icon-circle-close>
 </p>
