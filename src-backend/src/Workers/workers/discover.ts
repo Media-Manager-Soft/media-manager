@@ -20,7 +20,7 @@ process.on('message', async (message) => {
           result[column] = media[column];
         })
         media = result;
-      }else {
+      } else {
         if (message.data.action !== undefined) {
           await media.mediaService.copyOrMoveFileToLocation(message.data.action);
         }

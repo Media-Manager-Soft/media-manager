@@ -57,7 +57,7 @@ export class LocationService {
   }
 
   public async removeIfNotExists() {
-    const media = await Media.find({relations: ['location']})
+    const media = await Media.find({relations: ['location'], where: {location: this.location.id}})
     media.forEach(media => {
       !media.fileExists() ? media.removeWithThumb() : null;
     })
