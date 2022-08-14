@@ -4,6 +4,7 @@ import {MetadataService} from "./MetadataService";
 import {Thumbnail} from "../../../Entities/Thumbnail";
 import {ImgConverter} from "../../Img/ImgConverter";
 import {PathHelper} from "../../../Helpers/helpers";
+import {OrientationHelper} from "../../../Helpers/OrientationHelper";
 
 const fs = require('fs');
 const path = require('path');
@@ -88,6 +89,7 @@ export class MediaService {
       const buffer = await this.media.converter().retrieveThumb();
       thumb.thumbnail = await ImgConverter.setData(buffer)
         .resizeToThumb()
+        .rotate(OrientationHelper.translate(this.media.orientation ?? 0))
         .toJpg({quality: 60, progressive: true})
         .toBuffer()
       thumb.locationId = this.media.location.id;

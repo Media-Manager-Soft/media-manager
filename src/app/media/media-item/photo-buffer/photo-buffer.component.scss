@@ -16,7 +16,7 @@ img {
 }
 
 .rotate-2 {
-  transform: scaleX(-1);
+  //transform: scaleX(-1);
 }
 
 .rotate-3 {
@@ -24,7 +24,7 @@ img {
 }
 
 .rotate-4 {
-  transform: rotate(180deg) scaleX(-1);
+  transform: rotate(180deg);
 }
 
 .rotate-5 {
@@ -32,7 +32,7 @@ img {
 }
 
 .rotate-6 {
-  transform: rotate(90deg) scaleX(-1);
+  transform: rotate(90deg);
 }
 
 .rotate-7 {
@@ -41,4 +41,12 @@ img {
 
 .rotate-8 {
   transform: rotate(270deg) scaleX(-1);
+}
+
+$rotationDeg: 0, 90, 180, 270, -90, -180, -270;
+
+@each $deg in $rotationDeg {
+  .rotate-#{$deg} {
+    transform: rotate(#{$deg}deg);
+  }
 }

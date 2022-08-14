@@ -19,6 +19,9 @@ export class ModalComponent {
   @Input()
   title: string | null = null;
 
+  @Input()
+  class: string
+  
   close() {
     this.isOpen = false;
     this.isOpenChange.emit(false);

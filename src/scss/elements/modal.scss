@@ -1,4 +1,4 @@
-.modal-bg{
+.modal-bg {
   background-color: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(10px);
   position: fixed;
@@ -9,9 +9,12 @@
   height: 100%;
   z-index: 99999;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  &.form-modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   &.light {
     background-color: rgba(0, 0, 0, 0.5);
   }

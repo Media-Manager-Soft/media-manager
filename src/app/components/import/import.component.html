@@ -9,7 +9,7 @@
 </button>
 
 <form [formGroup]="importForm" (ngSubmit)="onSubmit()">
-  <app-modal title="Import media" (isOpenChange)="isModalOpen = !isModalOpen" [isOpen]="isModalOpen">
+  <app-modal [class]="'form-modal'" title="Import media" (isOpenChange)="isModalOpen = !isModalOpen" [isOpen]="isModalOpen">
 
     <div *ngIf="locations?.length === 0" class="alert alert-warning" role="alert">
       No location found. Please add a location before import.

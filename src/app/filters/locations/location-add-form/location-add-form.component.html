@@ -1,5 +1,5 @@
 <form [formGroup]="locationForm" (ngSubmit)="onSubmit()">
-  <app-modal title="Create location" [isOpen]="isModalOpen" (isOpenChange)="close()">
+  <app-modal [class]="'form-modal'" title="Create location" [isOpen]="isModalOpen" (isOpenChange)="close()">
     <div class="form-group">
       <input formControlName="name" type="text" class="form-control form-control-sm" id="locationName"
              placeholder="Enter location name">

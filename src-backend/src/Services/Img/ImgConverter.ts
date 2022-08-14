@@ -1,4 +1,4 @@
-import { Media } from "../../Entities/Media";
+import {Media} from "../../Entities/Media";
 
 const sharp = require('sharp');
 
@@ -27,6 +27,13 @@ export class ImgConverter {
 
   toJpg(options: object) {
     this.data.jpeg(options);
+    return this;
+  }
+
+  rotate(deg: number | undefined) {
+    if (deg) {
+      this.data.rotate(deg)
+    }
     return this;
   }
 }

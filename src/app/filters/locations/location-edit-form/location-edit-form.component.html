@@ -1,4 +1,4 @@
-<app-modal title="Edit location" (isOpenChange)="isModalOpen = !isModalOpen" [isOpen]="isModalOpen">
+<app-modal [class]="'form-modal'" title="Edit location" (isOpenChange)="isModalOpen = !isModalOpen" [isOpen]="isModalOpen">
   <div class="form-group">
     <input class="form-control form-control-sm" id="locationName" [value]="location?.name" (input)="up($event)"
            aria-describedby="emailHelp" placeholder="Enter name">

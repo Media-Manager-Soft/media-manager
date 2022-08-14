@@ -30,7 +30,7 @@ export class PhotoBufferComponent implements OnInit {
       const urlCreator = window.URL || window.webkitURL;
       const blob = new Blob([buffer]);
       this.thumbnail.nativeElement.src = urlCreator.createObjectURL(blob)
-      this.thumbnail.nativeElement.classList.add('rotate-' + this.orientation)
+      // this.thumbnail.nativeElement.classList.add('rotate-' + this.orientation) //Not used
     } catch (e) {
     }
   }

@@ -1,22 +1,23 @@
 <div class="modal-bg preview-container">
-    <icon-close class="close-button" (document:keydown.esc)="closeModal()" (click)="closeModal()"></icon-close>
-    <icon-spinner class="spinner" *ngIf="isLoading"></icon-spinner>
-    <div class="media-preview-container" [hidden]="!(currentPreviewType === 'photo')">
-        <pinch-zoom
-                disableZoomControl="disable"
-                [backgroundColor]="'rgba(0, 0, 0, 0.0)'"
-        >
-            <img #photoThumb [class.blur]="isLoading">
-        </pinch-zoom>
-    </div>
-    <div class="media-preview-container" [hidden]="!(currentPreviewType === 'video')">
-        <video
-                [class.blur]="isLoading"
-                controls width="100%" #videoThumb>
-        </video>
-    </div>
-    <div class="tool-container">
-        <app-preview-tools [mediaItemIndex]="currentIndex"></app-preview-tools>
-    </div>
+  <icon-close class="close-button" (document:keydown.esc)="closeModal()" (click)="closeModal()"></icon-close>
+  <icon-spinner class="spinner" *ngIf="isLoading"></icon-spinner>
+  <div class="media-preview-container" [hidden]="!(currentPreviewType === 'photo')">
+    <pinch-zoom
+      disableZoomControl="disable"
+      overflow="visible"
+      [backgroundColor]="'rgba(0, 0, 0, 0.0)'"
+    >
+      <img #photoThumb [class.blur]="isLoading">
+    </pinch-zoom>
+  </div>
+  <div class="media-preview-container" [hidden]="!(currentPreviewType === 'video')">
+    <video
+      [class.blur]="isLoading"
+      controls width="100%" #videoThumb>
+    </video>
+  </div>
+  <div class="tool-container">
+    <app-preview-tools [mediaItemIndex]="currentIndex"></app-preview-tools>
+  </div>
 </div>
 
