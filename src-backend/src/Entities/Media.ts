@@ -10,6 +10,7 @@ import * as fs from "fs";
 import {Thumbnail} from "./Thumbnail";
 import moment = require("moment");
 import {Moment} from "moment";
+import {HeicConverter} from "../Services/Converters/HeicConverter";
 
 const path = require('path');
 
@@ -118,6 +119,8 @@ export class Media extends BaseEntity {
         return new PhotoRawConverter(this)
       case MediaType.VIDEO:
         return new VideoConverter(this)
+      case MediaType.HEIC:
+        return new HeicConverter(this)
     }
     throw new Error('Undefined type of given media')
     // return new PhotoConverter(this)

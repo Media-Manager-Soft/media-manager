@@ -1,6 +1,6 @@
-import { Component, Input, Output, ViewChild, EventEmitter, ElementRef } from '@angular/core';
-import { ElectronService } from "../../core/services/electron.service";
-import { MediaService } from "../media.service";
+import {Component, Input, Output, ViewChild, EventEmitter, ElementRef} from '@angular/core';
+import {ElectronService} from "../../core/services/electron.service";
+import {MediaService} from "../media.service";
 
 @Component({
   selector: 'app-preview-media',
@@ -42,7 +42,7 @@ export class PreviewMediaComponent {
       this.photoThumb.nativeElement.removeAttribute('src');
       this.videoThumb.nativeElement.src = 'file://' + data.data;
       this.currentPreviewType = 'video';
-    } else if (data.type === 'PhotoRaw') {
+    } else if (data.type === 'PhotoRaw' || data.type === 'Heic') {
       this.currentPreviewType = 'photo';
 
       const urlCreator = window.URL || window.webkitURL;
@@ -75,9 +75,11 @@ export class PreviewMediaComponent {
   }
 
   closeModal() {
-    this.clearViewer();
-    this.modalClosed.emit(true);
-    this.media = null;
+    if (document.fullscreenElement === null) {
+      this.clearViewer();
+      this.modalClosed.emit(true);
+      this.media = null;
+    }
   }
 
 

@@ -1,5 +1,6 @@
 export enum MediaType {
   PHOTO = "Photo",
+  HEIC = 'Heic',
   VIDEO = "Video",
   PHOTO_RAW = "PhotoRaw",
 }
@@ -16,6 +17,9 @@ export const MediaExtensionTypes: IExtensionTypes = {
   '.webp': MediaType.PHOTO,
   '.tiff': MediaType.PHOTO,
   '.tif': MediaType.PHOTO,
+
+  '.heic': MediaType.HEIC,
+  '.heif': MediaType.HEIC,
 
   '.3fr': MediaType.PHOTO_RAW,
   '.3gp2': MediaType.PHOTO_RAW,
@@ -39,8 +43,6 @@ export const MediaExtensionTypes: IExtensionTypes = {
   '.gif': MediaType.PHOTO_RAW,
   '.gpr': MediaType.PHOTO_RAW,
   '.hdr': MediaType.PHOTO_RAW,
-  '.heic': MediaType.PHOTO_RAW,
-  '.heif': MediaType.PHOTO_RAW,
   '.hif': MediaType.PHOTO_RAW,
   '.insp': MediaType.PHOTO_RAW,
   '.insv': MediaType.PHOTO_RAW,
