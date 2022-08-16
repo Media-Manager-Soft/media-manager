@@ -22,9 +22,6 @@ export class WorkerComponent implements OnInit {
 
 
   terminate() {
-    if (!confirm('Are you sure you want stop this process?')) {
-      return;
-    }
     this.show = false;
     this.electronService.ipcRenderer.invoke('terminate-process', {processId: this.data.workerName}).then(() => {
       this.terminateProcess.emit(this.data.workerName);

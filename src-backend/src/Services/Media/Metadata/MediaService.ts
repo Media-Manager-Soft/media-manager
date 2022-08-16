@@ -89,7 +89,7 @@ export class MediaService {
       const buffer = await this.media.converter().retrieveThumb();
       thumb.thumbnail = await ImgConverter.setData(buffer)
         .resizeToThumb()
-        .rotate(OrientationHelper.translate(this.media.orientation ?? 0))
+        .rotate(OrientationHelper.translate(this.media.orientation ?? 0, this.media.type))
         .toJpg({quality: 60, progressive: true})
         .toBuffer()
       thumb.locationId = this.media.location.id;
@@ -118,15 +118,17 @@ export class MediaService {
 
   async generateUniqueHash() {
     const checksum = require('checksum');
-    const fs = require('fs');
+    // const fs = require('fs');
     const data = {
       size: this.media.size,
       locationId: this.media.location.id,
       camera: this.media.camera,
       cameraModel: this.media.cameraModel,
+      cameraMake: this.media.camera,
+      orientation: this.media.orientation,
       // @ts-ignore
       takenAt: this.media.takenAt,
-      modifyTime: fs.statSync(this.media.originalPath).mtime,
+      // modifyTime: fs.statSync(this.media.originalPath).mtime,
     }
     return await checksum(JSON.stringify(data))
   }
