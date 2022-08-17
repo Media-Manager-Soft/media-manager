@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { GridService } from "./grid.service";
-import { MediaService } from "../media.service";
+import {Component, OnInit} from '@angular/core';
+import {GridService} from "./grid.service";
+import {MediaService} from "../media.service";
 
 @Component({
   selector: 'app-grid',
@@ -9,20 +9,20 @@ import { MediaService } from "../media.service";
 })
 export class GridComponent implements OnInit {
 
-  private currentSeparatorValue: string = ''
+  public currentSeparatorValue: string | null = null
 
-  constructor(public gridService: GridService, public mediaService: MediaService) {
+  constructor(
+    public gridService: GridService,
+    public mediaService: MediaService,
+  ) {
   }
 
   ngOnInit(): void {
   }
 
-
-  shouldSeparateGrid(value: any): Boolean {
-    const stringDate = new Date(value).toDateString();
-    const result = this.currentSeparatorValue !== stringDate;
-    this.currentSeparatorValue = stringDate;
-    return result
+  setNewSeparatorValue(value: string | null): string | null {
+    this.currentSeparatorValue = value;
+    return this.currentSeparatorValue;
   }
 
   modalClosed() {

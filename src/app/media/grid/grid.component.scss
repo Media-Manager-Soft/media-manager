@@ -1,7 +1,6 @@
 @import "/src/scss/variables";
 
 .media-grid-item-container {
-  padding-top: 15px;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -16,6 +15,15 @@
 
 p.media-grid-separator {
   padding: 10px;
+  margin-right: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   width: 100%;
-  background-color: darkgrey;
+  background-color: $gray-900;
+  border: solid 1px $gray-900;
+  color: $gray-200;
+  border-radius: 5px;
+  &:first-of-type{
+    margin-top: 0;
+  }
 }

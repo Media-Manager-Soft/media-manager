@@ -29,6 +29,8 @@ export class MediaQuery {
     if (!this.skipDataQuery) {
       return [];
     }
+    this.mediaQueryBuilder.select('*')
+    this.mediaQueryBuilder.addSelect(`STRFTIME('%Y-%m-%d', "takenAt")`, 'takenAtDate')
     return this.mediaQueryBuilder.getRawMany()
   }
 
