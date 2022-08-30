@@ -66,22 +66,7 @@ export class MetadataService {
   }
 
   getTakenAt() {
-    // let date = this.fileMetadata.dateTimeOriginal
-    // if (!date) { //Store incorrect date of media that has no exif taken at date time
-    //   date = Fs.statSync(this.media.originalPath).mtime
-    // }
-    // return this.fileMetadata.dateTimeOriginal;
-
-    // return as Date object
-    // @ts-ignore
     return this.fileMetadata.dateTimeOriginal?.toString();
-
-    // let date = new Date(this.fileMetadata.dateTimeOriginal)
-    // if (date.toString() !== 'Invalid Date') {
-    //   return date;
-    // } else {
-    //   return null;
-    // }
   }
 
   getLatitude() {

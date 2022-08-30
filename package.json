@@ -43,7 +43,7 @@
     "image-size": "^1.0.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
-    "ngx-infinite-scroll": "^10.0.1",
+    "ngx-infinite-scroll": "^13.1.0",
     "ngx-pinch-zoom": "^2.6.2",
     "ngx-treeview": "^10.0.2",
     "reflect-metadata": "^0.1.13",
