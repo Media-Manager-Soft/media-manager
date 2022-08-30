@@ -1,24 +1,30 @@
-import {Component, Input, Output, ViewChild, EventEmitter, ElementRef} from '@angular/core';
+import {Component, Input, Output, EventEmitter, ViewEncapsulation} from '@angular/core';
 import {ElectronService} from "../../core/services/electron.service";
 import {MediaService} from "../media.service";
 
 @Component({
   selector: 'app-preview-media',
   templateUrl: './preview-media.component.html',
-  styleUrls: ['./preview-media.component.scss']
+  styleUrls: ['./preview-media.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class PreviewMediaComponent {
   media: any;
-  @ViewChild('photoThumb') photoThumb: ElementRef;
-  @ViewChild('videoThumb') videoThumb: ElementRef;
   currentIndex: number;
   currentPreviewType: string;
   isLoading = false;
+  public src: any;
 
   @Input() set previewItemIndex(mediaIndex: any) {
     this.currentIndex = mediaIndex;
     this.media = this.mediaService.media[mediaIndex]
-    this.setImageForPreview(this.media)
+    if (this.media) {
+      console.log('true')
+      this.setImageForPreview(this.media)
+    }else {
+      console.log('flase')
+      this.closeModal();
+    }
   }
 
   @Output() modalClosed = new EventEmitter<boolean>();
@@ -32,46 +38,29 @@ export class PreviewMediaComponent {
   protected setImageForPreview(media: any) {
     this.isLoading = true;
     this.electronService.ipcRenderer.invoke('get-media-for-preview', media.id).then(data => {
-      this.putPreviewToHtml(data)
+      this.setMediaType(data)
       this.isLoading = false;
     })
   }
 
-  protected putPreviewToHtml(data: any) {
-    if (data.type === 'Video') {
-      this.photoThumb.nativeElement.removeAttribute('src');
-      this.videoThumb.nativeElement.src = 'file://' + data.data;
-      this.currentPreviewType = 'video';
-    } else if (data.type === 'PhotoRaw' || data.type === 'Heic') {
-      this.currentPreviewType = 'photo';
-
-      const urlCreator = window.URL || window.webkitURL;
-      const blob = new Blob([data.data]);
-      this.photoThumb.nativeElement.src = urlCreator.createObjectURL(blob);
-      this.videoThumb.nativeElement.removeAttribute('src');
-
-    } else {
-      this.videoThumb.nativeElement.removeAttribute('src');
-      this.photoThumb.nativeElement.src = 'file://' + data.data;
-      this.currentPreviewType = 'photo';
+  protected setMediaType(data: any) {
+    this.src = data.data;
+    switch (data.type) {
+      case 'Video':
+        this.currentPreviewType = 'video';
+        break;
+      case 'PhotoRaw':
+      case 'Heic':
+        this.currentPreviewType = 'photo';
+        break;
+      default:
+        this.currentPreviewType = 'photo';
+        break;
     }
   }
 
-  // getThumb(blobData: any) {
-  //   let blob = new Blob([blobData], {type: 'image/webp'});
-  //
-  //   let reader = new FileReader();
-  //   reader.readAsDataURL(blob);
-  //
-  //   reader.onload = () => {
-  //     // this.viewer.fullImage = reader.result;
-  //     // this.viewer.thumbImage = reader.result;
-  //   };
-  // }
-
   clearViewer() {
-    this.videoThumb.nativeElement.removeAttribute('src');
-    this.photoThumb.nativeElement.removeAttribute('src');
+    this.src = null;
   }
 
   closeModal() {

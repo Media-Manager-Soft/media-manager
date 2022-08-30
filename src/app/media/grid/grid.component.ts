@@ -9,8 +9,6 @@ import {MediaService} from "../media.service";
 })
 export class GridComponent implements OnInit {
 
-  public currentSeparatorValue: string | null = null
-
   constructor(
     public gridService: GridService,
     public mediaService: MediaService,
@@ -18,11 +16,6 @@ export class GridComponent implements OnInit {
   }
 
   ngOnInit(): void {
-  }
-
-  setNewSeparatorValue(value: string | null): string | null {
-    this.currentSeparatorValue = value;
-    return this.currentSeparatorValue;
   }
 
   modalClosed() {

@@ -24,6 +24,8 @@ import { ModalComponent } from './ui/modal/modal.component';
 import { LocationAddFormComponent } from './filters/locations/location-add-form/location-add-form.component';
 import { LocationEditFormComponent } from './filters/locations/location-edit-form/location-edit-form.component';
 import { ImportComponent } from './components/import/import.component';
+import { VideoComponent } from './media/preview-media/preview-types/video/video.component';
+import { PhotoComponent } from './media/preview-media/preview-types/photo/photo.component';
 
 
 @NgModule({
@@ -47,6 +49,8 @@ import { ImportComponent } from './components/import/import.component';
     LocationAddFormComponent,
     LocationEditFormComponent,
     ImportComponent,
+    VideoComponent,
+    PhotoComponent,
   ],
   imports: [
     IconsModule,

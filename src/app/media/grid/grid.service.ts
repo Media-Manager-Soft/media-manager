@@ -7,7 +7,6 @@ export class GridService {
 
   public selectedMediaPreview: number | null = null;
 
-
   selectMediaIndexForPreview(index: number | null) {
     this.selectedMediaPreview = index;
   }
