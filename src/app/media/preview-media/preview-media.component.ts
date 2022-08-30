@@ -19,10 +19,8 @@ export class PreviewMediaComponent {
     this.currentIndex = mediaIndex;
     this.media = this.mediaService.media[mediaIndex]
     if (this.media) {
-      console.log('true')
       this.setImageForPreview(this.media)
     }else {
-      console.log('flase')
       this.closeModal();
     }
   }
