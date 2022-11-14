@@ -89,6 +89,10 @@ export class Main {
       return LocationController.dispatch(arg.action, arg.data)
     })
 
+    ipcMain.on('select-folder', async (event) => {
+      event.returnValue = await require('electron').dialog.showOpenDialog({properties: ['openDirectory']});
+    })
+
     ipcMain.handle('media-actions', async (event, arg) => {
       return MediaActionsController.dispatch(arg.action, arg.data)
     })

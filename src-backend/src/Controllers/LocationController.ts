@@ -48,9 +48,6 @@ export class LocationController {
     await Location.delete({id: data.locationId});
   }
 
-  static selectFolder(data: any) {
-    const {dialog} = require('electron')
-    return dialog.showOpenDialog({properties: ['openDirectory']});
-  }
+
 
 }

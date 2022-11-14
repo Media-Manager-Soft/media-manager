@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { ElectronService } from "../../../core/services/electron.service";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {ElectronService} from "../../../core/services/electron.service";
 
 @Component({
   selector: 'app-location-add-form',
@@ -27,15 +27,10 @@ export class LocationAddFormComponent {
   }
 
   selectFolder() {
-    this.electronService.ipcRenderer.invoke('locations', {action: 'selectFolder'})
-      .then((rsp) => {
-        if (!rsp.canceled) {
-          this.locationForm.patchValue({'path': rsp.filePaths[0]});
-        }
-      })
-      .catch(e => {
-
-      });
+    let rsp = this.electronService.ipcRenderer.sendSync('select-folder')
+    if (!rsp.canceled) {
+      this.locationForm.patchValue({'path': rsp.filePaths[0]});
+    }
   }
 
   onSubmit() {
@@ -49,7 +44,7 @@ export class LocationAddFormComponent {
     await this.electronService.ipcRenderer.invoke('locations', {action: 'store', data});
   }
 
-  close(){
+  close() {
     this.isModalOpenChange.emit(false);
   }
 }
