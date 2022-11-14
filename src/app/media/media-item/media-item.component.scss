@@ -15,15 +15,21 @@
     color: white;
     opacity: 0.3;
     position: absolute;
-    margin: 14px 14px 7px 14px;
     transition: all 0.3s ease;
+    padding: 10px 10px 0 10px;
 
     &:hover {
       transition: all 0.3s ease;
       opacity: 1;
     }
 
+    &.favorite {
+      top: 0;
+      left: 0;
+    }
+
     &.picked {
+      left: 0;
       bottom: 0;
     }
 

@@ -1,7 +1,7 @@
 <div class="action-container">
   <icon-favorite
     (click)="mediaService.updateMedia(media.id, {favorite: !media.favorite})"
-    class="action"
+    class="action favorite"
     [filled]="media.favorite"
   ></icon-favorite>
   <icon-flag-filled
