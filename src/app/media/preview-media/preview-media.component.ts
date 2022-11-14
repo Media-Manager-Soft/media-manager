@@ -1,6 +1,7 @@
 import {Component, Input, Output, EventEmitter, ViewEncapsulation} from '@angular/core';
 import {ElectronService} from "../../core/services/electron.service";
 import {MediaService} from "../media.service";
+import {MediaItemError} from "../../dto/media-item-error";
 
 @Component({
   selector: 'app-preview-media',
@@ -13,6 +14,7 @@ export class PreviewMediaComponent {
   currentIndex: number;
   currentPreviewType: string;
   isLoading = false;
+  itemError: MediaItemError;
   public src: any;
 
   @Input() set previewItemIndex(mediaIndex: any) {
@@ -20,7 +22,7 @@ export class PreviewMediaComponent {
     this.media = this.mediaService.media[mediaIndex]
     if (this.media) {
       this.setImageForPreview(this.media)
-    }else {
+    } else {
       this.closeModal();
     }
   }
@@ -34,6 +36,7 @@ export class PreviewMediaComponent {
   }
 
   protected setImageForPreview(media: any) {
+    this.itemError = {} as MediaItemError;
     this.isLoading = true;
     this.electronService.ipcRenderer.invoke('get-media-for-preview', media.id).then(data => {
       this.setMediaType(data)

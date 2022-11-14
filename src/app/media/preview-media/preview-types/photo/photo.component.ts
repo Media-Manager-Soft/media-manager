@@ -1,4 +1,15 @@
-import {AfterViewInit, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef, EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
+import {MediaItemError} from "../../../../dto/media-item-error";
 
 @Component({
   selector: 'app-photo',
@@ -16,7 +27,10 @@ export class PhotoComponent implements OnInit, AfterViewInit, OnChanges {
   @Input() isLoading: boolean;
   @Input() src: any;
 
+  @Output() errorItem = new EventEmitter<MediaItemError>();
+
   public data: any;
+  public notFound: boolean = false;
 
   ngOnInit(): void {
   }
@@ -26,6 +40,7 @@ export class PhotoComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
+    this.notFound = false;
     this.src = changes['src']?.currentValue;
     this.setSrc();
   }
@@ -41,5 +56,10 @@ export class PhotoComponent implements OnInit, AfterViewInit, OnChanges {
       const blob = new Blob([this.src]);
       this.imgControl.nativeElement.src = urlCreator.createObjectURL(blob)
     }
+  }
+
+  handleMissingImage(ev: Event) {
+    this.notFound = true;
+    this.errorItem.emit({isError: true, text: 'Photo not found on disk'})
   }
 }

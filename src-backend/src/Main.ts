@@ -11,8 +11,8 @@ import {ThumbnailController} from "./Controllers/ThumbnailController";
 import {LocationController} from "./Controllers/LocationController";
 import {MediaActionsController} from "./Controllers/MediaActionsController";
 
-var bus = require('./Events/eventBus');
-var workerManager = require('./Workers/WorkerManager')
+const bus = require('./Events/eventBus');
+const workerManager = require('./Workers/WorkerManager');
 
 export class Main {
   private mainWindow: Electron.CrossProcessExports.BrowserWindow;
@@ -30,6 +30,7 @@ export class Main {
       this.mainWindow = new BrowserWindow({
         width: 1400,
         height: 900,
+        title: 'Media Manager',
         // icon: path.join(__dirname, "../bin/dist/MB/favicon/icon.png"),
         webPreferences: {
           nodeIntegration: true, // Allows IPC and other APIs

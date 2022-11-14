@@ -1,7 +1,7 @@
 @import "/src/scss/variables";
 
 .media-grid-item-container {
-  overflow: scroll;
+  //overflow: scroll; // makes unexpected padding
   //height: 100vh;
   display: flex;
   flex-wrap: wrap;

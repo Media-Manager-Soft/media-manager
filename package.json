@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "main": "bin/dist/out-tsc/src-backend/main.js",
   "author": "Tomek Żmudziński",
-  "description": "MediaBackupper",
+  "description": "MediaManager",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
