@@ -113,6 +113,11 @@ export class Main {
     ipcMain.handle('update-metadata', async (event, arg) => {
       return UpdateMetaMetadataController.update(arg.mediaId, arg.data);
     })
+
+    ipcMain.on('open-in-external', async (event, mediaId) => {
+      let media = await Media.findOne(mediaId, {relations: ['location']});
+      await require('electron').shell.openPath(media?.getPathToFile());
+    })
   }
 
 

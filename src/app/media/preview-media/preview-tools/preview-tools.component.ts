@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { GridService } from "../../grid/grid.service";
 import { MediaService } from "../../media.service";
+import {ElectronService} from "../../../core/services/electron.service";
 
 @Component({
   selector: 'app-preview-tools',
@@ -12,7 +13,11 @@ export class PreviewToolsComponent {
   @Input()
   mediaItemIndex: number
 
-  constructor(public gridService: GridService, public mediaService: MediaService) {
+  constructor(
+    public gridService: GridService,
+    public mediaService: MediaService,
+    private electronService: ElectronService,
+    ) {
 
   }
 
@@ -27,5 +32,8 @@ export class PreviewToolsComponent {
       this.mediaService.media[this.mediaItemIndex].id,
       {flag: flag}
     )
+  }
+  openInExternal(){
+    this.electronService.ipcRenderer.send('open-in-external', this.mediaService.media[this.mediaItemIndex].id);
   }
 }

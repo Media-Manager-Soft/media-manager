@@ -26,6 +26,10 @@
             (click)="toggleFlag(-1)"
     ></icon-rejected>
 
+  <icon-sign
+    (click)="openInExternal()"
+  ></icon-sign>
+
     <icon-arrow
             (document:keydown.ARROWRIGHT)="gridService.nextMediaPreview()"
             (click)="gridService.nextMediaPreview()"
