@@ -31,7 +31,7 @@ export class Main {
         width: 1400,
         height: 900,
         title: 'Media Manager',
-        // icon: path.join(__dirname, "../bin/dist/MB/favicon/icon.png"),
+        icon: path.join(__dirname, "../bin/dist/out-tsc/assets/MM-logo.png"),
         webPreferences: {
           nodeIntegration: true, // Allows IPC and other APIs
           contextIsolation: false,
