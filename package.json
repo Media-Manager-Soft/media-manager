@@ -1,9 +1,9 @@
 {
-  "name": "mb",
-  "version": "0.0.0",
+  "name": "media-manager",
+  "version": "1.0.0-beta",
   "main": "bin/dist/out-tsc/src-backend/main.js",
-  "author": "Tomek Żmudziński",
-  "description": "MediaManager",
+  "author": "Media Manager",
+  "description": "Application for managing photos and videos",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -11,13 +11,11 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "app:tsc:main": "tsc",
-    "app:build": "ng build --prod --base-href ./ && npm run app:tsc:main",
+    "app:build": "ng build --configuration development --base-href ./ && npm run app:tsc:main && electron-builder",
     "app:start": "npm run app:build && electron .",
     "app:start-electron": "npm run app:tsc:main && electron . ",
     "app:start-hr": "npm run app:tsc:main && electron . --serve",
-    "pack": "npm run app:build && electron-builder --dir",
-    "dist": "npm run app:build && electron-builder",
-    "gen:icons": "./node_modules/.bin/electron-icon-builder --input=./assets/MM-logo.png --output=./assets"
+    "gen:icons": ".\\node_modules\\.bin\\electron-icon-builder -f --input=assets\\icon.png --output=assets"
   },
   "private": true,
   "dependencies": {
@@ -76,9 +74,30 @@
     "typescript": "~4.4.3"
   },
   "build": {
+    "linux": {
+      "target": [
+        "zip"
+      ],
+      "icon": "./assets/icons/icon.icns"
+    },
+    "mac": {
+      "target": [
+        "zip",
+        "dir",
+        "dmg"
+      ],
+      "icon": "./assets/icons/icon.icns"
+    },
+    "win": {
+      "target": [
+        "dir"
+      ],
+      "icon": "./assets/icons/icon.ico"
+    },
     "appId": "com.media-manager.app",
+    "productName": "Media Manager",
     "directories": {
-      "buildResources": "./bin/dist",
+      "buildResources": "./bin/dist/",
       "output": "./bin/build"
     },
     "files": [

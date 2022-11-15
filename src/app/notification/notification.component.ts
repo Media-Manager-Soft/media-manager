@@ -25,7 +25,8 @@ export class NotificationComponent implements OnInit {
   processTerminated(ev: any) {
     delete this.workers[ev];
     this.isModalOpen = false;
-    window.location.reload(); //TODO: temporary solution
+    window.location.hash = window.location.href;
+    // window.location.reload(); //TODO: temporary solution
   }
 
   ngOnInit() {
@@ -33,7 +34,8 @@ export class NotificationComponent implements OnInit {
       if (message.processing === false) {
         delete this.workers[message.workerName];
         this.isModalOpen = false;
-        window.location.reload(); //TODO: temporary solution
+        window.location.hash = window.location.href;
+        // window.location.reload(); //TODO: temporary solution
       } else {
         this.workers[message.workerName] = message
         this.isModalOpen = true;

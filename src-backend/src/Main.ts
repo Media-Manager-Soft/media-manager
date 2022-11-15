@@ -25,13 +25,12 @@ export class Main {
   }
 
   protected onReady() {
-
     app.on("ready", () => {
       this.mainWindow = new BrowserWindow({
         width: 1400,
         height: 900,
         title: 'Media Manager',
-        icon: path.join(__dirname, "../bin/dist/out-tsc/assets/MM-logo.png"),
+        icon: path.join(__dirname, "/../../../icons/1024x1024.png"),
         webPreferences: {
           nodeIntegration: true, // Allows IPC and other APIs
           contextIsolation: false,
