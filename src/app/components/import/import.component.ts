@@ -41,15 +41,10 @@ export class ImportComponent implements OnInit {
   }
 
   selectFolder() {
-    this.electronService.ipcRenderer.invoke('locations', {action: 'selectFolder'})
-      .then((rsp) => {
-        if (!rsp.canceled) {
-          this.importForm.patchValue({'path': rsp.filePaths[0]});
-        }
-      })
-      .catch(e => {
-
-      });
+    let rsp = this.electronService.ipcRenderer.sendSync('select-folder')
+    if (!rsp.canceled) {
+      this.importForm.patchValue({'path': rsp.filePaths[0]});
+    }
   }
 
 }
