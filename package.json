@@ -82,9 +82,7 @@
     },
     "mac": {
       "target": [
-        "zip",
-        "dir",
-        "dmg"
+        "dir"
       ],
       "icon": "./assets/icons/icon.icns"
     },

@@ -15,3 +15,8 @@
   ></app-worker>
 </div>
 
+<app-error-bag
+  [errors]="errors"
+  [showErrorModal]="showErrors"
+  (closeModal)="reloadPage()"
+></app-error-bag>

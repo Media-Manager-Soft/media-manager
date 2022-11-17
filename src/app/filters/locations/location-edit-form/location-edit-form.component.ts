@@ -10,7 +10,7 @@ import { ILocation } from "../ILocation";
 export class LocationEditFormComponent implements OnInit {
 
   removeMissing = true;
-  regenerateThumbs = true;
+  regenerateThumbs = false;
 
   @Input()
   isModalOpen = false;

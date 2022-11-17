@@ -62,6 +62,10 @@ export class Main {
         new Notification({title: args.title, body: args.body}).show()
       })
 
+      bus.on('error-bag', (args: any) => { // Error bag
+        this.mainWindow.webContents.send("error-bag", args)
+      })
+
       PathHelper.deleteTemp()
     });
   }

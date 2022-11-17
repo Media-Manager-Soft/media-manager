@@ -36,10 +36,19 @@ process.on('message', async (message) => {
       }
 
       notify(message.id, true, media.filename, message.data.paths.length, i + 1, actionName)
-
     } catch (e: any) {
       // TODO: emit errors during discovering
       console.error(`Discover worker error: "${e.message}": ${message.data.paths[i]}`);
+      // @ts-ignore
+      process.send({
+        type: 'error-bag',
+        msg: {
+          filename: message.data.paths[i],
+          // filename: message.filename,
+          error: e.message
+        }
+      });
+
     }
 
   }

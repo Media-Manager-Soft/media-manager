@@ -1,4 +1,4 @@
-import { IMetadata } from "./IMetadata";
+import {IMetadata} from "./IMetadata";
 import sizeOf from "image-size";
 
 const exiftool = require("exiftool-vendored").exiftool
@@ -38,7 +38,11 @@ export class PhotoMetadataService implements IMetadata {
   }
 
   get dateTimeOriginal() {
-    return this.metadata.DateTimeOriginal;
+    let date = this.metadata.DateTimeOriginal;
+    if (typeof date !== 'object') {
+      return null;
+    }
+    return date;
   }
 
   get latitude() {

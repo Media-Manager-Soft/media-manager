@@ -1,0 +1,13 @@
+<div *ngIf="showErrorModal" class="modal-bg form-modal light">
+  <div class="modal">
+    <p>Can't import these files:</p>
+    <div class="files-list">
+
+      <p *ngFor="let error of errors">
+        <strong>{{ error.filename }}</strong> {{ error.error }}
+      </p>
+
+    </div>
+    <button style="margin-top: 15px" class="btn btn-success btn-sm" (click)="closeModal.emit()">Ok</button>
+  </div>
+</div>
