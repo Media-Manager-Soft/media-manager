@@ -25,8 +25,7 @@ export class NotificationComponent implements OnInit {
   processTerminated(ev: any) {
     delete this.workers[ev];
     this.isModalOpen = false;
-    window.location.hash = window.location.href;
-    // window.location.reload(); //TODO: temporary solution
+    this.reloadPage();
   }
 
   ngOnInit() {
@@ -34,14 +33,19 @@ export class NotificationComponent implements OnInit {
       if (message.processing === false) {
         delete this.workers[message.workerName];
         this.isModalOpen = false;
-        window.location.hash = window.location.href;
-        // window.location.reload(); //TODO: temporary solution
+        this.reloadPage();
       } else {
         this.workers[message.workerName] = message
         this.isModalOpen = true;
       }
       this.cdr.detectChanges();
     })
+  }
+
+  reloadPage() {
+    //TODO: this shitty solution should be solved by reloading dates and media items in grid
+    history.pushState(null, '', window.location.href);
+    window.location.reload();
   }
 
 }
