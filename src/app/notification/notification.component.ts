@@ -11,6 +11,8 @@ export class NotificationComponent implements OnInit {
   text = ''
   isModalOpen = false;
   workers: any = {};
+  errors: [] = [];
+  showErrors = false;
 
   constructor(
     private electronService: ElectronService,
@@ -25,7 +27,7 @@ export class NotificationComponent implements OnInit {
   processTerminated(ev: any) {
     delete this.workers[ev];
     this.isModalOpen = false;
-    this.reloadPage();
+    this.showErrorModal();
   }
 
   ngOnInit() {
@@ -33,13 +35,25 @@ export class NotificationComponent implements OnInit {
       if (message.processing === false) {
         delete this.workers[message.workerName];
         this.isModalOpen = false;
-        this.reloadPage();
+        this.showErrorModal();
       } else {
         this.workers[message.workerName] = message
         this.isModalOpen = true;
       }
       this.cdr.detectChanges();
     })
+    this.electronService.ipcRenderer.on('error-bag', (evt, message) => {
+      // @ts-ignore
+      this.errors.push(message)
+    })
+  }
+
+  showErrorModal() {
+    if (this.errors.length > 0) {
+      this.showErrors = true;
+    }else {
+      this.reloadPage();
+    }
   }
 
   reloadPage() {

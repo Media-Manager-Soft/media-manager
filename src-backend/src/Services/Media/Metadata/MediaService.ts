@@ -9,6 +9,8 @@ import {OrientationHelper} from "../../../Helpers/OrientationHelper";
 const fs = require('fs');
 const path = require('path');
 
+const bus = require('./../../../Events/eventBus');
+
 export class MediaService {
   private mediaMetadataService: MetadataService;
 
@@ -27,7 +29,6 @@ export class MediaService {
     this.media.path = this.mediaMetadataService.getFilePathInLocation();
     this.media.filename = this.mediaMetadataService.getFileName();
 
-    try {
       this.media.cameraModel = this.mediaMetadataService.getCameraModel();
       this.media.camera = this.mediaMetadataService.getCameraManufacturer();
       this.media.height = this.mediaMetadataService.getHeight();
@@ -38,9 +39,6 @@ export class MediaService {
       this.media.takenAt = this.mediaMetadataService.getTakenAt();
       this.media.size = this.mediaMetadataService.getFileSize();
       this.media.uniqueHash = await this.generateUniqueHash();
-    } catch (e) {
-      console.error(e)
-    }
   }
 
   async copyOrMoveFileToLocation(action: 'move' | 'copy') {
@@ -63,7 +61,11 @@ export class MediaService {
       await this[action](this.media.originalPath, newPath)
       this.media.originalPath = newPath;
       this.media.path = this.mediaMetadataService.getFilePathInLocation();
-    } catch (err) {
+    } catch (err: any) {
+      bus.emit('error-bag', {
+        filename: this.media.filename,
+        error: err.message
+      })
       console.error(err)
     }
   }
@@ -78,6 +80,11 @@ export class MediaService {
 
   async storeThumb() {
     // if (!this.media.hasThumb()) {
+
+    if (!this.media.fileExists()) {
+      return;
+    }
+
     let thumb: Thumbnail | undefined = await Thumbnail.findOne({mediaId: this.media.id});
 
     if (thumb === undefined) {
