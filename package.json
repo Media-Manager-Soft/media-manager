@@ -1,5 +1,5 @@
 {
-  "name": "Media-Manager",
+  "name": "media-manager",
   "version": "1.0.0-alpha",
   "main": "bin/dist/out-tsc/src-backend/main.js",
   "author": "Media Manager",
@@ -10,11 +10,9 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "app:tsc:main": "tsc",
-    "app:build": "ng build --configuration development --base-href ./ && npm run app:tsc:main && electron-builder",
-    "app:start": "npm run app:build && electron .",
-    "app:start-electron": "npm run app:tsc:main && electron . ",
-    "app:start-hr": "npm run app:tsc:main && electron . --serve",
+    "app:publish": "ng build --configuration development --base-href ./ && tsc && electron-builder -p onTag",
+    "app:start-electron": "tsc && electron . ",
+    "app:start-electron-hr": "tsc && electron . --serve",
     "gen:icons": ".\\node_modules\\.bin\\electron-icon-builder -f --input=assets\\icon.png --output=assets"
   },
   "private": true,
@@ -89,16 +87,19 @@
     },
     "win": {
       "target": [
-        "dir"
+        "dir",
+        "nsis"
       ],
-      "publish": ["github"],
+      "publish": [
+        "github"
+      ],
       "icon": "./assets/icons/icon.ico"
     },
     "appId": "com.media-manager.app",
     "productName": "Media Manager",
     "directories": {
       "buildResources": "./bin/dist/",
-      "output": "./bin/build"
+      "output": "./bin/build/${version}"
     },
     "files": [
       "./bin/dist/**/*"

@@ -59,7 +59,7 @@ export class Main {
           })
         );
       } else {
-        new AppUpdater();
+        // new AppUpdater();
         this.mainWindow.loadFile(
           path.resolve(__dirname, '../../../MB/index.html')
         );

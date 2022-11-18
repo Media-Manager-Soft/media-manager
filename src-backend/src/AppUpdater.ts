@@ -1,5 +1,7 @@
 const { autoUpdater } = require("electron-updater")
-
+// This
+// in Main
+// yarn remove electron-updater
 export default class AppUpdater {
   constructor() {
     console.log('asd')
