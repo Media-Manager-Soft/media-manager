@@ -11,6 +11,7 @@ import {ThumbnailController} from "./Controllers/ThumbnailController";
 import {LocationController} from "./Controllers/LocationController";
 import {MediaActionsController} from "./Controllers/MediaActionsController";
 import {appMainMenu} from "./Menu/Menu";
+import AppUpdater from "./AppUpdater";
 
 const bus = require('./Events/eventBus');
 const workerManager = require('./Workers/WorkerManager');
@@ -58,6 +59,7 @@ export class Main {
           })
         );
       } else {
+        // new AppUpdater();
         this.mainWindow.loadFile(
           path.resolve(__dirname, '../../../MB/index.html')
         );
