@@ -1,4 +1,4 @@
-import {app, BrowserWindow, ipcMain, Notification} from "electron";
+import {app, BrowserWindow, ipcMain, Notification, Menu} from "electron";
 import * as path from "path";
 import * as url from "url";
 import {Media} from "./Entities/Media";
@@ -10,6 +10,7 @@ import {UpdateMetaMetadataController} from "./Controllers/UpdateMetaMetadataCont
 import {ThumbnailController} from "./Controllers/ThumbnailController";
 import {LocationController} from "./Controllers/LocationController";
 import {MediaActionsController} from "./Controllers/MediaActionsController";
+import {appMainMenu} from "./Menu/Menu";
 
 const bus = require('./Events/eventBus');
 const workerManager = require('./Workers/WorkerManager');
@@ -25,6 +26,12 @@ export class Main {
   }
 
   protected onReady() {
+
+
+    // @ts-ignore
+    Menu.setApplicationMenu(Menu.buildFromTemplate(appMainMenu));
+
+
     app.on("ready", () => {
       this.mainWindow = new BrowserWindow({
         width: 1400,
@@ -34,23 +41,28 @@ export class Main {
         webPreferences: {
           nodeIntegration: true, // Allows IPC and other APIs
           contextIsolation: false,
-          webSecurity: false //Todo: remove if not needed in the future
+          webSecurity: false, //Todo: remove if not needed in the future
         },
       });
+
 
       const isDev = process.argv.some(val => val === '--serve')
 
       if (isDev) {
         this.mainWindow.webContents.openDevTools();
+        this.mainWindow.loadURL(
+          url.format({
+            pathname: 'localhost:4200',
+            protocol: 'http',
+            slashes: true
+          })
+        );
+      } else {
+        this.mainWindow.loadFile(
+          path.resolve(__dirname, '../../../MB/index.html')
+        );
       }
 
-      this.mainWindow.loadURL(
-        url.format({
-          pathname: isDev ? 'localhost:4200' : path.resolve(__dirname, '../../../MB/index.html'),
-          protocol: isDev ? 'http:' : 'file:',
-          slashes: true
-        })
-      );
 
       bus.on('notifyFront', (args: any) => { // Frontend notifications
         this.mainWindow.webContents.send("notification", args)
@@ -65,6 +77,7 @@ export class Main {
       bus.on('error-bag', (args: any) => { // Error bag
         this.mainWindow.webContents.send("error-bag", args)
       })
+
 
       PathHelper.deleteTemp()
     });
