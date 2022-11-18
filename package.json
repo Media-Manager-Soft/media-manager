@@ -1,6 +1,6 @@
 {
   "name": "media-manager",
-  "version": "1.0.0-beta",
+  "version": "1.0.0-alpha",
   "main": "bin/dist/out-tsc/src-backend/main.js",
   "author": "Media Manager",
   "description": "Application for managing photos and videos",

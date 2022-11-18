@@ -7,6 +7,8 @@ process.on('message', async (message) => {
   await DBConnection.createConnection()
   const location = await Location.findOne(message.data.locationId);
 
+  var successQty = 0;
+
   for (let i = 0; i < message.data.paths.length; i++) {
     let media = new Media();
     try {
@@ -35,7 +37,10 @@ process.on('message', async (message) => {
         actionName = 'Importing'
       }
 
-      notify(message.id, true, media.filename, message.data.paths.length, i + 1, actionName)
+      notify(message.id, true, media.filename, message.data.paths.length, i + 1, actionName);
+
+      successQty++;
+
     } catch (e: any) {
       // TODO: emit errors during discovering
       console.error(`Discover worker error: "${e.message}": ${message.data.paths[i]}`);
@@ -56,7 +61,7 @@ process.on('message', async (message) => {
   // @ts-ignore
   process.send({
     type: 'notifyDesktop',
-    msg: {title: 'Finished!', body: `Synchronized ${message.data.paths.length} media file(s)`}
+    msg: {title: 'Finished!', body: `Processed ${successQty} media file(s)`}
   });
 });
 

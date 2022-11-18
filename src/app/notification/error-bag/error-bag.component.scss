@@ -13,7 +13,10 @@
 }
 
 .files-list {
-  user-select: initial;
+  * {
+    user-select: text !important;
+  }
+
   border: solid 1px $gray-800;
   border-radius: 5px;
   margin-top: 15px;
