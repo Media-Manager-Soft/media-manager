@@ -9,7 +9,7 @@ export class BlobImageDirective {
 
   constructor(el: ElementRef) {
     this.el = el.nativeElement;
-    this.el.src = "/assets/no-preview.jpg"
+    this.el.src = "assets/public/no-preview.jpg"
     // @ts-ignore
   }
 
@@ -25,7 +25,7 @@ export class BlobImageDirective {
       return urlCreator.createObjectURL(blob);
     } catch (e) {
       // request from backend
-      return '/assets/no-preview.jpg'
+      return 'assets/public/no-preview.jpg'
     }
 
   }

@@ -59,6 +59,7 @@ export class Main {
 
       const isDev = process.argv.some(val => val === '--serve')
 
+      // this.mainWindow.webContents.openDevTools();
       if (isDev) {
         this.mainWindow.webContents.openDevTools();
         this.mainWindow.loadURL(

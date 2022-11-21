@@ -63,6 +63,8 @@ export const appMainMenu = [
               bug_report_url: 'https://github.com/Media-Manager-Soft/media-manager/issues/new',
               homepage: 'https://github.com/Media-Manager-Soft/media-manager',
               license: 'MIT',
+              description: "By using this application, you accept that we are not responsible for the operation of the application.",
+              adjust_window_size: false,
               win_options: {
                 minimizable: false,
                 fullscreenable: false,
