@@ -49,7 +49,7 @@ export class FlagsComponent {
         }
       }).then(() => {
         this.locationService.setDateByLocation()
-        this.mediaService.getMedia();
+        this.mediaService.getMedia(true);
       })
     }
   }

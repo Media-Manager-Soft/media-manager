@@ -24,7 +24,7 @@ export class MediaService {
     this.resetPagination();
   }
 
-  getMedia() {
+  getMedia(refresh: boolean = false) {
     this.media$ = new Observable((observer) => {
       this.electronService.ipcRenderer.invoke('get-media', {query: this.queries, pagination: this.pagination})
         .then((result) => {
@@ -35,6 +35,9 @@ export class MediaService {
           observer.complete();
         })
     }).subscribe((media) => {
+      if (refresh){
+        this.media = [];
+      }
       // @ts-ignore
       this.media.push(...media)
       this.getThumbs()

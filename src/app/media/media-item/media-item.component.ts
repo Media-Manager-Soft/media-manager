@@ -29,7 +29,6 @@ export class MediaItemComponent {
   }
 
   setFlag(value:number){
-    console.log(this.media);
     if (value === this.media.flag){
       value = 0;
     }
