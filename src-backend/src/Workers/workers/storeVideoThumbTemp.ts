@@ -9,9 +9,6 @@ function storeVideoThumbTemp(pathToFile: string, pathToTemp: string) {
   const ffmpeg = require("../../plugins/ffmpeg");
   try {
 
-    if (fs.existsSync(pathToTemp)) {
-      return;
-    }
 
     ffmpeg(pathToFile)
       .screenshots({
