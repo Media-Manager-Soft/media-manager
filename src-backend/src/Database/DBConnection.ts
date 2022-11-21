@@ -3,12 +3,9 @@ import * as path from "path";
 import { Location } from "../Entities/Location";
 import { Media } from "../Entities/Media";
 import { Thumbnail } from "../Entities/Thumbnail";
-import { app } from "electron";
 
 export class DBConnection {
-  public static async createConnection(storePathParam: string|null = null) {
-
-    let storePath = storePathParam ?? app.getPath('userData');
+  public static async createConnection(storePath: string) {
 
     await createConnections([
       {

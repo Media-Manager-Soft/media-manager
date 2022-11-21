@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import { app } from "electron";
+import {APP_DATA} from "../configs";
 
 const path = require('path');
 
@@ -11,7 +11,7 @@ export class PathHelper {
   }
 
   public static getTempPath(folder: string = '', fileName: string | null = null) {
-    let filePath = path.join(path.join(app.getPath('temp'), 'tmp'), folder);
+    let filePath = path.join(APP_DATA, 'tmp', folder);
     if (fileName) {
       filePath = path.join(filePath, fileName)
     }

@@ -58,7 +58,7 @@ export class NotificationComponent implements OnInit {
 
   reloadPage() {
     //TODO: this shitty solution should be solved by reloading dates and media items in grid
-    history.pushState(null, '', window.location.href);
+    history.pushState(null, '', window.location.href + 'index.html');
     window.location.reload();
   }
 

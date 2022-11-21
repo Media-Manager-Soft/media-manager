@@ -21,7 +21,7 @@ export class Main {
   public run() {
     this.onReady();
     this.onWindowClosed();
-    DBConnection.createConnection();
+    DBConnection.createConnection(app.getPath('userData'));
     this.ipc()
   }
 
@@ -36,7 +36,7 @@ export class Main {
       this.mainWindow = new BrowserWindow({
         width: 1400,
         height: 900,
-        title: 'Media Manager',
+        title: `Media Manager - ${app.getVersion()}`,
         icon: path.join(__dirname, "/../../../icons/1024x1024.png"),
         webPreferences: {
           nodeIntegration: true, // Allows IPC and other APIs
@@ -45,17 +45,17 @@ export class Main {
         },
       });
 
-      try {
-        const {autoUpdater} = require("electron-updater")
+      const {autoUpdater} = require("electron-updater")
+      // Object.defineProperty(app, 'isPackaged', { //force fake is packaged
+      //   get() {
+      //     return true;
+      //   }
+      // });
+      autoUpdater.checkForUpdatesAndNotify().catch((e: any) => {
         const log = require("electron-log")
-        log.transports.file.level = "debug"
-        log.transports.file.resolvePath = () => path.join(__dirname, '/logs/main.log');
-        autoUpdater.logger = log
-        autoUpdater.checkForUpdatesAndNotify();
-      } catch (e) {
-        console.error(e)
-      }
-
+        log.transports.file.resolvePath = () => path.join(app.getPath('userData'), '/logs/update.log');
+        log.error(e)
+      });
 
       const isDev = process.argv.some(val => val === '--serve')
 

@@ -15,9 +15,10 @@
     "app:build": "npm run app:dist && electron-builder",
     "app:publish": "npm run app:dist && electron-builder -p always",
     "app:start-electron": "npm run app:tsc && electron . ",
-    "app:start-electron-hr": "npm run app:tsc && electron . --serve",
+    "app:start-app": "npm run app:dist && electron . ",
+    "app:start-app-hr": "npm run app:tsc && electron . --serve",
     "gen:icons": ".\\node_modules\\.bin\\electron-icon-builder -f --input=assets\\icon.png --output=assets",
-    "assets:copy": "cp assets\\icon.png bin\\dist\\out-tsc\\src-backend\\"
+    "assets:copy": "cp assets/icon.png bin/dist/out-tsc/src-backend/"
   },
   "private": true,
   "dependencies": {
