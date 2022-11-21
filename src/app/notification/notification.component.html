@@ -1,0 +1,22 @@
+<!--Previous solution (small toast on bottom right)-->
+<!--<div class="container">-->
+<!--    <div *ngFor="let worker of workersKeys">-->
+<!--        <app-worker-->
+<!--                [data]="this.workers[worker]"-->
+<!--                (terminateProcess)="processTerminated($event)"-->
+<!--        ></app-worker>-->
+<!--    </div>-->
+<!--</div>-->
+<!--  Array is because of toast (see above)-->
+<div *ngFor="let worker of workersKeys">
+  <app-worker
+    [data]="this.workers[worker]"
+    (terminateProcess)="processTerminated($event)"
+  ></app-worker>
+</div>
+
+<app-error-bag
+  [errors]="errors"
+  [showErrorModal]="showErrors"
+  (closeModal)="reloadPage()"
+></app-error-bag>

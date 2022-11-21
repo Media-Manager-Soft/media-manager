@@ -2,7 +2,7 @@
 
 # compiled output
 /bin
-/db
+/app_data
 /tmp
 /out-tsc
 # Only exists if Bazel was run
@@ -46,3 +46,4 @@ testem.log
 .DS_Store
 Thumbs.db
 
+electron-builder.env

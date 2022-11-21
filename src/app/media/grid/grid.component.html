@@ -1,0 +1,27 @@
+<app-preview-media
+  *ngIf="gridService.selectedMediaPreview !== null"
+  [previewItemIndex]="gridService.selectedMediaPreview"
+  (modalClosed)="modalClosed()"
+></app-preview-media>
+
+<div class="media-grid-item-container"
+     infiniteScroll
+     [infiniteScrollDistance]="3"
+     [infiniteScrollThrottle]="50"
+     [fromRoot]="true"
+     (scrolled)="onScroll()"
+>
+  <ng-container *ngFor="let item of mediaService.media; let i = index">
+
+    <p
+      class="media-grid-separator"
+      *ngIf="item.takenAtDate !== mediaService.media[i-1]?.takenAtDate"
+    >
+      {{ item.takenAtDate}}
+    </p>
+
+    <div class="media-item">
+      <app-media-item [mediaIndex]="i"></app-media-item>
+    </div>
+  </ng-container>
+</div>

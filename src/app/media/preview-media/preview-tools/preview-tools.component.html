@@ -1,0 +1,39 @@
+<div class="tools">
+    <icon-arrow
+            class="checked"
+            position="left"
+            (document:keydown.ARROWLEFT)="gridService.prevMediaPreview()"
+            (click)="gridService.prevMediaPreview()"
+    ></icon-arrow>
+
+    <icon-favorite
+                (click)="toggleFavorite()"
+                (document:keydown.f)="toggleFavorite()"
+                [filled]="mediaService.media[mediaItemIndex].favorite"
+                [class.checked]="mediaService.media[mediaItemIndex].favorite"
+    ></icon-favorite>
+
+    <icon-flag-filled
+            [class.checked]="mediaService.media[mediaItemIndex].flag == 1"
+            (click)="toggleFlag(1)"
+    ></icon-flag-filled>
+    <icon-flag
+            [class.checked]="mediaService.media[mediaItemIndex].flag == 0"
+            (click)="toggleFlag(0)"
+    ></icon-flag>
+    <icon-rejected
+            [class.checked]="mediaService.media[mediaItemIndex].flag == -1"
+            (click)="toggleFlag(-1)"
+    ></icon-rejected>
+
+  <icon-sign
+    (click)="openInExternal()"
+  ></icon-sign>
+
+    <icon-arrow
+            (document:keydown.ARROWRIGHT)="gridService.nextMediaPreview()"
+            (click)="gridService.nextMediaPreview()"
+            position="right"
+            class="checked"
+    ></icon-arrow>
+</div>

@@ -1,22 +1,19 @@
 {
-  "name": "mb",
-  "version": "0.0.0",
+  "name": "media-manager",
+  "version": "1.0.0-alpha",
   "main": "bin/dist/out-tsc/src-backend/main.js",
-  "author": "Tomek Żmudziński",
-  "description": "MediaBackupper",
+  "author": "Media Manager",
+  "description": "Application for managing photos and videos",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "app:tsc:main": "tsc",
-    "app:build": "ng build --prod --base-href ./ && npm run app:tsc:main",
-    "app:start": "npm run app:build && electron .",
-    "app:start-electron": "npm run app:tsc:main && electron . ",
-    "app:start-hr": "npm run app:tsc:main && electron . --serve",
-    "pack": "npm run app:build && electron-builder --dir",
-    "dist": "npm run app:build && electron-builder"
+    "app:publish": "ng build --configuration development --base-href ./ && tsc && electron-builder -p onTag",
+    "app:start-electron": "tsc && electron . ",
+    "app:start-electron-hr": "tsc && electron . --serve",
+    "gen:icons": ".\\node_modules\\.bin\\electron-icon-builder -f --input=assets\\icon.png --output=assets"
   },
   "private": true,
   "dependencies": {
@@ -28,12 +25,33 @@
     "@angular/platform-browser": "~13.0.0",
     "@angular/platform-browser-dynamic": "~13.0.0",
     "@angular/router": "~13.0.0",
+    "@ffmpeg-installer/ffmpeg": "^1.1.0",
+    "@ffprobe-installer/ffprobe": "^1.4.0",
     "@prisma/client": "^3.5.0",
+    "@types/lodash": "^4.14.178",
+    "bootstrap": "^5.1.3",
+    "checksum": "^1.0.0",
+    "dcraw": "^1.0.3",
+    "electron-updater": "^5.3.0",
+    "exifr": "^7.1.3",
+    "exiftool-vendored": "^15.11.0",
+    "ffprobe": "^1.1.2",
+    "fluent-ffmpeg": "^2.1.2",
+    "heic-convert": "^1.2.4",
+    "image-size": "^1.0.0",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
+    "ngx-infinite-scroll": "^13.1.0",
+    "ngx-pinch-zoom": "^2.6.2",
+    "ngx-treeview": "^10.0.2",
     "reflect-metadata": "^0.1.13",
     "rxjs": "~7.4.0",
+    "sharp": "^0.29.3",
     "sqlite3": "^5.0.2",
+    "trash": "^8.1.0",
     "tslib": "^2.3.0",
     "typeorm": "^0.2.41",
+    "uuid": "^8.3.2",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
@@ -44,6 +62,7 @@
     "@types/node": "^12.20.37",
     "electron": "^16.0.2",
     "electron-builder": "^22.14.5",
+    "electron-icon-builder": "^2.0.1",
     "jasmine-core": "~3.10.0",
     "karma": "~6.3.0",
     "karma-chrome-launcher": "~3.1.0",
@@ -54,9 +73,33 @@
     "typescript": "~4.4.3"
   },
   "build": {
+    "linux": {
+      "target": [
+        "zip"
+      ],
+      "icon": "./assets/icons/icon.icns"
+    },
+    "mac": {
+      "target": [
+        "dir"
+      ],
+      "icon": "./assets/icons/icon.icns"
+    },
+    "win": {
+      "target": [
+        "dir",
+        "nsis"
+      ],
+      "publish": [
+        "github"
+      ],
+      "icon": "./assets/icons/icon.ico"
+    },
+    "appId": "com.media-manager.app",
+    "productName": "Media Manager",
     "directories": {
-      "buildResources": "./bin/dist",
-      "output": "./bin/build"
+      "buildResources": "./bin/dist/",
+      "output": "./bin/build/${version}"
     },
     "files": [
       "./bin/dist/**/*"

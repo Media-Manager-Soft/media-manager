@@ -1,0 +1,11 @@
+<div *ngIf="show" class="modal-bg form-modal light">
+  <div class="center">
+    <div class="worker" *ngIf="data.processing && show">
+      <!--    <icon-circle-close class="close" (click)="terminate()"></icon-circle-close>-->
+      <p class="title">{{ data.job }} ({{ data.data.current }}/{{data.data.total}})</p>
+      <p class="title">{{ data.data.title }}</p>
+      <progress [max]="data.data.total" [value]="data.data.current"></progress>
+      <button style="margin-top: 15px" class="btn btn-danger btn-sm" (click)="terminate()">Cancel</button>
+    </div>
+  </div>
+</div>

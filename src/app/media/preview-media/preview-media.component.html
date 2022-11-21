@@ -1,0 +1,25 @@
+<div class="modal-bg preview-container">
+  <icon-close class="close-button" (document:keydown.esc)="closeModal()" (click)="closeModal()"></icon-close>
+  <icon-spinner class="spinner" *ngIf="isLoading"></icon-spinner>
+  <app-item-error [data]="itemError"></app-item-error>
+  <div class="media-preview-container" *ngIf="(currentPreviewType === 'photo')">
+    <app-photo
+      [isLoading]="isLoading"
+      [src]="src"
+      (errorItem)="itemError = $event"
+    ></app-photo>
+  </div>
+
+  <div class="media-preview-container" *ngIf="(currentPreviewType === 'video')">
+    <app-video
+      (errorItem)="itemError = $event"
+      [isLoading]="isLoading"
+      [src]="src"
+    ></app-video>
+  </div>
+
+  <div class="tool-container">
+    <app-preview-tools [mediaItemIndex]="currentIndex"></app-preview-tools>
+  </div>
+</div>
+

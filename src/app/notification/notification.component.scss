@@ -1,0 +1,11 @@
+@import "/src/scss/variables";
+
+.container {
+  position: fixed;
+  bottom: 10px;
+  right: 20px;
+
+  div{
+    margin-bottom: 10px;
+  }
+}

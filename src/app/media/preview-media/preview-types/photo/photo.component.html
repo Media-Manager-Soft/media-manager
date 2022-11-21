@@ -1,0 +1,12 @@
+<pinch-zoom
+  disableZoomControl="disable"
+  overflow="visible"
+  [backgroundColor]="'rgba(0, 0, 0, 0.0)'"
+>
+  <img
+    [hidden]="notFound"
+    [class.blur]="isLoading"
+    #imgControl
+    (error)="handleMissingImage($event)"
+  >
+</pinch-zoom>
