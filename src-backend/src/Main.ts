@@ -49,7 +49,6 @@ export class Main {
         const {autoUpdater} = require("electron-updater")
         const log = require("electron-log")
         log.transports.file.level = "debug"
-        console.log(__dirname)
         log.transports.file.resolvePath = () => path.join(__dirname, '/logs/main.log');
         autoUpdater.logger = log
         autoUpdater.checkForUpdatesAndNotify();

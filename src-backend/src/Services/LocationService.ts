@@ -3,6 +3,7 @@ import * as fs from "fs";
 import * as path from "path";
 import {MediaExtensionTypes} from "../Enums/MediaType";
 import {Media} from "../Entities/Media";
+import { app } from "electron";
 
 const bus = require('./../Events/eventBus');
 const workerManager = require('./../Workers/WorkerManager');
@@ -32,6 +33,7 @@ export class LocationService {
   public async importFiles(path: string, locationId: number, action: string) {
     let paths = this.getAllFiles(path, []);
     let id = workerManager.runProcess('discover', {
+      dbStorePath: app.getPath('userData'),
       paths: paths,
       locationId: locationId,
       regenerateThumbs: true,
@@ -46,6 +48,7 @@ export class LocationService {
   public async syncFiles(regenerateThumb: boolean = true) {
     let paths = this.getAllFiles(this.location.path, []);
     let id = workerManager.runProcess('discover', {
+      dbStorePath: app.getPath('userData'),
       paths: paths,
       locationId: this.location.id,
       regenerateThumbs: regenerateThumb

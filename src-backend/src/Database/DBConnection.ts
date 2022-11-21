@@ -1,21 +1,19 @@
-import { createConnections, getConnection, getConnectionManager } from "typeorm";
+import { createConnections, getConnection } from "typeorm";
 import * as path from "path";
-import { APP_DATA } from "../configs";
 import { Location } from "../Entities/Location";
 import { Media } from "../Entities/Media";
 import { Thumbnail } from "../Entities/Thumbnail";
+import { app } from "electron";
 
 export class DBConnection {
-  public static async createConnection() {
+  public static async createConnection(storePathParam: string|null = null) {
 
-    // if (getConnectionManager().has('default')) {
-    //   return
-    // }
+    let storePath = storePathParam ?? app.getPath('userData');
 
     await createConnections([
       {
         type: "sqlite",
-        database: path.join(APP_DATA, 'db', 'db.sqlite'),
+        database: path.join(storePath, 'db', 'db.sqlite'),
         synchronize: true,
         entities: [
           Location,
@@ -28,7 +26,7 @@ export class DBConnection {
       {
         name: "thumbnail",
         type: "sqlite",
-        database: path.join(APP_DATA, 'db', 'thumbnail.sqlite'),
+        database: path.join(storePath, 'db', 'thumbnail.sqlite'),
         synchronize: true,
         entities: [
           Thumbnail,

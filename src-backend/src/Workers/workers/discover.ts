@@ -4,7 +4,7 @@ import {Media} from "../../Entities/Media";
 
 process.on('message', async (message) => {
 
-  await DBConnection.createConnection()
+  await DBConnection.createConnection(message.data.dbStorePath)
   const location = await Location.findOne(message.data.locationId);
 
   var successQty = 0;
