@@ -1,17 +1,16 @@
-import {app, BrowserWindow, ipcMain, Notification, Menu} from "electron";
+import { app, BrowserWindow, ipcMain, Notification, Menu } from "electron";
 import * as path from "path";
 import * as url from "url";
-import {Media} from "./Entities/Media";
-import {DBConnection} from "./Database/DBConnection";
-import {NavDates} from "./Data/NavDates";
-import {MediaQuery} from "./Queries/MediaQuery";
-import {PathHelper} from "./Helpers/helpers";
-import {UpdateMetaMetadataController} from "./Controllers/UpdateMetaMetadataController";
-import {ThumbnailController} from "./Controllers/ThumbnailController";
-import {LocationController} from "./Controllers/LocationController";
-import {MediaActionsController} from "./Controllers/MediaActionsController";
-import {appMainMenu} from "./Menu/Menu";
-import AppUpdater from "./AppUpdater";
+import { Media } from "./Entities/Media";
+import { DBConnection } from "./Database/DBConnection";
+import { NavDates } from "./Data/NavDates";
+import { MediaQuery } from "./Queries/MediaQuery";
+import { PathHelper } from "./Helpers/helpers";
+import { UpdateMetaMetadataController } from "./Controllers/UpdateMetaMetadataController";
+import { ThumbnailController } from "./Controllers/ThumbnailController";
+import { LocationController } from "./Controllers/LocationController";
+import { MediaActionsController } from "./Controllers/MediaActionsController";
+import { appMainMenu } from "./Menu/Menu";
 
 const bus = require('./Events/eventBus');
 const workerManager = require('./Workers/WorkerManager');
@@ -46,6 +45,18 @@ export class Main {
         },
       });
 
+      try {
+        const {autoUpdater} = require("electron-updater")
+        const log = require("electron-log")
+        log.transports.file.level = "debug"
+        console.log(__dirname)
+        log.transports.file.resolvePath = () => path.join(__dirname, '/logs/main.log');
+        autoUpdater.logger = log
+        autoUpdater.checkForUpdatesAndNotify();
+      } catch (e) {
+        console.error(e)
+      }
+
 
       const isDev = process.argv.some(val => val === '--serve')
 
@@ -59,7 +70,6 @@ export class Main {
           })
         );
       } else {
-        // new AppUpdater();
         this.mainWindow.loadFile(
           path.resolve(__dirname, '../../../MB/index.html')
         );
