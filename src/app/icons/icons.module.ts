@@ -18,6 +18,9 @@ import { CircleCloseComponent } from './icons/circle-close/circle-close.componen
 import {SignComponent} from "./icons/sign/sign.component";
 import { FolderComponent } from './icons/folder/folder.component';
 import { SeparatorComponent } from './icons/separator/separator.component';
+import { PhotoComponent } from './icons/photo/photo.component';
+import { RawComponent } from './icons/raw/raw.component';
+import { MovieComponent } from './icons/movie/movie.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,10 @@ import { SeparatorComponent } from './icons/separator/separator.component';
     CircleCloseComponent,
     SignComponent,
     FolderComponent,
-    SeparatorComponent
+    SeparatorComponent,
+    PhotoComponent,
+    RawComponent,
+    MovieComponent
   ],
   exports: [
     FavoriteComponent,
@@ -58,7 +64,10 @@ import { SeparatorComponent } from './icons/separator/separator.component';
     CircleCloseComponent,
     SignComponent,
     FolderComponent,
-    SeparatorComponent
+    SeparatorComponent,
+    RawComponent,
+    PhotoComponent,
+    MovieComponent
   ],
   imports: [
     CommonModule
