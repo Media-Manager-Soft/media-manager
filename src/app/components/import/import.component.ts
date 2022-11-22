@@ -1,7 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {ILocation} from "../../filters/locations/ILocation";
-import {ElectronService} from "../../core/services/electron.service";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import { Component, Input, OnInit } from '@angular/core';
+import { ILocation } from "../../filters/locations/ILocation";
+import { ElectronService } from "../../core/services/electron.service";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { ConfigService } from "../../service/config.service";
+import moment = require("moment");
 
 @Component({
   selector: 'app-import',
@@ -16,7 +18,8 @@ export class ImportComponent implements OnInit {
   locations: ILocation[];
 
   constructor(
-    private electronService: ElectronService
+    private electronService: ElectronService,
+    private configs: ConfigService,
   ) {
   }
 
@@ -32,11 +35,16 @@ export class ImportComponent implements OnInit {
   onSubmit() {
     this.importMedia(this.importForm.value).then(() => {
       this.isModalOpen = false;
-      // this.locationAdded.emit(true);
     });
   }
 
   async importMedia(data: any) {
+
+    this.configs.set('last_import', JSON.stringify({
+      locationId: this.importForm.value.locationId,
+      at: moment().format("YYYY-MM-DD HH:mm:ss"),
+    }));
+
     await this.electronService.ipcRenderer.invoke('locations', {action: 'import', data});
   }
 

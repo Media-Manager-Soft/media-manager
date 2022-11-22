@@ -1,8 +1,9 @@
-import {Location} from '../Entities/Location';
+import { Location } from '../Entities/Location';
 import * as fs from "fs";
 import * as path from "path";
-import {MediaExtensionTypes} from "../Enums/MediaType";
-import {Media} from "../Entities/Media";
+import { MediaExtensionTypes } from "../Enums/MediaType";
+import { Media } from "../Entities/Media";
+import { WorkerDataType } from "../Types/WorkerDataType";
 
 const bus = require('./../Events/eventBus');
 const workerManager = require('./../Workers/WorkerManager');
@@ -37,8 +38,9 @@ export class LocationService {
       paths: paths,
       locationId: locationId,
       regenerateThumbs: true,
-      action: action,
-    })
+      fileActionType: action,
+      actionType: "Importing"
+    } as WorkerDataType)
 
     workerManager.getWorker(id).on('message', (resp: any) => {
       bus.emit(resp.type, resp.msg)
@@ -52,8 +54,9 @@ export class LocationService {
       dbStorePath: app.getPath('userData'),
       paths: paths,
       locationId: this.location.id,
-      regenerateThumbs: regenerateThumb
-    })
+      regenerateThumbs: regenerateThumb,
+      actionType: "Synchronizing"
+    } as WorkerDataType)
 
     workerManager.getWorker(id).on('message', (resp: any) => {
       bus.emit(resp.type, resp.msg)

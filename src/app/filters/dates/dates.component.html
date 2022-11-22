@@ -9,6 +9,12 @@
   Without dates
 </p>
 
+<p style="margin-bottom:10px; margin-left: 10px;" class="selection" [class]="{selected: datesService.recentlyImported}"
+   (click)="datesService.getRecentlyImported()"
+>
+  Last import
+</p>
+
 <div style="margin-left: -20px">
   <app-tree-view
     [items]="datesService.items"

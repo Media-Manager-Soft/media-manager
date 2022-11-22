@@ -43,6 +43,7 @@ export class MediaQuery {
     this.flagsQuery();
     this.locationsQuery();
     this.typesQuery();
+    this.lastImportedQuery();
   }
 
   private dateQuery() {
@@ -86,6 +87,12 @@ export class MediaQuery {
   private typesQuery() {
     if (this.queries.types?.length > 0) {
       this.mediaQueryBuilder.andWhere("type IN (:...types)", {types: this.queries.types})
+    }
+  }
+
+  private lastImportedQuery() {
+    if (this.queries.locations?.includes(parseInt(this.queries.recentlyImported?.locationId))) {
+      this.mediaQueryBuilder.andWhere("importedAt > :from", {from: this.queries.recentlyImported?.at});
     }
   }
 

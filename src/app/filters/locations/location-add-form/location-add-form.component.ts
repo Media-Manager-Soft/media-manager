@@ -20,7 +20,7 @@ export class LocationAddFormComponent {
 
   locationForm = new FormGroup({
     path: new FormControl('', [Validators.required]),
-    name: new FormControl('', [Validators.required]),
+    name: new FormControl('', [Validators.required, Validators.max(100)]),
   });
 
   constructor(private electronService: ElectronService) {

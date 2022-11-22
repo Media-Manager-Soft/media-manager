@@ -78,10 +78,13 @@ export class Media extends BaseEntity {
   @Column({nullable: true, type: 'datetime'})
   takenAt: string | null | undefined;
 
-  @Column({default: () => "CURRENT_TIMESTAMP"})
+  @Column({nullable: true, type: 'text'})
+  importedAt:  null | string;
+
+  @Column({default: () => "datetime('now','localtime')"})
   createdAt: Date;
 
-  @Column({default: () => "CURRENT_TIMESTAMP"})
+  @Column({default: () => "datetime('now','localtime')"})
   updatedAt: Date;
 
   originalPath: string;

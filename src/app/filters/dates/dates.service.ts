@@ -3,6 +3,7 @@ import { Observable, Subscription } from "rxjs";
 import { TreeItemDto } from "./tree-view/tree-iten.dto";
 import { ElectronService } from "../../core/services/electron.service";
 import { MediaService } from "../../media/media.service";
+import { ConfigService } from "../../service/config.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,18 @@ export class DatesService {
   public items: TreeItemDto[] = [];
   public noDates = false;
   public allDates = true;
+  public recentlyImported = false;
+  public lastImportAt: {
+    locationId: String|null,
+    at: String|null,
+  } | null;
 
-  constructor(public electronService: ElectronService, private mediaService: MediaService) {
+  constructor(
+    public electronService: ElectronService,
+    private mediaService: MediaService,
+    private configs: ConfigService,
+  ) {
+    this.lastImportAt = JSON.parse(this.configs.get('last_import') ?? '{}');
   }
 
 
@@ -47,6 +58,17 @@ export class DatesService {
     })
   }
 
+  getRecentlyImported() {
+    this.recentlyImported = !this.recentlyImported;
+    this.allDates = false;
+    this.noDates = false;
+    if (this.recentlyImported) {
+      this.unselectAll();
+      this.mediaService.setQuery({type: 'recentlyImported', parameters: this.lastImportAt}).getMedia();
+    }else {
+      this.mediaService.setQuery({type: 'recentlyImported', parameters: {}}).getMedia()
+    }
+  }
 
   noDatesToggle(value: boolean | null = null, getData = false) {
     this.noDates = value === null ? !this.noDates : value;
