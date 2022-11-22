@@ -146,9 +146,16 @@ export class Main {
       return UpdateMetaMetadataController.update(arg.mediaId, arg.data);
     })
 
-    ipcMain.on('open-in-external', async (event, mediaId) => {
-      let media = await Media.findOne(mediaId, {relations: ['location']});
-      await require('electron').shell.openPath(media?.getPathToFile());
+    ipcMain.on('open-in-external', async (event, arg: { type: 'file'|'location', mediaId: number }) => {
+      let media = await Media.findOne(arg.mediaId, {relations: ['location']});
+      switch (arg.type) {
+        case 'file':
+          await require('electron').shell.openPath(media?.getPathToFile());
+          break;
+        case 'location':
+          await require('electron').shell.showItemInFolder(media?.getPathToFile());
+          break;
+      }
     })
   }
 

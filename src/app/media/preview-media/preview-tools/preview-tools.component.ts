@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { GridService } from "../../grid/grid.service";
 import { MediaService } from "../../media.service";
-import {ElectronService} from "../../../core/services/electron.service";
+import { ElectronService } from "../../../core/services/electron.service";
 
 @Component({
   selector: 'app-preview-tools',
@@ -17,23 +17,29 @@ export class PreviewToolsComponent {
     public gridService: GridService,
     public mediaService: MediaService,
     private electronService: ElectronService,
-    ) {
+  ) {
 
   }
 
-  toggleFavorite(){
+  toggleFavorite() {
     this.mediaService.updateMedia(
       this.mediaService.media[this.mediaItemIndex].id,
       {favorite: !this.mediaService.media[this.mediaItemIndex].favorite}
     )
   }
-  toggleFlag(flag:number){
+
+  toggleFlag(flag: number) {
     this.mediaService.updateMedia(
       this.mediaService.media[this.mediaItemIndex].id,
       {flag: flag}
     )
   }
-  openInExternal(){
-    this.electronService.ipcRenderer.send('open-in-external', this.mediaService.media[this.mediaItemIndex].id);
+
+  openInExternal() {
+    this.electronService.ipcRenderer.send('open-in-external', {type: 'file', mediaId: this.mediaService.media[this.mediaItemIndex].id});
+  }
+
+  showInLocation() {
+    this.electronService.ipcRenderer.send('open-in-external', {type: 'location', mediaId: this.mediaService.media[this.mediaItemIndex].id});
   }
 }
