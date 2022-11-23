@@ -16,6 +16,13 @@
       <input type="hidden" formControlName="path">
     </div>
 
+    <div class="form-check" style="margin-top: 10px;">
+      <input class="form-check-input" type="checkbox" formControlName="generateThumbnails" id="generateThumbnails">
+      <label class="form-check-label" for="generateThumbnails">
+        Generate thumbnails during synchronization
+      </label>
+    </div>
+
     <button footerAction class="btn btn-success btn-sm" [disabled]="locationForm.invalid" type="submit">Add</button>
 
   </app-modal>

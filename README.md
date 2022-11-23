@@ -2,7 +2,7 @@
 
 ![Media Manager screenshot](github/media-manager.jpg)
 
-A tool for simple managing photos and videos.
+An open-source simple tool for managing photos and videos.
 
 ## Features
 * Reads almost all video and photo files format (CR3 included)

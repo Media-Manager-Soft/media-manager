@@ -19,7 +19,7 @@ export class LocationController {
     location.path = data.path;
     location.name = data.name;
     await location.save();
-    location.service().syncFiles();
+    location.service().syncFiles(data.generateThumbnails);
   }
 
   static async update(data: any) {

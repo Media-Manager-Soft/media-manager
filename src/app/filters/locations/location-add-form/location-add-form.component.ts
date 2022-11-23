@@ -21,6 +21,7 @@ export class LocationAddFormComponent {
   locationForm = new FormGroup({
     path: new FormControl('', [Validators.required]),
     name: new FormControl('', [Validators.required, Validators.max(100)]),
+    generateThumbnails: new FormControl(true),
   });
 
   constructor(private electronService: ElectronService) {
