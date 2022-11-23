@@ -18,7 +18,8 @@
     "app:start-app": "npm run app:compile && electron . ",
     "app:start-app-hr": "npm run app:tsc && electron . --serve",
     "gen:icons": ".\\node_modules\\.bin\\electron-icon-builder -f --input=assets\\icon.png --output=assets",
-    "assets:copy": "cp assets/icon.png bin/dist/out-tsc/src-backend/"
+    "assets:copy": "cp assets/icon.png bin/dist/out-tsc/src-backend/",
+    "release": "standard-version"
   },
   "private": true,
   "dependencies": {
