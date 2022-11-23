@@ -7,13 +7,15 @@
     ></icon-arrow>
 
     <icon-favorite
-                (click)="toggleFavorite()"
-                (document:keydown.f)="toggleFavorite()"
-                [filled]="mediaService.media[mediaItemIndex].favorite"
-                [class.checked]="mediaService.media[mediaItemIndex].favorite"
+            class="separated"
+            (click)="toggleFavorite()"
+            (document:keydown.f)="toggleFavorite()"
+            [filled]="mediaService.media[mediaItemIndex].favorite"
+            [class.checked]="mediaService.media[mediaItemIndex].favorite"
     ></icon-favorite>
 
     <icon-flag-filled
+            class="separated"
             [class.checked]="mediaService.media[mediaItemIndex].flag == 1"
             (click)="toggleFlag(1)"
     ></icon-flag-filled>
@@ -26,14 +28,19 @@
             (click)="toggleFlag(-1)"
     ></icon-rejected>
 
-  <icon-sign
-    (click)="openInExternal()"
-  ></icon-sign>
+    <icon-sign
+            class="separated"
+            (click)="openInExternal()"
+    ></icon-sign>
+
+    <icon-folder
+            (click)="showInLocation()"
+    ></icon-folder>
 
     <icon-arrow
             (document:keydown.ARROWRIGHT)="gridService.nextMediaPreview()"
             (click)="gridService.nextMediaPreview()"
             position="right"
-            class="checked"
+            class="checked separated"
     ></icon-arrow>
 </div>

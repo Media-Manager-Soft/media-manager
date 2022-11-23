@@ -28,6 +28,7 @@ import {VideoComponent} from './media/preview-media/preview-types/video/video.co
 import {PhotoComponent} from './media/preview-media/preview-types/photo/photo.component';
 import {ItemErrorComponent} from "./ui/item-error/item-error.component";
 import { ErrorBagComponent } from './notification/error-bag/error-bag.component';
+import { MediaTypeComponent } from './filters/media-type/media-type.component';
 
 
 @NgModule({
@@ -55,6 +56,7 @@ import { ErrorBagComponent } from './notification/error-bag/error-bag.component'
     PhotoComponent,
     ItemErrorComponent,
     ErrorBagComponent,
+    MediaTypeComponent,
   ],
   imports: [
     IconsModule,

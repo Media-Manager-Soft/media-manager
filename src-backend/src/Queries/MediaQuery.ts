@@ -42,10 +42,12 @@ export class MediaQuery {
     this.favoritesQuery();
     this.flagsQuery();
     this.locationsQuery();
+    this.typesQuery();
+    this.lastImportedQuery();
   }
 
   private dateQuery() {
-    if (!this.queries.date){
+    if (!this.queries.date) {
       this.mediaQueryBuilder.andWhere("takenAt IS NOT NULL");
       this.skipDataQuery = true;
       return;
@@ -79,6 +81,18 @@ export class MediaQuery {
   private locationsQuery() {
     if (this.queries.locations?.length > 0) {
       this.mediaQueryBuilder.andWhere("locationId IN (:...locations)", {locations: this.queries.locations})
+    }
+  }
+
+  private typesQuery() {
+    if (this.queries.types?.length > 0) {
+      this.mediaQueryBuilder.andWhere("type IN (:...types)", {types: this.queries.types})
+    }
+  }
+
+  private lastImportedQuery() {
+    if (this.queries.locations?.includes(parseInt(this.queries.recentlyImported?.locationId))) {
+      this.mediaQueryBuilder.andWhere("importedAt > :from", {from: this.queries.recentlyImported?.at});
     }
   }
 

@@ -1,17 +1,16 @@
-import {app, BrowserWindow, ipcMain, Notification, Menu} from "electron";
+import { app, BrowserWindow, ipcMain, Notification, Menu } from "electron";
 import * as path from "path";
 import * as url from "url";
-import {Media} from "./Entities/Media";
-import {DBConnection} from "./Database/DBConnection";
-import {NavDates} from "./Data/NavDates";
-import {MediaQuery} from "./Queries/MediaQuery";
-import {PathHelper} from "./Helpers/helpers";
-import {UpdateMetaMetadataController} from "./Controllers/UpdateMetaMetadataController";
-import {ThumbnailController} from "./Controllers/ThumbnailController";
-import {LocationController} from "./Controllers/LocationController";
-import {MediaActionsController} from "./Controllers/MediaActionsController";
-import {appMainMenu} from "./Menu/Menu";
-import AppUpdater from "./AppUpdater";
+import { Media } from "./Entities/Media";
+import { DBConnection } from "./Database/DBConnection";
+import { NavDates } from "./Data/NavDates";
+import { MediaQuery } from "./Queries/MediaQuery";
+import { PathHelper } from "./Helpers/helpers";
+import { UpdateMetaMetadataController } from "./Controllers/UpdateMetaMetadataController";
+import { ThumbnailController } from "./Controllers/ThumbnailController";
+import { LocationController } from "./Controllers/LocationController";
+import { MediaActionsController } from "./Controllers/MediaActionsController";
+import { appMainMenu } from "./Menu/Menu";
 
 const bus = require('./Events/eventBus');
 const workerManager = require('./Workers/WorkerManager');
@@ -22,7 +21,7 @@ export class Main {
   public run() {
     this.onReady();
     this.onWindowClosed();
-    DBConnection.createConnection();
+    DBConnection.createConnection(app.getPath('userData'));
     this.ipc()
   }
 
@@ -37,7 +36,7 @@ export class Main {
       this.mainWindow = new BrowserWindow({
         width: 1400,
         height: 900,
-        title: 'Media Manager',
+        title: `Media Manager - ${app.getVersion()}`,
         icon: path.join(__dirname, "/../../../icons/1024x1024.png"),
         webPreferences: {
           nodeIntegration: true, // Allows IPC and other APIs
@@ -46,9 +45,21 @@ export class Main {
         },
       });
 
+      const {autoUpdater} = require("electron-updater")
+      // Object.defineProperty(app, 'isPackaged', { //force fake is packaged
+      //   get() {
+      //     return true;
+      //   }
+      // });
+      autoUpdater.checkForUpdatesAndNotify().catch((e: any) => {
+        const log = require("electron-log")
+        log.transports.file.resolvePath = () => path.join(app.getPath('userData'), '/logs/update.log');
+        log.error(e)
+      });
 
       const isDev = process.argv.some(val => val === '--serve')
 
+      // this.mainWindow.webContents.openDevTools();
       if (isDev) {
         this.mainWindow.webContents.openDevTools();
         this.mainWindow.loadURL(
@@ -59,7 +70,6 @@ export class Main {
           })
         );
       } else {
-        // new AppUpdater();
         this.mainWindow.loadFile(
           path.resolve(__dirname, '../../../MB/index.html')
         );
@@ -136,9 +146,16 @@ export class Main {
       return UpdateMetaMetadataController.update(arg.mediaId, arg.data);
     })
 
-    ipcMain.on('open-in-external', async (event, mediaId) => {
-      let media = await Media.findOne(mediaId, {relations: ['location']});
-      await require('electron').shell.openPath(media?.getPathToFile());
+    ipcMain.on('open-in-external', async (event, arg: { type: 'file'|'location', mediaId: number }) => {
+      let media = await Media.findOne(arg.mediaId, {relations: ['location']});
+      switch (arg.type) {
+        case 'file':
+          await require('electron').shell.openPath(media?.getPathToFile());
+          break;
+        case 'location':
+          await require('electron').shell.showItemInFolder(media?.getPathToFile());
+          break;
+      }
     })
   }
 

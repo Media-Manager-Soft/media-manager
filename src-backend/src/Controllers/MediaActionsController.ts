@@ -19,7 +19,7 @@ export class MediaActionsController {
       try {
         fs.unlinkSync(item.getPathToFile())
       } catch (e) {
-        console.log(e)
+        console.error(e)
       }
       item.removeWithThumb();
     })

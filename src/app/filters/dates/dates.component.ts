@@ -8,13 +8,13 @@ import { DatesService } from "./dates.service";
 })
 export class DatesComponent implements OnInit {
 
-  constructor(public datesService: DatesService) {
+  constructor(
+    public datesService: DatesService,
+  ) {
   }
 
   ngOnInit(): void {
-
   }
-
 
 
 }

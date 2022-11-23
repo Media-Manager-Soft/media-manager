@@ -1,18 +1,26 @@
-import {Location} from "../../Entities/Location";
-import {DBConnection} from "../../Database/DBConnection";
-import {Media} from "../../Entities/Media";
+import { Location } from "../../Entities/Location";
+import { DBConnection } from "../../Database/DBConnection";
+import { Media } from "../../Entities/Media";
+import { WorkerDataType } from "../../Types/WorkerDataType";
+import moment = require("moment");
 
 process.on('message', async (message) => {
 
-  await DBConnection.createConnection()
-  const location = await Location.findOne(message.data.locationId);
+  let {id, data}: { id: string; data: WorkerDataType } = message
 
-  var successQty = 0;
+  await DBConnection.createConnection(data.dbStorePath)
+  const location: Location | undefined = await Location.findOne(data.locationId);
 
-  for (let i = 0; i < message.data.paths.length; i++) {
+  if (location === undefined) {
+    return;
+  }
+
+  let successQty = 0;
+
+  for (let i = 0; i < data.paths.length; i++) {
     let media = new Media();
     try {
-      await media.mediaService.discoverMetadata(message.data.paths[i], location);
+      await media.mediaService.discoverMetadata(data.paths[i], location);
 
       let result = await media.mediaService.shouldBeImported();
 
@@ -23,32 +31,30 @@ process.on('message', async (message) => {
         })
         media = result;
       } else {
-        if (message.data.action !== undefined) {
-          await media.mediaService.copyOrMoveFileToLocation(message.data.action);
+        if (data.fileActionType !== undefined) {
+          media.importedAt = moment().format("YYYY-MM-DD HH:mm:ss");
+          await media.mediaService.copyOrMoveFileToLocation(data.fileActionType);
         }
       }
 
       await media.save();
 
-      let actionName = 'Synchronizing'
-
-      if (message.data.regenerateThumbs === true) {
+      if (data.regenerateThumbs) {
         await media.mediaService.storeThumb();
-        actionName = 'Importing'
       }
 
-      notify(message.id, true, media.filename, message.data.paths.length, i + 1, actionName);
+      notify(id, true, media.filename, data.paths.length, i + 1, data.actionType);
 
       successQty++;
 
     } catch (e: any) {
       // TODO: emit errors during discovering
-      console.error(`Discover worker error: "${e.message}": ${message.data.paths[i]}`);
+      console.error(`Discover worker error: "${e.message}": ${data.paths[i]}`);
       // @ts-ignore
       process.send({
         type: 'error-bag',
         msg: {
-          filename: message.data.paths[i],
+          filename: data.paths[i],
           // filename: message.filename,
           error: e.message
         }
@@ -57,7 +63,7 @@ process.on('message', async (message) => {
     }
 
   }
-  notify(message.id, false, 'Finish!', 1, 1, 'Synchronizing')
+  notify(id, false, 'Finish!', 1, 1, data.actionType)
   // @ts-ignore
   process.send({
     type: 'notifyDesktop',

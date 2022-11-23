@@ -1,0 +1,23 @@
+<p class="selection"
+   (click)="toggle('photo')"
+   [class]="{selected: selected.photo}"
+>
+    <icon-photo></icon-photo>
+    Photos
+</p>
+
+<p class="selection"
+   (click)="toggle('movie')"
+   [class]="{selected: selected.movie}"
+>
+    <icon-movie></icon-movie>
+    Movies
+</p>
+
+<p class="selection"
+   (click)="toggle('raw')"
+   [class]="{selected: selected.raw}"
+>
+<icon-raw></icon-raw>
+    RAW
+</p>

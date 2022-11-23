@@ -11,7 +11,7 @@ export class PathHelper {
   }
 
   public static getTempPath(folder: string = '', fileName: string | null = null) {
-    let filePath = path.join(path.join(APP_DATA, 'tmp'), folder);
+    let filePath = path.join(APP_DATA, 'tmp', folder);
     if (fileName) {
       filePath = path.join(filePath, fileName)
     }

@@ -1,9 +1,10 @@
-import {Injectable} from '@angular/core';
-import {countBy, filter, find, map, remove} from "lodash";
-import {ElectronService} from "../../core/services/electron.service";
-import {MediaService} from "../../media/media.service";
-import {DatesService} from "../dates/dates.service";
-import {ILocation} from "./ILocation";
+import { Injectable } from '@angular/core';
+import { countBy, filter, find, map, remove } from "lodash";
+import { ElectronService } from "../../core/services/electron.service";
+import { MediaService } from "../../media/media.service";
+import { DatesService } from "../dates/dates.service";
+import { ILocation } from "./ILocation";
+import { ConfigService } from "../../service/config.service";
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class LocationService {
   constructor(
     private electronService: ElectronService,
     private mediaService: MediaService,
-    private datesService: DatesService
+    private datesService: DatesService,
+    private config: ConfigService
   ) {
   }
 
@@ -31,16 +33,19 @@ export class LocationService {
     if (location?.pathExists === false) {
       return;
     }
-    let loc = find(this.locations, {id: location.id});
-    const selQty = countBy(this.locations, (location) => {
+    let loc = find(this.locations, {id: location.id}); // find given location
+    const selQty = countBy(this.locations, (location) => { // count selected
       return location.isSelected;
     })
     // @ts-ignore
-    if (selQty.true === 1 && !!location.isSelected) {
+    if (selQty.true === 1 && !!location.isSelected) { // prevent null selection
       return;
     }
     // @ts-ignore
     loc.isSelected = !loc.isSelected;
+
+    // @ts-ignore
+    this.config.set('locations', this.getSelected())
     this.setQuery();
   }
 

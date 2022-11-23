@@ -1,4 +1,5 @@
-import {shell} from "electron";
+import { shell } from "electron";
+import openAboutWindow from "about-window";
 
 const isMac = process.platform === 'darwin'
 
@@ -8,7 +9,7 @@ export const appMainMenu = [
     submenu: [
       {role: 'about'},
       {type: 'separator'},
-      // {role: 'services'},
+      // {role: 'services'}
       {type: 'separator'},
       {role: 'hide'},
       {role: 'hideOthers'},
@@ -20,14 +21,14 @@ export const appMainMenu = [
   {
     label: 'Window',
     submenu: [
-      { role: 'minimize' },
-      { role: 'zoom' },
+      {role: 'minimize'},
+      {role: 'zoom'},
       ...(isMac ? [
-        { type: 'separator' },
-        { role: 'front' },
-        { type: 'separator' },
+        {type: 'separator'},
+        {role: 'front'},
+        {type: 'separator'},
       ] : [
-        { role: 'close' }
+        {role: 'close'}
       ])
     ]
   },
@@ -52,6 +53,34 @@ export const appMainMenu = [
           openUrl('https://github.com/Media-Manager-Soft/media-manager/discussions')
         }
       },
+      {
+        label: 'License...',
+        click() {
+          openUrl('https://github.com/Media-Manager-Soft/media-manager/blob/master/LICENSE')
+        }
+      },
+      {type: 'separator'},
+      {
+        label: 'About',
+        click() {
+          openAboutWindow({
+              icon_path: __dirname + "\\..\\..\\icon.png",
+              product_name: 'Media Manager',
+              bug_report_url: 'https://github.com/Media-Manager-Soft/media-manager/issues/new',
+              homepage: 'https://github.com/Media-Manager-Soft/media-manager',
+              license: 'MIT',
+              description: "By using this application, you accept that we are not responsible for the operation of the application.",
+              adjust_window_size: false,
+              win_options: {
+                minimizable: false,
+                fullscreenable: false,
+                resizable: false,
+                maximizable: false,
+              }
+            }
+          );
+        }
+      }
     ]
   },
 ]
