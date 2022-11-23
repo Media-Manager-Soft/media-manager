@@ -58,7 +58,7 @@ export class LocationEditFormComponent implements OnInit {
   }
 
   delete(){
-    if (confirm('Are you sure all items from database? No file will be deleted.')) {
+    if (confirm('Are you sure all items from database? No files will be deleted.')) {
       this.electronService.ipcRenderer.invoke('locations', {
         action: 'delete',
         data: {

@@ -1,10 +1,9 @@
 import { PathHelper } from "../../Helpers/helpers";
 import * as fs from "fs";
 import { ImgConverter } from "../Img/ImgConverter";
+import { Media } from "../../Entities/Media";
 
-var path = require('path');
 const {v4: uuidv4} = require('uuid');
-const {Worker} = require("worker_threads");
 
 export class VideoDriver {
   static async toBuffer(pathToFile: string) {
@@ -17,20 +16,32 @@ export class VideoDriver {
   }
 
 
-
   protected static async storeThumbToTemp(pathToFile: string, id: string) {
     const pathToTemp = PathHelper.getTempPath(id);
     PathHelper.ensurePathExists(pathToTemp)
 
-    const worker = new Worker(
-      path.resolve(__dirname, '../../Workers/workers/storeVideoThumbTemp.js'),
-      {workerData: {pathToFile: pathToFile, pathToTemp: pathToTemp}}
-    );
+    return new Promise((resolve, reject) => {
 
-    return new Promise((resolve) => {
-      worker.on("exit", () => {
-        resolve(true);
-      })
+      const ffmpeg = require("../../plugins/ffmpeg");
+
+      if (!fs.existsSync(pathToTemp)) { // Prevent render missing file
+        return;
+      }
+
+      ffmpeg(pathToFile)
+        .screenshots({
+          timestamps: ['30%'],
+          filename: '%s.jpg',
+          folder: pathToTemp,
+          size: Media.THUMB_WIDTH + 'x?'
+        })
+        .on('end', function (stdout: any, stderr: any) {
+          resolve(true);
+        })
+        .on('error', function (stdout: any, stderr: any) {
+          console.error('ffmpeg failed')
+          reject(true);
+        });
     });
   }
 

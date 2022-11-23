@@ -1,27 +1,33 @@
-# MB
+# Media Manager
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.0.3.
+![Media Manager screenshot](github/media-manager.jpg)
 
-## Development server
+A tool for simple managing photos and videos.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Features
+* Reads almost all video and photo files format (CR3 included)
+* Preview most of the formats
+* **Prevent add a duplicated file**
+* Import and synchronizing folder
+* Many folder locations
+* Filter by:
+    * date
+    * file type
+    * last import
+    * favorites
+    * locations
+* Mark as favorite
+* Mark by flags
+* Remove all rejected items by one click
 
-## Code scaffolding
+## Download
+Go to [release page](https://github.com/Media-Manager-Soft/media-manager/releases) and choose current version.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Contribution
+If you want to contribute this project, start a 
+[discussion](https://github.com/Media-Manager-Soft/media-manager/discussions).
 
-## Build
+If you found a bug please submit it [here](https://github.com/Media-Manager-Soft/media-manager/issues/new)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## License
+MIT
