@@ -53,6 +53,12 @@ export const appMainMenu = [
           openUrl('https://github.com/Media-Manager-Soft/media-manager/discussions')
         }
       },
+      {
+        label: 'License...',
+        click() {
+          openUrl('https://github.com/Media-Manager-Soft/media-manager/blob/master/LICENSE')
+        }
+      },
       {type: 'separator'},
       {
         label: 'About',
