@@ -1,5 +1,4 @@
 import {Location} from "../Entities/Location";
-import {dialog} from "electron";
 import {Media} from "../Entities/Media";
 import {Thumbnail} from "../Entities/Thumbnail";
 import {LocationResource} from "../Resources/LocationResource";
@@ -30,7 +29,7 @@ export class LocationController {
 
   static async import(data: any) {
     const loc = await Location.findOne(data.locationId)
-    loc?.service().importFiles(data.path, parseInt(data.locationId), data.action)
+    loc?.service().importFiles(data.path, parseInt(data.locationId), data.action, data.generateThumbnails)
   }
 
   static async sync(data: any) {
