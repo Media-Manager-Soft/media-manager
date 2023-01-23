@@ -1,9 +1,9 @@
-import { Location } from '../Entities/Location';
+import {Location} from '../Entities/Location';
 import * as fs from "fs";
 import * as path from "path";
-import { MediaExtensionTypes } from "../Enums/MediaType";
-import { Media } from "../Entities/Media";
-import { WorkerDataType } from "../Types/WorkerDataType";
+import {MediaExtensionTypes} from "../Enums/MediaType";
+import {Media} from "../Entities/Media";
+import {WorkerDataType} from "../Types/WorkerDataType";
 
 const bus = require('./../Events/eventBus');
 const workerManager = require('./../Workers/WorkerManager');
@@ -30,14 +30,14 @@ export class LocationService {
     return arrayOfFiles
   }
 
-  public async importFiles(path: string, locationId: number, action: string) {
+  public async importFiles(path: string, locationId: number, action: string, generateThumbnails: boolean) {
     const app = require('electron').app
     let paths = this.getAllFiles(path, []);
     let id = workerManager.runProcess('discover', {
       dbStorePath: app.getPath('userData'),
       paths: paths,
       locationId: locationId,
-      regenerateThumbs: true,
+      regenerateThumbs: generateThumbnails,
       fileActionType: action,
       actionType: "Importing"
     } as WorkerDataType)

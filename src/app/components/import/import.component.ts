@@ -27,6 +27,7 @@ export class ImportComponent implements OnInit {
     path: new FormControl('', [Validators.required]),
     locationId: new FormControl(null, [Validators.required]),
     action: new FormControl('', [Validators.required]),
+    generateThumbnails: new FormControl(true, [Validators.required]),
   });
 
   ngOnInit(): void {

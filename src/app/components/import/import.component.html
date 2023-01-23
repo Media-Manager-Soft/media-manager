@@ -9,7 +9,8 @@
 </button>
 
 <form [formGroup]="importForm" (ngSubmit)="onSubmit()">
-  <app-modal [class]="'form-modal'" title="Import media" (isOpenChange)="isModalOpen = !isModalOpen" [isOpen]="isModalOpen">
+  <app-modal [class]="'form-modal'" title="Import media" (isOpenChange)="isModalOpen = !isModalOpen"
+             [isOpen]="isModalOpen">
 
     <div *ngIf="locations?.length === 0" class="alert alert-warning" role="alert">
       No location found. Please add a location before import.
@@ -59,6 +60,12 @@
       <input type="hidden" formControlName="path">
     </div>
 
+    <div class="form-check" style="margin-top: 10px;">
+      <input class="form-check-input" type="checkbox" formControlName="generateThumbnails" id="generateThumbnails">
+      <label class="form-check-label" for="generateThumbnails">
+        Generate thumbnails during import
+      </label>
+    </div>
 
     <button [disabled]="!importForm.valid" footerAction class="btn btn-success btn-sm" type="submit">Import</button>
   </app-modal>
