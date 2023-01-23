@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1-beta](https://github.com/Media-Manager-Soft/media-manager/compare/v1.1.0-beta...v1.1.1-beta) (2023-01-23)
+
+
+### Features
+
+* **media:** Determine if thumbnails should be generated during sync ([e717543](https://github.com/Media-Manager-Soft/media-manager/commit/e7175436aa3f0917e638b7b7fd5f603cba0ab9d2))
+* Optional generating thumbnails during import ([afeb8a2](https://github.com/Media-Manager-Soft/media-manager/commit/afeb8a2e190152c9a519bbdbef586facfd170f2c))
+
 ## [1.1.0-beta](https://github.com/Media-Manager-Soft/media-manager/compare/v1.0.0-alpha...v1.1.0-beta) (2022-11-23)
 
 
